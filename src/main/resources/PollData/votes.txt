@@ -1,0 +1,6 @@
+1,Diabetes,0
+2,Obesity,0
+3,Flu,0
+4,Heart Problems,0
+5,Malaria,0
+6,Smoking Habits,0
