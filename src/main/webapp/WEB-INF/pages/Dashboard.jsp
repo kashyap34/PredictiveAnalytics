@@ -41,6 +41,7 @@
 	<link href='${pageContext.request.contextPath}/resources/css/jquery.iphone.toggle.css' rel='stylesheet'>
 	<link href='${pageContext.request.contextPath}/resources/css/opa-icons.css' rel='stylesheet'>
 	<link href='${pageContext.request.contextPath}/resources/css/uploadify.css' rel='stylesheet'>
+	<link href='${pageContext.request.contextPath}/resources/css/jquery-ui-1.10.4.custom.css' rel='stylesheet'>
 	<link href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.11/themes/flick/jquery-ui.css" rel="stylesheet" type="text/css" />
 	
 
@@ -171,19 +172,31 @@
 				
 				<div class="box span10">
 					<div class="box-header well" data-original-title>
-						<h2><i class="icon-list-alt"></i> Health Trends in United States</h2>
+						<h2><i class="icon-list-alt"></i> Health Trends around the world</h2>
 						<div class="box-icon">
 							<a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
 							<a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a>
 						</div>
 					</div>
 					<div class="box-content">
-						<div id="pie-chart-container"></div>
-						<div id="line-chart-container">
-							<%-- <c:forEach var="dataItems" items="${countryPredictions}">
-								
-							</c:forEach> --%>
+						<div id="pie-chart-container">
+							<c:if test="${error != null}">
+								<div class="alert alert-danger">${error}</div>
+							</c:if>
 						</div>
+						<div id="filter-data">
+							<label for="searchText"><strong>Filter data by Country </strong></label>
+							<input type="text" id="searchText" placeholder="Enter search country here" class="span6 typeahead" data-provide="typeahead"
+								data-items="8"/>
+							<button class="btn btn-primary" id="btn-filter" value="filter" type="button">Filter</button>
+						</div>
+						<div id="alert-error" class="alert alert-danger"></div>
+						<hr id="pie-bar-separator">
+						<div id="bar-chart-container"></div>
+						<br/>
+						<br/>
+						<hr id="bar-line-separator">
+						<div id="line-chart-container"></div>
 					</div>
 				</div><!--/span-->
 			</div><!--/row-->
@@ -194,7 +207,7 @@
 	================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
 
-	<!-- jQuery -->
+	<%-- <!-- jQuery -->
 	<script src="${pageContext.request.contextPath}/resources/js/jquery-1.7.2.min.js"></script>
 	<!-- jQuery UI -->
 	<script src="${pageContext.request.contextPath}/resources/js/jquery-ui-1.8.21.custom.min.js"></script>
@@ -205,9 +218,15 @@
 	<!-- popover effect library -->
 	<script src="${pageContext.request.contextPath}/resources/js/bootstrap-popover.js"></script>
 	<!-- application script for Charisma demo -->
-	<script src="${pageContext.request.contextPath}/resources/js/charisma.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/charisma.js"></script> --%>
 	
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js" type="text/javascript"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/jquery.ui.core.min.js" type="text/javascript"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/jquery.ui.widget.min.js" type="text/javascript"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/jquery.ui.position.min.js" type="text/javascript"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/jquery.ui.autocomplete.min.js" type="text/javascript"></script>
+	<!-- autocomplete library -->
+	<script src="${pageContext.request.contextPath}/resources/js/bootstrap-typeahead.js"></script>
 	<script src="http://jquery.bassistance.de/validate/jquery.validate.js"></script>
 	
 	<!-- High Charts -->
@@ -215,8 +234,13 @@
 	<script src="http://code.highcharts.com/modules/exporting.js"></script>
 	
 	<script type="text/javascript">
+	var disease;
 	$(function () {
-	$('#line-chart-container').hide();
+	$('#pie-bar-separator').hide();
+	$('#bar-line-separator').hide();
+	$('#alert-error').hide();
+	$('#filter-data').hide();
+	
 		 $('#pie-chart-container').highcharts({
 	        chart: {
 	            plotBackgroundColor: null,
@@ -245,14 +269,6 @@
 	            type: 'pie',
 	            name: 'Disease share',
 	            data: [
-	                /* ['Malaria',   2000],
-	                ['Tuberculosis',   9600],
-	                {
-	                    name: 'Diabetes',
-	                    y: 1765,
-	                    sliced: true,
-	                    selected: true
-	                }, */
 	                <c:forEach items = "${avgCasesMap}" var = "avgCases">
 	                ['${avgCases.key}', ${avgCases.value}],
 	                </c:forEach>
@@ -260,7 +276,18 @@
 	            point: {
 	            	events: {
 		            	click: function(event) {
-		            		$('#line-chart-container').show();
+		            		disease = this.name;
+		            		$.get("${pageContext.request.contextPath}/dashboard/country/" + disease, function(data){
+		            			var obj = jQuery.parseJSON(data);
+		            			/* $('#searchText').autocomplete({
+		            				lookup: countries.countryList
+		            			}) */
+		            			var countries = obj.countryList;
+		            			var autoComplete = $('#searchText').typeahead();
+		            			autoComplete.data('typeahead').source = countries;
+		            			$('#filter-data').show();
+		            			
+		            		});
 	    	        	}
 	            	}
 	            }
@@ -268,90 +295,131 @@
 	    });
 	});
 	
-		$('#line-chart-container').highcharts({
-            title: {
-                text: 'Diabetes Melitus Prevelance',
-                x: -20 //center
-            },
-            subtitle: {
-                text: 'United States of America',
-                x: -20
-            },
-            xAxis: {
-                categories: [1980,
-                             1981,
-                             1982,
-                             1983,
-                             1984,
-                             1985,
-                             1986,
-                             1987,
-                             1988,
-                             1989,
-                             1990,
-                             1991,
-                             1992,
-                             1993,
-                             1994,
-                             1995,
-                             1996,
-                             1997,
-                             1998,
-                             1999,
-                             2000,
-                             2001,
-                             2002,
-                             2003,
-                             2004,
-                             2005,
-                             2006,
-                             2007,
-                             2008,
-                             2009,
-                             2010,
-                             2011,
-                             2012,
-                             2013,
-                             2014,
-                             2015,
-                             2016,
-                             2017,
-                             2018
-					],
-				title: {
-					text: 'Year'
-				}
-            },
-            yAxis: {
-                title: {
-                    text: 'Number of cases (in Thousands)'
-                },
-                plotLines: [{
-                    value: 0,
-                    width: 1,
-                    color: '#808080'
-                }]
-            },
-            tooltip: {
-                valueSuffix: 'k'
-            },
-            legend: {
-                layout: 'vertical',
-                align: 'right',
-                verticalAlign: 'middle',
-                borderWidth: 0
-            },
-            series: [{
-                name: '# of cases',
-                data: [
-                       <c:forEach items="${countryPredictions}" var="data" varStatus="status">
-                       ${data}
-                       <c:if test="${not status.last}">,</c:if>
-                       </c:forEach>
-                      ]
-            }]
-        });
-
+	$('#btn-filter').click(function(){
+		var country = $('#searchText').val();
+		$.get("${pageContext.request.contextPath}/dashboard/country?disease=" + disease + "&country=" + country, function(data){
+			var obj = jQuery.parseJSON(data);
+			var cases = obj.cases;
+			var predictions = obj.predictions;
+			if(obj.error != null) {
+				$('#alert-error').text(obj.error).show();
+			}
+			else {
+				$('#pie-bar-separator').show();
+				$('#bar-chart-container').highcharts({
+		            chart: {
+		                type: 'bar'
+		            },
+		            title: {
+		                text: disease + ' - Number of reported cases'
+		            },
+		            subtitle: {
+		                text: 'Source: WHO Data Repository'
+		            },
+		            xAxis: {
+		                categories: [country],
+		                title: {
+		                    text: null
+		                }
+		            },
+		            yAxis: {
+		                min: 0,
+		                title: {
+		                    text: 'Cases',
+		                    align: 'low'
+		                },
+		                labels: {
+		                    overflow: 'justify'
+		                }
+		            },
+		            plotOptions: {
+		                bar: {
+		                    dataLabels: {
+		                        enabled: true
+		                    }
+		                }
+		            },
+		            legend: {
+		                layout: 'vertical',
+		                align: 'right',
+		                verticalAlign: 'top',
+		                x: -40,
+		                y: 100,
+		                floating: true,
+		                borderWidth: 1,
+		                backgroundColor: '#FFFFFF',
+		                shadow: true
+		            },
+		            credits: {
+		                enabled: false
+		            },
+		            series: [{
+		                name: 'Year 2006',
+		                data: [cases[2006]]
+		            }, {
+		                name: 'Year 2007',
+		                data: [cases[2007]]
+		            }, {
+		                name: 'Year 2008',
+		                data: [cases[2008]]
+		            }, {
+		                name: 'Year 2009',
+		                data: [cases[2009]]
+		            }, {
+		                name: 'Year 2010',
+		                data: [cases[2010]]
+		            }, {
+		                name: 'Year 2011',
+		                data: [cases[2011]]
+		            }]
+		        });
+				
+				$('#bar-line-separator').show();
+				
+				$('#line-chart-container').highcharts({
+		            title: {
+		                text: 'Estimated number of cases by 2018',
+		                x: -20 //center
+		            },
+		            subtitle: {
+		                text: 'Predictions based on WHO Data',
+		                x: -20
+		            },
+		            xAxis: {
+		                categories: [2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018],
+		                title: {
+		                	text: 'Year'
+		                }
+		            },
+		            yAxis: {
+		                title: {
+		                    text: 'Number of cases'
+		                },
+		                plotLines: [{
+		                    value: 0,
+		                    width: 1,
+		                    color: '#808080'
+		                }]
+		            },
+		            tooltip: {
+		                pointFormat: '{series.name}: <b>{point.y:.0f}</b>'
+		            },
+		            legend: {
+		                layout: 'vertical',
+		                align: 'right',
+		                verticalAlign: 'middle',
+		                borderWidth: 0
+		            },
+		            series: [{
+		                name: country,
+		                data: predictions
+		            }]
+		        });
+			}
+		});
+		
+	});
+	
 </script>	
 		
 </body>

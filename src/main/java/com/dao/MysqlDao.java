@@ -6,13 +6,17 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.beans.CountryData;
 import com.beans.Disease;
 import com.beans.UserInfo;
 
@@ -246,6 +250,209 @@ public class MysqlDao {
 			
 		} catch(SQLException e) {
 			logger.error("Error in getting the average cases for the country: " + country);
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public Map<String, Double> getAverageCasesWorldWide() {
+		try {
+			logger.info("Retrieving average cases world wide");
+			String[] diseases = {"Diabetes", "Cholera", "Malaria", "Tuberculosis"};
+			query = "Select AVG(WHO.Disease.no_of_cases) as avg_cases from WHO.Disease where indicator like ? AND year > 2005";
+			pstmt = conn.prepareStatement(query);
+			Map<String, Double> avgCasesMap = new HashMap<String, Double>();
+			
+			for(String disease : diseases) {
+				pstmt.setString(1, "%" + disease + "%");
+				rs = pstmt.executeQuery();
+				
+				if(rs.next()) {
+					avgCasesMap.put(disease, rs.getDouble("avg_cases"));
+				}
+			}
+			if(avgCasesMap.size() > 0)
+				return avgCasesMap;
+			else
+				return null;
+			
+		} catch(SQLException e) {
+			logger.error("Error in getting the average cases world wide");
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public List<String> getCountryListForDisease(String disease) {
+		try {
+			logger.info("Retrieving the list of countries for: " + disease);
+			query = "Select distinct country from WHO.Disease where indicator like ?";
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setString(1, "%" + disease + "%");
+			rs = pstmt.executeQuery();
+			List<String> countryList = new ArrayList<String>();
+			
+			while(rs.next()) {
+				countryList.add(rs.getString("country"));
+			}
+			
+			if(countryList.size() > 0)
+				return countryList;
+			else
+				return null;
+			
+		} catch(SQLException e) {
+			logger.error("Error in retrieving the country list for the disease: " + disease);
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public Map<Integer, Integer> getCasesYearWiseForCountry(String country, String disease) {
+		try {
+			query = "Select year, no_of_cases from WHO.Disease where indicator like ? AND country = ? AND year > 2005";
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setString(1, "%" + disease + "%");
+			pstmt.setString(2, country);
+			
+			rs = pstmt.executeQuery();
+			Map<Integer, Integer> yearVsCasesMap = new LinkedHashMap<Integer, Integer>();
+			
+			while(rs.next()) {
+				yearVsCasesMap.put(rs.getInt("year"), rs.getInt("no_of_cases"));
+			}
+			
+			if(yearVsCasesMap.size() > 0)
+				return yearVsCasesMap;
+			else
+				return null;
+			
+		} catch(SQLException e) {
+			logger.error("Error in fetching the cases year wise for country: " + country);
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	/*
+	 * Retrieve cases for all the diseases country wise
+	 */
+	public Map<String, CountryData> getCasesCountryWise() {
+		try {
+			String[] diseases = {"Diabetes", "Cholera", "Malaria", "Tuberculosis"};
+			Map<String, CountryData> diseaseVsCountryDataMap = new LinkedHashMap<String, CountryData>();
+			CountryData countryData = new CountryData();
+			
+			for(String disease : diseases) {
+				List<String> countryList = getCountryListForDisease(disease);
+				if(countryList != null) {
+					for(String country : countryList) {
+						countryData.setCountryName(country);
+						countryData.setYearVsCasesMap(getCasesYearWiseForCountry(country, disease));
+						diseaseVsCountryDataMap.put(disease, countryData);
+					}
+				}
+				else
+					return null;
+			}
+			
+			if(diseaseVsCountryDataMap.size() > 0)
+				return diseaseVsCountryDataMap;
+			else
+				return null;
+			
+		} catch(Exception e) {
+			logger.error("Error in fetching the cases data country wise");
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	/*
+	 * Retrieve cases for @param disease country wise
+	 */
+	public Map<String, CountryData> getCasesCountryWise(String disease) {
+		try {
+			Map<String, CountryData> diseaseVsCountryDataMap = new LinkedHashMap<String, CountryData>();
+			CountryData countryData = new CountryData();
+			
+			List<String> countryList = getCountryListForDisease(disease);
+			if (countryList != null) {
+				for (String country : countryList) {
+					countryData.setCountryName(country);
+					countryData.setYearVsCasesMap(getCasesYearWiseForCountry(country, disease));
+					diseaseVsCountryDataMap.put(disease, countryData);
+				}
+			} else
+				return null;
+			
+			if(diseaseVsCountryDataMap.size() > 0)
+				return diseaseVsCountryDataMap;
+			else
+				return null;
+			
+		} catch(Exception e) {
+			logger.error("Error in fetching the cases data country wise");
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public Map<Integer, List<Integer>> getDiseaseCasesYearWise(String disease) {
+		try{
+			logger.info("Retreiving the year wise case data for: " + disease);
+			int[] years = {2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013};
+			Map<Integer, List<Integer>> yearVsCasesMap = new LinkedHashMap<Integer, List<Integer>>();
+			
+			for(int year : years) {
+				List<Integer> casesList = new ArrayList<Integer>();
+				query = "Select no_of_cases from WHO.Disease where indicator like ? AND year = ?";
+				pstmt = conn.prepareStatement(query);
+				
+				pstmt.setString(1, "%" + disease + "%");
+				pstmt.setInt(2, year);
+				
+				rs = pstmt.executeQuery();
+				
+				while(rs.next()) {
+					casesList.add(rs.getInt("no_of_cases"));
+				}
+				yearVsCasesMap.put(year, casesList);
+			}
+			
+			if(yearVsCasesMap.size() > 0)
+				return yearVsCasesMap;
+			else
+				return null;
+			
+		} catch(SQLException e) {
+			logger.error("Error in fetching the data for disease: " + disease);
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public Map<String, List<Integer>> getCasesCountryWiseForDisease(String disease) {
+		try {
+			Map<String, List<Integer>> countryVsCasesDataMap = new LinkedHashMap<String, List<Integer>>();
+			
+			List<String> countryList = getCountryListForDisease(disease);
+			if (countryList != null) {
+				for (String country : countryList) {
+					//countryVsCasesDataMap.put(country, getDiseaseCasesYearWiseForCountry(disease, country));
+				}
+			} else
+				return null;
+			
+			if(countryVsCasesDataMap.size() > 0)
+				return countryVsCasesDataMap;
+			else
+				return null;
+			
+		} catch(Exception e) {
+			logger.error("Error in fetching the cases data country wise");
 			e.printStackTrace();
 			return null;
 		}
