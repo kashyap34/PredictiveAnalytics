@@ -71,7 +71,8 @@ public class DashboardController {
 			logger.info("Retrieving the country wise cases data for: " + disease);
 			Map<Integer, Integer> yearVsCasesMap = dao.getCasesYearWiseForCountry(country, disease);
 			if(yearVsCasesMap != null) {
-				ArrayList<Double> predictedInstances = rUtils.predictInstance(yearVsCasesMap);
+				//ArrayList<Double> predictedInstances = rUtils.predictInstance(yearVsCasesMap);
+				ArrayList<Double> predictedInstances = rUtils.predictInstanceUsingTimeSeries(yearVsCasesMap);
 				System.out.println("{\"cases\":" + mapper.writeValueAsString(yearVsCasesMap) + ", \"predictions\":" + mapper.writeValueAsString(predictedInstances) +"}");
 				return "{\"cases\":" + mapper.writeValueAsString(yearVsCasesMap) + ", \"predictions\":" + mapper.writeValueAsString(predictedInstances) +"}";
 			}
