@@ -380,7 +380,7 @@ progress::-webkit-progress-value { background: #0063a6; }
 		$('#jsonFileNameSpan').show();
 		
 		//validation
-		if(!(/json/i.test(type))) {
+		if(!(/json/i.name(type))) {
 			$('#patientFormatError').text('Please upload JSON files only !');
 			$('#patientFormatError').show();
 		}

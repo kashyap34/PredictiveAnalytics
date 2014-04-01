@@ -1,8 +1,7 @@
 package com.controllers;
 
+import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,9 +15,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.beans.CountryData;
+import com.beans.PatientData;
+import com.beans.PatientStatistics;
 import com.dao.MysqlDao;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.utils.MongoUtils;
 import com.utils.RUtils;
 
 @Controller
@@ -28,6 +30,11 @@ public class DashboardController {
 	private static RUtils rUtils = new RUtils();
 	private static Logger logger = LoggerFactory.getLogger(DashboardController.class);
 	private ObjectMapper mapper = new ObjectMapper();
+	private MongoUtils mongoUtils;
+	
+	public DashboardController() throws UnknownHostException {
+		mongoUtils = new MongoUtils();
+	}
 	
 	@RequestMapping(value = "/dashboard", method = RequestMethod.GET)
 	public String returnDashboardView(ModelMap model) {
@@ -85,5 +92,34 @@ public class DashboardController {
 			e.printStackTrace();
 			return "";
 		}
+	}
+	
+	@RequestMapping(value = "/dashboard/patient", method = RequestMethod.GET)
+	public String returnPatientView(ModelMap model) {
+		logger.info("Generating the view for patient");
+		
+		List<PatientData> patientList = mongoUtils.retreiveAllPatients();
+		if(patientList != null)
+			model.addAttribute("patientList", patientList);
+		else
+			model.addAttribute("error", "Error in retreiving patient data");
+		
+		return "PatientDashboard";
+	}
+	
+	@RequestMapping(value = "/dashboard/patient", method = RequestMethod.GET, params = "medical_record_no")
+	public @ResponseBody String retreivePatientDetails(@RequestParam("medical_record_no") String mrno, ModelMap model) {
+		logger.info("Retreiving the details of patient with medical record no: " + mrno);
+		PatientStatistics patientStats = mongoUtils.retrieveStatisticsForPatient(mrno);
+		
+		try {
+			System.out.println(mapper.writeValueAsString(patientStats));
+			return mapper.writeValueAsString(patientStats);
+		} catch (JsonProcessingException e) {
+			logger.error("Error in generating the statistics for the given user");
+			e.printStackTrace();
+			return "{\"error\": \"Error in generating the statistics for the selected user\"}";
+		}
+		
 	}
 }

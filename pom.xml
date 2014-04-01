@@ -70,13 +70,12 @@
        	</dependency> -->
        	<dependency>
     		<groupId>com.fasterxml.jackson.core</groupId>
-    		<artifactId>jackson-core</artifactId>
+    		<artifactId>jackson-databind</artifactId>
     		<version>2.3.0</version>
 		</dependency>
- 
-		<dependency>
+       	<dependency>
     		<groupId>com.fasterxml.jackson.core</groupId>
-    		<artifactId>jackson-databind</artifactId>
+    		<artifactId>jackson-core</artifactId>
     		<version>2.3.0</version>
 		</dependency>
        	<!-- Mongo -->
@@ -91,7 +90,6 @@
 			<artifactId>commons-fileupload</artifactId>
 			<version>1.2.2</version>
 		</dependency>
- 
 		<!-- Apache Commons Upload --> 
 		<dependency>
 			<groupId>commons-io</groupId>
@@ -110,6 +108,48 @@
 			<artifactId>JRI</artifactId>
 			<version>0.8-4</version>
 		</dependency>
+		<!-- Apache Commons -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-exec</artifactId>
+			<version>1.2</version>
+		</dependency>
+		<!-- Apache commons logging -->
+		<dependency>
+        	<groupId>commons-logging</groupId>
+        	<artifactId>commons-logging</artifactId>
+        	<version>1.1.1</version>
+		</dependency>
+		<!-- Apache commons lang -->
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.3</version>
+		</dependency>
+        <!-- Amazon AWS SDK -->
+        <dependency>
+			<groupId>com.amazonaws</groupId>
+			<artifactId>aws-java-sdk</artifactId>
+			<version>1.7.5</version>
+		</dependency>
+		<!-- Apache Hadoop -->
+		<!-- <dependency>
+			<groupId>org.apache.hadoop</groupId>
+			<artifactId>hadoop-core</artifactId>
+			<version>1.2.1</version>
+		</dependency>
+		Mongo Hadoop
+		<dependency>
+			<groupId>org.mongodb</groupId>
+			<artifactId>mongo-hadoop-core</artifactId>
+			<version>1.0.0</version>
+		</dependency> -->
+        <!-- Joda Time -->    
+        <dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+			<version>2.3</version>
+		</dependency>    
 	</dependencies>
 
 	<build>
