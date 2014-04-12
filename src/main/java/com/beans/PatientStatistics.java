@@ -1,15 +1,39 @@
 package com.beans;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class PatientStatistics {
-	private List<String> tagList = new ArrayList<String>();
-	private Map<Integer, Integer> yearVsEncounterMap = new LinkedHashMap<Integer, Integer>();
+public class PatientStatistics implements Serializable{
+	private static final long serialVersionUID = 1L;
+	private List<String> tagList;
+	private Map<Integer, Integer> yearVsEncounterMap;
 	private int sinceYear;
+	private List<String> familyHistory;
+	private String title;
 	
+	
+	
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	/*public PatientOccupation getOccupation() {
+		return occupation;
+	}
+	public void setOccupation(PatientOccupation occupation) {
+		this.occupation = occupation;
+	}*/
+	public List<String> getFamilyHistory() {
+		return familyHistory;
+	}
+	public void setFamilyHistory(List<String> familyHistory) {
+		this.familyHistory = familyHistory;
+	}
 	public int getSinceYear() {
 		return sinceYear;
 	}

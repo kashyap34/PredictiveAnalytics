@@ -1,6 +1,7 @@
 package com.dao;
 
 import java.io.FileInputStream;
+import java.net.UnknownHostException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -18,7 +19,10 @@ import org.slf4j.LoggerFactory;
 
 import com.beans.CountryData;
 import com.beans.Disease;
+import com.beans.PatientOccupation;
 import com.beans.UserInfo;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.utils.MongoUtils;
 
 public class MysqlDao {
 	
@@ -29,6 +33,8 @@ public class MysqlDao {
 	private ResultSet rs;
 	private PreparedStatement pstmt;
 	private String query;
+	private ObjectMapper mapper = new ObjectMapper();
+	private MongoUtils mongoUtils = new MongoUtils();
 	
 	public MysqlDao() {
 		try{
@@ -453,6 +459,100 @@ public class MysqlDao {
 			
 		} catch(Exception e) {
 			logger.error("Error in fetching the cases data country wise");
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public List<String> retrieveAllOccupations() {
+		try {
+			logger.info("Retrieving the list of all occupations");
+			query = "Select title from Occupation.occupation_data";
+			pstmt = conn.prepareStatement(query);
+			List<String> jobTitleList = new ArrayList<String>();
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				jobTitleList.add(rs.getString("title"));
+			}
+			
+			if(jobTitleList.size() > 0)
+				return jobTitleList;
+			else
+				return null;
+		} catch(Exception e) {
+			logger.error("Error in retreiving all the job titles");
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public String retrieveDescriptionForOccupation(String title) {
+		try {
+			logger.info("Retrieving the description for occupation with title: " + title);
+			query = "Select description from Occupation.occupation_data where title = ?";
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setString(1, title);
+			String jobDescription ;
+			
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				jobDescription = rs.getString("description");
+				return jobDescription;
+			}
+			
+			return null;
+
+		} catch(Exception e) {
+			logger.error("Error in retreiving all the job titles");
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public String retrieveOccupationDetailsForAJob(String title) {
+		try {
+			query = "Select * from Occupation.jobTypes";
+			pstmt = conn.prepareStatement(query);
+			List<PatientOccupation> occupationTypesList = new ArrayList<PatientOccupation>();
+			
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				PatientOccupation occupation = new PatientOccupation();
+				occupation.setType(rs.getString("type"));
+				occupation.setCategory(rs.getString("category"));
+				occupation.setActivityLevel(rs.getString("activity_level"));
+				
+				occupationTypesList.add(occupation);
+			}
+			
+			for(final PatientOccupation occupation : occupationTypesList) {
+				if(title.contains(occupation.getType())) {
+					logger.info("Found matching job title with info:"
+							+ " Activity Level: " + occupation.getActivityLevel()
+							+ " Category: " + occupation.getCategory()
+							+ " Type: " + occupation.getType()
+							+ " Description: " + retrieveDescriptionForOccupation(title));
+					PatientOccupation matchingOccupation = new PatientOccupation();
+					matchingOccupation.setActivityLevel(occupation.getActivityLevel());
+					matchingOccupation.setCategory(occupation.getCategory());
+					matchingOccupation.setType(occupation.getType());
+					matchingOccupation.setTitle(title);
+					matchingOccupation.setDescription(retrieveDescriptionForOccupation(title));
+					return mapper.writeValueAsString(matchingOccupation);
+				}
+			}
+			logger.info("Matching occupation type not found");
+			PatientOccupation occupation = new PatientOccupation();
+			occupation.setActivityLevel("Light");
+			occupation.setCategory("Other");
+			occupation.setDescription(retrieveDescriptionForOccupation(title));
+			occupation.setTitle(title);
+			return mapper.writeValueAsString(occupation);
+				
+		} catch(Exception e) {
+			logger.error("Error in retreiving the occupation details for title: " + title);
 			e.printStackTrace();
 			return null;
 		}

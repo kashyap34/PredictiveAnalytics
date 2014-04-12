@@ -10,12 +10,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.beans.PatientData;
+import com.beans.PatientOccupation;
 import com.beans.PatientStatistics;
 import com.dao.MysqlDao;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -119,6 +121,51 @@ public class DashboardController {
 			logger.error("Error in generating the statistics for the given user");
 			e.printStackTrace();
 			return "{\"error\": \"Error in generating the statistics for the selected user\"}";
+		}
+	}
+	
+	@RequestMapping(value = "/dashboard/patient/occupationsList", method = RequestMethod.GET)
+	public @ResponseBody String retrieveAllOccupations(ModelMap model) {
+		try {
+			List<String> occupationsList = dao.retrieveAllOccupations();
+			System.out.println(mapper.writeValueAsString(occupationsList));
+			if(occupationsList != null) 
+				return "{\"occupationsList\": " + mapper.writeValueAsString(occupationsList) + "}";
+			else 
+				return "{\"error\": \"Error in retrieving Occupations list\"}";
+		} catch(Exception e) {
+			logger.error("Error in retrieving all occupations list");
+			e.printStackTrace();
+			return "{\"error\": \"Error in retrieving Occupations list\"}";
+		}
+	}
+	
+	@RequestMapping(value = "/dashboard/patient/update", method = RequestMethod.POST , params = "medical_record_no")
+	public @ResponseBody String returnPatientsFamilyHistory(@RequestBody PatientStatistics patientStats, 
+															@RequestParam("medical_record_no") String mrno, ModelMap model) {
+		try {
+			logger.info("Updating the information of the patient with medical record no: " + mrno);
+			String result = "";
+			System.out.println(mapper.writeValueAsString(patientStats));
+			if(patientStats.getFamilyHistory() != null) {
+				result = mongoUtils.updateDocument("family_history", patientStats.getFamilyHistory(), mrno);
+			}
+			else
+				logger.warn("Family history empty");
+			
+			if(patientStats.getTitle() != null || !patientStats.getTagList().isEmpty()) {
+				String title = patientStats.getTitle();
+				String occupation = dao.retrieveOccupationDetailsForAJob(title);
+				//System.out.println(mapper.writeValueAsString(occupation));
+				//occupation.setTitle(title);
+				result = mongoUtils.updateOccupation("occupation", occupation, mrno);
+			}
+			return result;
+			
+		} catch(Exception e) {
+			logger.error("Error in updating the family history for the user with medical record no: " + mrno);
+			e.printStackTrace();
+			return "{\"error\": \"Error in updating the family history for the selected user\"}";
 		}
 		
 	}

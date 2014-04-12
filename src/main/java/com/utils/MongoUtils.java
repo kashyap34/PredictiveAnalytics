@@ -12,8 +12,15 @@ import org.bson.types.ObjectId;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 
 import com.beans.PatientData;
+import com.beans.PatientOccupation;
 import com.beans.PatientStatistics;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.BasicDBObject;
@@ -21,8 +28,10 @@ import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
+import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoException;
+import com.mongodb.WriteResult;
 import com.mongodb.util.JSON;
 import com.patient.Condition;
 import com.patient.Encounter;
@@ -40,11 +49,17 @@ public class MongoUtils {
 	private ObjectMapper mapper;
 	private BasicDBObject basicDbObject;
 	
-	public MongoUtils() throws UnknownHostException {
-		mongoClient = new MongoClient("localhost", 27017);
-		db = mongoClient.getDB("Patient");
-		collection = db.getCollection("Patient");
-		mapper = new ObjectMapper();
+	public MongoUtils() {
+		try {
+			mongoClient = new MongoClient("localhost", 27017);
+			db = mongoClient.getDB("Patient");
+			collection = db.getCollection("Patient");
+			mapper = new ObjectMapper();
+		} catch(UnknownHostException e) {
+			logger.error("Error in connecting to Mongo instance");
+			e.printStackTrace();
+			System.exit(0);
+		}
 	}
 	
 	public MongoUtils(String fileName) throws UnknownHostException {
@@ -142,6 +157,8 @@ public class MongoUtils {
 			List<Procedures> procedureList = new ArrayList<Procedures>();
 			List<String> tagList = new ArrayList<String>();
 			List<Values> valueList = new ArrayList<Values>();
+			List<String> familyHistory = new ArrayList<String>();
+			PatientOccupation occupation;
 			
 			while(cursor.hasNext()) {
 				Patient patient = mapper.readValue(cursor.next().toString(), Patient.class);
@@ -191,6 +208,12 @@ public class MongoUtils {
 				}
 				
 				patientStats.setTagList(tagList);
+				
+				familyHistory = patient.getFamily_history();
+				patientStats.setFamilyHistory(familyHistory);
+				
+				occupation = patient.getOccupation();
+				patientStats.setTitle(occupation.getTitle());
 			}
 			return patientStats;
 		} catch(Exception e) {
@@ -199,6 +222,40 @@ public class MongoUtils {
 			return null;
 		} finally {
 			cursor.close();
+		}
+	}
+	
+	public String updateDocument(String key, Object value, String medical_record_number) {
+		try {
+			logger.info("Updating the document with value " + value.getClass() + " for patient with medical record number: " + medical_record_number);
+			BasicDBObject setNewField = new BasicDBObject("$set", new BasicDBObject().append(key, value));
+			WriteResult result = collection.update(new BasicDBObject().append("medical_record_number", medical_record_number), setNewField);
+			
+			if(result != null) 
+				return "{\"success\": \"Patient's information updated successfully\"}";
+			else
+				return "{\"error\": \"Error in updating the information of the selected user\"}";
+		} catch(Exception e) {
+			logger.error("Error in updating the document");
+			e.printStackTrace();
+			return "{\"error\": \"Error in updating the information of the selected user\"}";
+		}
+	}
+	
+	public String updateOccupation(String key, String occupation, String medical_record_number) {
+		try {
+			BasicDBObject occupationObject = (BasicDBObject)JSON.parse(occupation);
+			BasicDBObject setNewField = new BasicDBObject("$set", new BasicDBObject().append(key, occupationObject));
+			WriteResult result = collection.update(new BasicDBObject().append("medical_record_number", medical_record_number), setNewField);
+			
+			if(result != null) 
+				return "{\"success\": \"Patient's information updated successfully\"}";
+			else
+				return "{\"error\": \"Error in updating the information of the selected user\"}";
+		} catch(Exception e) {
+			logger.error("Error in updating the document");
+			e.printStackTrace();
+			return "{\"error\": \"Error in updating the information of the selected user\"}";
 		}
 	}
 }

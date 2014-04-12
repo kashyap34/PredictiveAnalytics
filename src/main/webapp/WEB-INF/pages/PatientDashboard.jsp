@@ -31,14 +31,15 @@
 		.panel-primary{
 		border-color:#428bca
 		}
+		
 	</style>
 	<link href="${pageContext.request.contextPath}/resources/css/bootstrap-classic.css" rel="stylesheet">
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
-	<link href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.11/themes/flick/jquery-ui.css" rel="stylesheet" type="text/css" />
-	<link href="${pageContext.request.contextPath}/resources/css/charisma-app.css" rel="stylesheet">
-	<link href="${pageContext.request.contextPath}/resources/css/jquery-ui-1.8.21.custom.css" rel="stylesheet">
-	<link href='${pageContext.request.contextPath}/resources/css/chosen.css' rel='stylesheet'>
-	<link href='${pageContext.request.contextPath}/resources/css/uniform.default.css' rel='stylesheet'>
+	<!-- <link href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.11/themes/flick/jquery-ui.css" rel="stylesheet" type="text/css" /> -->
+	<%-- <link href="${pageContext.request.contextPath}/resources/css/charisma-app.css" rel="stylesheet"> --%>
+	<%-- <link href="${pageContext.request.contextPath}/resources/css/jquery-ui-1.8.21.custom.css" rel="stylesheet"> --%>
+	<%-- <link href='${pageContext.request.contextPath}/resources/css/chosen.css' rel='stylesheet'> --%>
+	<%-- <link href='${pageContext.request.contextPath}/resources/css/uniform.default.css' rel='stylesheet'> --%>
 	
 
 	<!-- The HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -171,7 +172,7 @@
 						<div class="panel-heading">
 							<h3 class="panel-title">Patients</h3>
 								<div class="pull-right">
-									<span class="clickable filter" data-toggle="tooltip" title="Filter patients" data-container="body">
+									<span class="clickable filter" data-container="body">
 										<i class="icon-filter"></i>
 									</span>
 								</div>
@@ -186,6 +187,7 @@
 								</div>
 							</c:when>
 							<c:otherwise>
+							<div style="height: 300 px; overflow-y: auto;">
 								<table class="table table-bordered table-hover table-condensed" id="patient-table">
 									<thead>
 										<tr class="info">
@@ -217,6 +219,7 @@
 										</c:forEach>
 									</tbody>
 								</table>
+							</div>
 							</c:otherwise>
 						</c:choose>
 					</div>
@@ -227,6 +230,38 @@
 				<hr id="column-tag-cloud-separator" width="auto">
 				<strong><p id="tagCloudLabel" align="center" style="font-family: inherit; font-size-adjust: inherit"></p></strong>
 				<div id="tag-cloud-container"></div>
+				<hr id="column-family-history-separator">
+				<div id="family-history-container">
+					<table style="width: auto">
+					<tr>	
+						<td>
+							<h3>Enter family history conditions</h3><br/>
+						</td>
+						<td style="padding-left: 10px">
+							<input type="text" id="family-history-text" placeholder="For e.g. Diabetes, Cancer, HyperTension" style="height: 35px; width: 500px">
+						</td>
+					</tr>
+					</table>
+				</div>
+				<div id="occupation-data-container">
+					<table style="width: auto">
+					<tr>
+						<td>
+							<h3>Please enter patient's occupation</h3><br/>
+						</td>
+						<td style="padding-left: 10px">
+							<input type="text" id="search-occupation" style="height: 35px; width: 500px" placeholder="For e.g. Engineer" class="span6 typeahead" data-provide="typeahead"
+								data-items="8"/>
+						</td>
+					</tr>
+					</table> 
+				</div>
+					<table style="width: auto">
+					<tr>
+						<button type="button" class="btn btn-success" id="update-btn">Update</button>
+					</tr>
+					</table>
+				</div>
 			</div><!--/row-->
 				
 	</div>
@@ -240,8 +275,16 @@
 	<!-- jQuery UI -->
 	<script src="${pageContext.request.contextPath}/resources/js/jquery-ui-1.8.21.custom.min.js"></script> --%>
 	
-	<script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
-	<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js" type="text/javascript"></script>
+	<!-- <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script> -->
+	<script src="${pageContext.request.contextPath}/resources/js/jquery.ui.core.min.js" type="text/javascript"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/jquery.ui.widget.min.js" type="text/javascript"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/jquery.ui.position.min.js" type="text/javascript"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/jquery.ui.autocomplete.min.js" type="text/javascript"></script>
+	
+	<!-- autocomplete library -->
+	<script src="${pageContext.request.contextPath}/resources/js/bootstrap-typeahead.js"></script>
+	<script src="http://jquery.bassistance.de/validate/jquery.validate.js"></script>
 	
 	<!-- High Charts -->
 	<script src="http://code.highcharts.com/highcharts.js"></script>
@@ -251,8 +294,12 @@
 	<script src="http://www.jasondavies.com/d3.min.js" charset="utf-8"></script>
 	<script src="http://www.jasondavies.com/wordcloud/d3.layout.cloud.js"></script>
 	
-	<!-- Wordl Cloud -->
+	<!-- Word Cloud -->
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/wordcloud2.js"></script>
+	
+	<!-- Noty plugin -->
+	<script src="${pageContext.request.contextPath}/resources/js/jquery.noty.js"></script>
+	
 	
 	<!-- Filter table results script -->
 	<script type="text/javascript">
@@ -287,6 +334,9 @@
 
 	$(function(){
 		$('#error').hide();
+		$('#family-history-container').hide();
+		$('#occupation-data-container').hide();
+		$('#update-btn').hide();
 	    // attach table filter plugin to inputs
 		$('[data-action="filter"]').filterTable();
 		
@@ -314,18 +364,23 @@
 			
 			$.get("${pageContext.request.contextPath}/dashboard/patient?medical_record_no=" + medical_record_no, function(data){
 			$('#tag-cloud-container').empty();
+			//$('#family-history-container').hide();
+			//$('#occupation-data-container').hide();
+			
 				var encounters = [];
 				var obj = jQuery.parseJSON(data);
 				var yearVsEncounterMap = obj.yearVsEncounterMap;
 				var sinceYear = obj.sinceYear;
 				var years = Object.keys(yearVsEncounterMap);
 				var tagList = obj.tagList;
+				var familyHistory = obj.familyHistory;
+				var jobTitle = obj.title;
 				
 				$.each(yearVsEncounterMap, function(key, value) {
 					encounters.push(parseInt(value));
 				});
 				
-				alert(encounters);
+				//alert(encounters);
 				
 				 $('#column-chart-container').highcharts({
 			            chart: {
@@ -363,7 +418,7 @@
 			            }]
 			        });
 				 
-				 $('#tagCloudLabel').html("Summary of " + patientName + "'s medical encounters");
+				 $('#tagCloudLabel').html("<h3>Summary of " + patientName + "'s medical encounters</h3>");
 				 
 				 var fill = d3.scale.category20();
 
@@ -382,7 +437,7 @@
 				function draw(words) {
 				    d3.select("#tag-cloud-container").append("svg")
 				        .attr("width", 1000)
-				        .attr("height", 600)
+				        .attr("height", 400)
 				      .append("g")
 				        .attr("transform", "translate(400,200)")
 				      .selectAll("text")
@@ -397,8 +452,78 @@
 				        })
 				        .text(function(d) { return d.text; });
 				  }
+			if(!familyHistory.length) {
+				$('#family-history-container').show();
+				$('#update-btn').show();
+			}
+			else {
+				$('#family-history-container').hide();
+				$('#update-btn').hide();
+			}
+			
+			if(jobTitle == null || jobTitle.length == 0) {
+				$.get("${pageContext.request.contextPath}/dashboard/patient/occupationsList", function(data){
+        			var obj = jQuery.parseJSON(data);
+        			var occupationsList = obj.occupationsList;
+        			var autoComplete = $('#search-occupation').typeahead();
+        			autoComplete.data('typeahead').source = occupationsList;
+        			$('#occupation-data-container').show();
+        			$('#update-btn').show();
+        		});
+			}
+			else {
+				$('#occupation-data-container').hide();
+				$('#update-btn').hide();
+			}
 				 
 			});
+			
+		});
+		
+		$('#update-btn').click(function(){
+			var json;
+			var familyHistory = $('#family-history-text').val();
+			var occupation = $('#search-occupation').val();
+			if(familyHistory.length == 0) 
+				json = {"title": occupation};
+			else if(occupation.length == 0)
+				json = {"familyHistory": [familyHistory]};
+			else
+				json = {"familyHistory": [familyHistory], "title": occupation};
+			
+			$.ajax({
+                url: '${pageContext.request.contextPath}/dashboard/patient/update?medical_record_no=' + medical_record_no,
+                type: 'POST',
+                data: JSON.stringify(json),
+                contentType: 'application/json',
+                dataType: 'json',
+                success: function(response) {
+                    //alert("Success");
+                    if(response.success != null) {
+                    	var success = noty({
+    	        			text: response.success, 
+    	        			layout: 'top',
+    	        			type: 'success'
+    	        		});
+                    }
+                    else
+                    {
+                    	var error = noty({
+    	        			text: response.error, 
+    	        			layout: 'top',
+    	        			type: 'error'
+    	        		});
+                    }
+                },
+           		error: function(data, status, er) {
+					//alert("Status: " + status + " er: " + er);
+           			var postError = noty({
+            			text: er, 
+            			layout: 'topCenter',
+            			type: 'error'
+            		});
+              	}
+            });
 		});
 		
 		

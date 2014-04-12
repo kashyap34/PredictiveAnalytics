@@ -279,9 +279,6 @@
 		            		disease = this.name;
 		            		$.get("${pageContext.request.contextPath}/dashboard/country/" + disease, function(data){
 		            			var obj = jQuery.parseJSON(data);
-		            			/* $('#searchText').autocomplete({
-		            				lookup: countries.countryList
-		            			}) */
 		            			var countries = obj.countryList;
 		            			var autoComplete = $('#searchText').typeahead();
 		            			autoComplete.data('typeahead').source = countries;

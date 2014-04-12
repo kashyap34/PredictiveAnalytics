@@ -32,7 +32,12 @@
 			<artifactId>spring-webmvc</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
-		
+		<!-- Spring  Mongo DB -->
+	    <dependency>
+    	    <groupId>org.springframework.data</groupId>
+        	<artifactId>spring-data-mongodb</artifactId>
+        	<version>1.4.1.RELEASE</version>
+    	</dependency>
   		<!-- jsoup HTML parser library @ http://jsoup.org/ -->
 		<dependency>
   			<groupId>org.jsoup</groupId>

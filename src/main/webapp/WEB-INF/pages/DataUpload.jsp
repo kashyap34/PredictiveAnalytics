@@ -328,7 +328,7 @@ progress::-webkit-progress-value { background: #0063a6; }
 				<!-- end Data Upload -->
 			</div>
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js" type="text/javascript"></script>
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 <!-- notification plugin -->
 <script src="${pageContext.request.contextPath}/resources/js/jquery.noty.js"></script>
