@@ -15,9 +15,9 @@ import org.springframework.core.io.ClassPathResource;
 import au.com.bytecode.opencsv.CSVReader;
 
 public class RUtils {
-	private static Rengine rEngine;
+	public static Rengine rEngine;
 	
-	public RUtils() {
+	public void init() {
 		System.out.println("Invoking the R Engine");
 		rEngine = new Rengine(new String[]{"--no-save"}, false, null);
 	}
@@ -132,7 +132,7 @@ public class RUtils {
 		return predictedInstances;
 	}
 	
-	//For testing puposes only
+	//For testing purposes only
 	public static void main(String[] args) {
 		RUtils rUtils = new RUtils();
 		Map<Integer, Integer> yearVsCasesMap = new LinkedHashMap<Integer, Integer>();

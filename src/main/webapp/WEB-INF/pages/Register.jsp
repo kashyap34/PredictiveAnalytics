@@ -117,7 +117,7 @@
 								</td>
 								<td>
 									<div class="input-prepend" title="Contact" data-rel="tooltip">
-									<input name="contact" id="contact" type="tel" placeholder="Contact No (e.g. 0123456789)" required="required" size="35" maxlength="10"/>
+									<input name="contact" id="contact" type="tel" placeholder="Contact No (e.g. 0123456789)" data-format="+1 (ddd) ddd-dddd" required="required" size="35" maxlength="10"/>
 									</div>
 								</td>
 							</tr>

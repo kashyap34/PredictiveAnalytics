@@ -557,5 +557,31 @@ public class MysqlDao {
 			return null;
 		}
 	}
+	
+	public List<String> retrieveDiseaseList() {
+		try {
+			query = "Select * from WHO.DiseaseList";
+			pstmt = conn.prepareStatement(query);
+			List<String> diseaseList = new ArrayList<String>();
+			
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				String disease = rs.getString("name");
+				if(disease.indexOf("see") > 0) {
+					disease = disease.substring(0, (disease.indexOf("see") - 4));
+				}
+				diseaseList.add(disease);
+			}
+			if(diseaseList.size() > 0)
+				return diseaseList;
+			else
+				return null;
+			
+		} catch(Exception e) {
+			logger.error("Error in retrieving the disease list");
+			e.printStackTrace();
+			return null;
+		}
+	}
 }
 

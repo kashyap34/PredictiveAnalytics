@@ -1,11 +1,13 @@
 package com.patient;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Generated;
+
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
@@ -14,23 +16,19 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.apache.commons.lang.builder.ToStringBuilder;
-
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonIgnoreProperties({"codes", "free_text", "interpretation", "mood_code", "negationInd", "negationReason", "referenceRange", "specifics", 
-						"status_code", "time", "_type"})
+@JsonIgnoreProperties({"administrationTiming", "codes", "cumulativeMedicationDuration", "deliveryMethod", "dose", "doseIndicator", "doseRestriction",
+					   "freeTextSig", "free_text", "fulfillmentInstructions", "indication", "mood_code", "negationInd", "negationReason",
+					   "patientInstructions", "productForm", "reaction", "reason", "route", "site", "specifics", "statusOfMedication", "status_code",
+					   "time", "typeOfMedication", "vehicle", "_type"})
 @Generated("org.jsonschema2pojo")
 @JsonPropertyOrder({
 "description",
 "end_time",
 "oid",
-"start_time",
-"time",
-"values"
+"start_time"
 })
-public class Vital_sign {
+public class Medication {
 
 @JsonProperty("description")
 private String description;
@@ -40,10 +38,6 @@ private Integer end_time;
 private String oid;
 @JsonProperty("start_time")
 private Integer start_time;
-@JsonProperty("time")
-private Object time;
-@JsonProperty("values")
-private List<Value_> values = new ArrayList<Value_>();
 private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
 @JsonProperty("description")
@@ -84,26 +78,6 @@ return start_time;
 @JsonProperty("start_time")
 public void setStart_time(Integer start_time) {
 this.start_time = start_time;
-}
-
-@JsonProperty("time")
-public Object getTime() {
-return time;
-}
-
-@JsonProperty("time")
-public void setTime(Object time) {
-this.time = time;
-}
-
-@JsonProperty("values")
-public List<Value_> getValues() {
-return values;
-}
-
-@JsonProperty("values")
-public void setValues(List<Value_> values) {
-this.values = values;
 }
 
 @Override

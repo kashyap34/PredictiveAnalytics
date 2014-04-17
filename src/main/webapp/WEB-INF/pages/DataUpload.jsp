@@ -19,7 +19,7 @@
 	href="${pageContext.request.contextPath}/resources/css/jquery-ui-1.8.21.custom.css"
 	rel="stylesheet" type="text/css" />
 <link
-	href='${pageContext.request.contextPath}/resources/css/fullcalendar.css'
+	href='${pageContext.request.contextPath}/resources/css/ladda-themeless.min.css'
 	rel='stylesheet' type="text/css" />
 <link
 	href='${pageContext.request.contextPath}/resources/css/fullcalendar.print.css'
@@ -84,6 +84,44 @@ progress::-webkit-progress-value { background: #0063a6; }
     font-size: 100%;
     height: 100%;
   }
+}
+
+.imgClass { 
+    background-image: url('${pageContext.request.contextPath}/resources/img/Compute & Networking_Amazon EMR Cluster.svg');
+    background-position:  0px 0px;
+    background-repeat: no-repeat;
+    width: 186px;
+    height: 53px;
+    border: 0px;
+    background-color: none;
+    cursor: pointer;
+    outline: 0;
+}
+
+.modal {
+    display:    none;
+    position:   fixed;
+    z-index:    1000;
+    top:        0;
+    left:       0;
+    height:     100%;
+    width:      100%;
+    background: rgba( 255, 255, 255, .8 ) 
+                url('${pageContext.request.contextPath}/resources/img/ajax-loaders/ajax-loader-1.gif') 
+                50% 50% 
+                no-repeat;
+}
+
+/* When the body has the loading class, we turn
+   the scrollbar off with overflow:hidden */
+body.loading {
+    overflow: hidden;   
+}
+
+/* Anytime the body has the loading class, our
+   modal element will be visible */
+body.loading .modal {
+    display: block;
 }
 </style>
 </head>
@@ -226,7 +264,7 @@ progress::-webkit-progress-value { background: #0063a6; }
 									
 										<button type="button" class="btn btn-primary dropdown-toggle"
 											data-toggle="dropdown">
-											WHO Links <span class="caret"></span>
+											<span class="icon-folder-open"></span> WHO Links <span class="caret"></span>
 										</button>
 										<ul class="dropdown-menu">
 											<c:forEach items="${link}" var="linkName">
@@ -326,12 +364,40 @@ progress::-webkit-progress-value { background: #0063a6; }
 				</form>
 				<!-- end Patient Data Upload -->
 				<!-- end Data Upload -->
+				<!-- Run EMR job -->
+				<div class="box span12">
+					<div class="box-header well">
+							<h2>
+								<i class="icon-upload"></i> Run Amazon EMR Job
+							</h2>
+						</div>
+						<div class="box-content">
+							<p>Please use the button below to run the Elastic Map Reduce (EMR) job on Amazon cloud. Please note that this
+							process takes around 10 minutes to complete. Please do not navigate to another page while the process is running.</p>
+							<p>
+								<button class="btn btn-primary ladda-button" data-style="expand-right" type="button" id="emr-job-btn">
+									<i class="imgClass"></i>
+									<span class="ladda-label" id="emr-span">Run EMR job</span>
+								</button>
+							  	<div class="alert alert-danger" id="patientFormatError"></div>
+							</p>
+						</div>
+							<div class="clearfix"></div>
+						</div>
+				</div>
+				<!-- End EMR job -->
+				<div class="modal" id="emr-loader"></div>
 			</div>
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js" type="text/javascript"></script>
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+
 <!-- notification plugin -->
 <script src="${pageContext.request.contextPath}/resources/js/jquery.noty.js"></script>
+
+<!-- Button Spinner plugin  -->
+<script src="${pageContext.request.contextPath}/resources/js/spin.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/ladda.min.js"></script>
 
 <script type="text/javascript">
 	
@@ -480,6 +546,32 @@ progress::-webkit-progress-value { background: #0063a6; }
 	  	});
 	    
 	    return false;
+	});
+	
+	$('#emr-job-btn').click(function(){
+		var l = Ladda.create(this);
+		(function poll() {
+			setTimeout(function(){
+				console.log('Retrieving the status of the EMR job');
+				 $.ajax({
+			            url: "${pageContext.request.contextPath}/admin/data/emr/status",
+			            type: "GET",
+			            success: function(data) {
+			            	if(data.status.indexOf("complete") == -1) {
+			            		l.start();
+				                $('#emr-span').html(data.status);
+			            	}
+			            	else {
+			            		l.stop();
+				                $('#emr-span').html(data.status);
+			            	}
+			            },
+			            dataType: "json",
+			            complete: poll,
+			            timeout: 5000
+			        });
+			}, 5000);
+		})();
 	});
 
 </script>	

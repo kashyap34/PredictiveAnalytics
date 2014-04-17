@@ -16,16 +16,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.beans.DiabetesQuestionnaire;
 import com.beans.PatientData;
 import com.beans.PatientOccupation;
 import com.beans.PatientStatistics;
 import com.dao.MysqlDao;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.patient.Patient;
+import com.rules.Diabetes;
 import com.utils.MongoUtils;
 import com.utils.RUtils;
 
 @Controller
+@RequestMapping("dashboard")
 public class DashboardController {
 	
 	private MysqlDao dao = new MysqlDao();
@@ -38,7 +42,7 @@ public class DashboardController {
 		mongoUtils = new MongoUtils();
 	}
 	
-	@RequestMapping(value = "/dashboard", method = RequestMethod.GET)
+	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String returnDashboardView(ModelMap model) {
 		System.out.println("JRI Path is: " + System.getProperty("java.library.path"));
 		Map<String, Double> avgCasesMap = dao.getAverageCasesWorldWide();
@@ -54,7 +58,7 @@ public class DashboardController {
 		return "Dashboard";
 	}
 	
-	@RequestMapping(value = "/dashboard/country/{disease}", method = RequestMethod.GET)
+	@RequestMapping(value = "/country/{disease}", method = RequestMethod.GET)
 	public @ResponseBody String getCountryListForDisease(@PathVariable String disease, ModelMap model) {
 		try {
 			logger.info("Retrieving the country list data for: " + disease);
@@ -74,13 +78,16 @@ public class DashboardController {
 		}
 	}
 	
-	@RequestMapping(value = "/dashboard/country", method = RequestMethod.GET, params = {"disease","country"})
+	@RequestMapping(value = "/country", method = RequestMethod.GET, params = {"disease","country"})
 	public @ResponseBody String getCountryCasesForDisease(@RequestParam("disease") String disease, @RequestParam("country") String country) {
 		try {
 			logger.info("Retrieving the country wise cases data for: " + disease);
 			Map<Integer, Integer> yearVsCasesMap = dao.getCasesYearWiseForCountry(country, disease);
 			if(yearVsCasesMap != null) {
 				//ArrayList<Double> predictedInstances = rUtils.predictInstance(yearVsCasesMap);
+				if(!RUtils.rEngine.isAlive()) {
+					new RUtils().init();
+				}
 				ArrayList<Double> predictedInstances = rUtils.predictInstanceUsingTimeSeries(yearVsCasesMap);
 				System.out.println("{\"cases\":" + mapper.writeValueAsString(yearVsCasesMap) + ", \"predictions\":" + mapper.writeValueAsString(predictedInstances) +"}");
 				return "{\"cases\":" + mapper.writeValueAsString(yearVsCasesMap) + ", \"predictions\":" + mapper.writeValueAsString(predictedInstances) +"}";
@@ -96,7 +103,7 @@ public class DashboardController {
 		}
 	}
 	
-	@RequestMapping(value = "/dashboard/patient", method = RequestMethod.GET)
+	@RequestMapping(value = "/patient", method = RequestMethod.GET)
 	public String returnPatientView(ModelMap model) {
 		logger.info("Generating the view for patient");
 		
@@ -109,7 +116,7 @@ public class DashboardController {
 		return "PatientDashboard";
 	}
 	
-	@RequestMapping(value = "/dashboard/patient", method = RequestMethod.GET, params = "medical_record_no")
+	@RequestMapping(value = "/patient", method = RequestMethod.GET, params = "medical_record_no")
 	public @ResponseBody String retreivePatientDetails(@RequestParam("medical_record_no") String mrno, ModelMap model) {
 		logger.info("Retreiving the details of patient with medical record no: " + mrno);
 		PatientStatistics patientStats = mongoUtils.retrieveStatisticsForPatient(mrno);
@@ -124,7 +131,7 @@ public class DashboardController {
 		}
 	}
 	
-	@RequestMapping(value = "/dashboard/patient/occupationsList", method = RequestMethod.GET)
+	@RequestMapping(value = "/patient/occupationsList", method = RequestMethod.GET)
 	public @ResponseBody String retrieveAllOccupations(ModelMap model) {
 		try {
 			List<String> occupationsList = dao.retrieveAllOccupations();
@@ -140,7 +147,23 @@ public class DashboardController {
 		}
 	}
 	
-	@RequestMapping(value = "/dashboard/patient/update", method = RequestMethod.POST , params = "medical_record_no")
+	@RequestMapping(value = "/patient/diseaseList", method = RequestMethod.GET)
+	public @ResponseBody String retrieveAllDisease(ModelMap model) {
+		try {
+			List<String> diseaseList = dao.retrieveDiseaseList();
+			System.out.println(mapper.writeValueAsString(diseaseList));
+			if(diseaseList != null) 
+				return "{\"diseaseList\": " + mapper.writeValueAsString(diseaseList) + "}";
+			else 
+				return "{\"error\": \"Error in retrieving Disease list\"}";
+		} catch(Exception e) {
+			logger.error("Error in retrieving all occupations list");
+			e.printStackTrace();
+			return "{\"error\": \"Error in retrieving Occupations list\"}";
+		}
+	}
+	
+	@RequestMapping(value = "/patient/update", method = RequestMethod.POST , params = "medical_record_no")
 	public @ResponseBody String returnPatientsFamilyHistory(@RequestBody PatientStatistics patientStats, 
 															@RequestParam("medical_record_no") String mrno, ModelMap model) {
 		try {
@@ -148,17 +171,18 @@ public class DashboardController {
 			String result = "";
 			System.out.println(mapper.writeValueAsString(patientStats));
 			if(patientStats.getFamilyHistory() != null) {
-				result = mongoUtils.updateDocument("family_history", patientStats.getFamilyHistory(), mrno);
+				System.out.println(mapper.writeValueAsString(patientStats.getFamilyHistory()));
+				result = mongoUtils.updateDocument("family_history", mapper.writeValueAsString(patientStats.getFamilyHistory()), mrno);
 			}
 			else
 				logger.warn("Family history empty");
 			
-			if(patientStats.getTitle() != null || !patientStats.getTagList().isEmpty()) {
+			if(patientStats.getTitle() != null) {
 				String title = patientStats.getTitle();
 				String occupation = dao.retrieveOccupationDetailsForAJob(title);
 				//System.out.println(mapper.writeValueAsString(occupation));
 				//occupation.setTitle(title);
-				result = mongoUtils.updateOccupation("occupation", occupation, mrno);
+				result = mongoUtils.updateDocument("occupation", occupation, mrno);
 			}
 			return result;
 			
@@ -166,6 +190,37 @@ public class DashboardController {
 			logger.error("Error in updating the family history for the user with medical record no: " + mrno);
 			e.printStackTrace();
 			return "{\"error\": \"Error in updating the family history for the selected user\"}";
+		}
+	}
+	
+	@RequestMapping(value = "/patient/diabetes/predict", method = RequestMethod.GET, params = {"medical_record_no","q1","q2","q3","q4"})
+	public @ResponseBody String predictDiabetesForPatient(@RequestParam("medical_record_no") String medical_record_no,
+														  @RequestParam("q1") String question1,
+														  @RequestParam("q2") String question2,
+														  @RequestParam("q3") String question3,
+														  @RequestParam("q4") String question4,
+														  ModelMap model) {
+		try {
+			DiabetesQuestionnaire dbQues = new DiabetesQuestionnaire();
+			dbQues.setQuestion1(question1);
+			dbQues.setQuestion2(question2);
+			dbQues.setQuestion3(question3);
+			dbQues.setQuestion4(question4);
+			
+			Patient patient = mongoUtils.retrievePatientInfo(medical_record_no);
+			String prediction;
+			if(patient != null) {
+				prediction = new Diabetes().predictDiabetes(patient, dbQues);
+				return "{\"diabetes_prediction\": " + prediction + "}";
+			}
+			else {
+				return "{\"error\": \"Error in predicting diabetes for the selected user\"}";
+			}
+			
+		} catch(Exception e) {
+			logger.error("Error in predicting diabtes for patient with medical record number: " + medical_record_no );
+			e.printStackTrace();
+			return "{\"error\": \"Error in predicting diabetes for the selected user\"}";
 		}
 		
 	}

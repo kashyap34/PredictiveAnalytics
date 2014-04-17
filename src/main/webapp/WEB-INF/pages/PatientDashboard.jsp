@@ -31,10 +31,18 @@
 		.panel-primary{
 		border-color:#428bca
 		}
+		input {
+		display: block;
+		}
+		.centerText td {
+  			text-align: center;
+  			vertical-align: middle;
+		}
 		
 	</style>
 	<link href="${pageContext.request.contextPath}/resources/css/bootstrap-classic.css" rel="stylesheet">
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+	<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 	<!-- <link href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.11/themes/flick/jquery-ui.css" rel="stylesheet" type="text/css" /> -->
 	<%-- <link href="${pageContext.request.contextPath}/resources/css/charisma-app.css" rel="stylesheet"> --%>
 	<%-- <link href="${pageContext.request.contextPath}/resources/css/jquery-ui-1.8.21.custom.css" rel="stylesheet"> --%>
@@ -187,11 +195,11 @@
 								</div>
 							</c:when>
 							<c:otherwise>
-							<div style="height: 300 px; overflow-y: auto;">
-								<table class="table table-bordered table-hover table-condensed" id="patient-table">
+							<div style="height: 300 px; overflow-y: auto; text-align: center;">
+								<table class="table table-bordered table-hover table-condensed centerText" id="patient-table">
 									<thead>
 										<tr class="info">
-											<th>Record #</th>
+											<th style="display: none">Record #</th>
 											<th>Name</th>
 											<th>Age</th>
 											<th>Gender</th>
@@ -203,7 +211,7 @@
 									<tbody>
 										<c:forEach items="${patientList}" var="patient">
 											<tr>
-												<td>${patient.medical_record_no}</td>
+												<td style="display: none;">${patient.medical_record_no}</td>
 												<td>${patient.name}</td>
 												<td>${patient.age}</td>
 												<td>${patient.gender}</td>
@@ -226,28 +234,31 @@
 				</div> <!-- Patient data grid ends -->
 				<div id="error" class="alert alert-danger"></div>
 				<hr id="data-grid-column-chart-separator">
+				
 				<div id="column-chart-container"></div>
-				<hr id="column-tag-cloud-separator" width="auto">
+				<hr id="column-tag-cloud-separator">
+			
+				<br/>
+								
 				<strong><p id="tagCloudLabel" align="center" style="font-family: inherit; font-size-adjust: inherit"></p></strong>
-				<div id="tag-cloud-container"></div>
+				<div id="tag-cloud-container" class="span6"></div>
 				<hr id="column-family-history-separator">
-				<div id="family-history-container">
-					<table style="width: auto">
-					<tr>	
-						<td>
-							<h3>Enter family history conditions</h3><br/>
-						</td>
-						<td style="padding-left: 10px">
-							<input type="text" id="family-history-text" placeholder="For e.g. Diabetes, Cancer, HyperTension" style="height: 35px; width: 500px">
-						</td>
-					</tr>
-					</table>
+				
+				<div id="family-history-container" class="control-group span6">
+					<h4>Enter family history conditions</h4><br/>
+						<div id="family-history-group" class="control-group" style="padding-left: 10px">
+						</div>
+					<button class="btn btn-success" type="button" id="family-history-btn">
+						<i class="icon-plus-sign"></i>
+						Add family history
+					</button>
 				</div>
-				<div id="occupation-data-container">
+				
+				<div id="occupation-data-container" class="span6">
 					<table style="width: auto">
 					<tr>
 						<td>
-							<h3>Please enter patient's occupation</h3><br/>
+							<h4>Please enter patient's occupation</h4><br/>
 						</td>
 						<td style="padding-left: 10px">
 							<input type="text" id="search-occupation" style="height: 35px; width: 500px" placeholder="For e.g. Engineer" class="span6 typeahead" data-provide="typeahead"
@@ -256,14 +267,60 @@
 					</tr>
 					</table> 
 				</div>
-					<table style="width: auto">
+				<table style="width: auto">
 					<tr>
 						<button type="button" class="btn btn-success" id="update-btn">Update</button>
 					</tr>
-					</table>
-				</div>
-			</div><!--/row-->
+				</table>
 				
+				<div id="diabetes-questionnaire" class="span6">
+					<p><h4>Please check all the boxes that closely relates to the patient family's historical conditions</h4></p>
+					<table class="table table-condensed">
+						<tr>
+							<td>
+								Does anyone in the family have type 2 diabetes?
+							</td>
+							<td>
+								<input type="checkbox" id="q1"> 
+							</td>
+						</tr>
+						<tr>
+							<td>
+								Has anyone in the family been told they might get diabetes?
+							</td>
+							<td>
+								<input type="checkbox" id="q2"> 
+							</td>
+						</tr>
+						<tr>
+							<td>
+								Has anyone in the family been told they need to lower their weight or increase their physical activity to prevent type 2 diabetes?
+							</td>
+							<td>
+								<input type="checkbox" id="q3"> 
+							</td>
+						</tr>
+						<tr>
+							<td>
+								Did your mother get diabetes when she was pregnant? [This is also known as gestational diabetes (GDM)].
+							</td>
+							<td>
+								<input type="checkbox" id="q4"> 
+							</td>
+						</tr>
+					</table>
+				<table style="width: auto">
+					<tr>
+						<button type="button" class="btn btn-success" id="generate-predictions">
+							<i class="fa fa-bar-chart-o"> Predict Diabetes</i>
+						</button>
+					</tr>
+				</table>
+				</div>
+				
+				<div id="diabetes-prediction-container"></div>
+			
+				</div><!--/row-->
 	</div>
 
 	<!-- external javascript
@@ -337,6 +394,7 @@
 		$('#family-history-container').hide();
 		$('#occupation-data-container').hide();
 		$('#update-btn').hide();
+		$('#diabetes-questionnaire').hide();
 	    // attach table filter plugin to inputs
 		$('[data-action="filter"]').filterTable();
 		
@@ -357,6 +415,8 @@
 	<script type="text/javascript">
 		var medical_record_no;
 		var patientName;
+		var familyHistoryGroupCount = 1;
+		var diseaseList;
 		
 		$('#patient-table tr').click(function(){
 			medical_record_no = $(this).closest('tr').find('td').first().text();
@@ -454,11 +514,11 @@
 				  }
 			if(!familyHistory.length) {
 				$('#family-history-container').show();
-				$('#update-btn').show();
+				//$('#update-btn').show();
 			}
 			else {
 				$('#family-history-container').hide();
-				$('#update-btn').hide();
+				//$('#update-btn').hide();
 			}
 			
 			if(jobTitle == null || jobTitle.length == 0) {
@@ -468,28 +528,45 @@
         			var autoComplete = $('#search-occupation').typeahead();
         			autoComplete.data('typeahead').source = occupationsList;
         			$('#occupation-data-container').show();
-        			$('#update-btn').show();
+        			//$('#update-btn').show();
         		});
 			}
 			else {
 				$('#occupation-data-container').hide();
-				$('#update-btn').hide();
+				//$('#update-btn').hide();
+			}
+			
+			if(!familyHistory.length || jobTitle == null || jobTitle.length == 0) {
+				$('#update-btn').show();
 			}
 				 
 			});
+			
+			$.get("${pageContext.request.contextPath}/dashboard/patient/diseaseList", function(data){
+				var obj = jQuery.parseJSON(data);
+				diseaseList = obj.diseaseList;
+			}); 
+			
+			$('#diabetes-questionnaire').show();
 			
 		});
 		
 		$('#update-btn').click(function(){
 			var json;
-			var familyHistory = $('#family-history-text').val();
+			var familyHistory = [];
+			for(i = 1; i < familyHistoryGroupCount; i++) {
+				var familyCondition = {"disease": $('#family-history-text-'+ i).val(), 
+										"startAge": parseInt($('#start-age-'+ i).val()),
+										"endAge": parseInt($('#end-age-'+ i).val())};
+				familyHistory.push(familyCondition);
+			}
 			var occupation = $('#search-occupation').val();
 			if(familyHistory.length == 0) 
 				json = {"title": occupation};
 			else if(occupation.length == 0)
-				json = {"familyHistory": [familyHistory]};
+				json = {"familyHistory": familyHistory};
 			else
-				json = {"familyHistory": [familyHistory], "title": occupation};
+				json = {"familyHistory": familyHistory, "title": occupation};
 			
 			$.ajax({
                 url: '${pageContext.request.contextPath}/dashboard/patient/update?medical_record_no=' + medical_record_no,
@@ -526,6 +603,65 @@
             });
 		});
 		
+
+		$('#family-history-btn').click(function(){
+			
+			/* if(familyHistoryGroupCount > 10) {
+				alert('Only 10 historical events allowed');
+				return false;
+			} */
+			
+			$('#family-history-group').append(
+					  '<div id="family-history-group-' + familyHistoryGroupCount + '" class="control-group">'
+					+ '<input type="text" id="family-history-text-' + familyHistoryGroupCount + '" placeholder="Condition (For e.g. Diabetes)" style="height: 35px; width: 300px;" data-provide="typeahead" data-items="8" class="typeahead" required>'
+					+ '<input type="text" id="start-age-' + familyHistoryGroupCount + '" placeholder="Start Age (For e.g. 30)" style="height: 35px; width: auto; margin-left: 10px" required>'
+					+ '<input type="text" id="end-age-' + familyHistoryGroupCount + '" placeholder="End Age (For e.g. 50)" style="height: 35px; width: auto; margin-left: 10px" required>'
+					+ '<span class="icon-remove" id="remove-group-"' + familyHistoryGroupCount + 'style="margin-left: 10px"></span>'
+					+ '</div>'
+				);
+			
+			
+			familyHistoryGroupCount ++;
+			
+		});
+		
+		$('body').on('DOMNodeInserted', 'div[id*="family-history-group"]', function(){
+			var autoComplete = $(this).find('.typeahead').typeahead();
+			autoComplete.data('typeahead').source = diseaseList;
+		});
+
+		$('body').on('click', 'span[id*="remove-group-"]', function(){
+			
+			if(familyHistoryGroupCount == 1) {
+				alert('No more data to delete');
+				return false;
+			}
+			
+			familyHistoryGroupCount--;
+			
+			$('#family-history-group-' + familyHistoryGroupCount).fadeOut("slow");
+			$('#family-history-group-' + familyHistoryGroupCount).remove();
+		});
+		
+		$('#generate-predictions').click(function(){
+			 $('input:checkbox:checked').attr('value', 'off');
+			    var vals = $('input:checkbox').map(
+			        function(){
+			            return this.id + "=" +$(this).val();
+			        }).get().join('&');
+			    
+			   var queryParams = "medical_record_no=" + medical_record_no + "&" + vals;
+			   
+			   $.get('${pageContext.request.contextPath}/dashboard/patient/diabetes/predict?' + queryParams, function(data) {
+				  var obj = jQuery.parseJSON(data);
+				  if(obj.error == null) {
+					  $('#diabetes-prediction-container').html(obj.diabetes_prediction);
+				  }
+				  else {
+					  $('#diabetes-prediction-container').html('<div class="alert alert-danger">' + obj.error + '</div>');
+				  }
+			   });
+		});
 		
 	</script>
 		

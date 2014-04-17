@@ -17,6 +17,8 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 //import org.apache.hadoop.io.WritableComparable;
 
 
+
+import com.beans.FamilyCondition;
 import com.beans.PatientOccupation;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
@@ -50,7 +52,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 "type",
 "vital_signs",
 "family_history",
-"occupation"
+"occupation",
+"medications"
 })
 public class Patient implements /*WritableComparable,*/ Serializable {
 	
@@ -95,9 +98,11 @@ private String type;
 @JsonProperty("vital_signs")
 private List<Vital_sign> vital_signs = new ArrayList<Vital_sign>();
 @JsonProperty("family_history")
-private List<String> family_history = new ArrayList<String>();
+private List<FamilyCondition> family_history = new ArrayList<FamilyCondition>();
 @JsonProperty("occupation")
 private PatientOccupation occupation = new PatientOccupation();
+@JsonProperty("medications")
+private List<Medication> medications = new ArrayList<Medication>();
 
 private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
@@ -292,12 +297,12 @@ this.vital_signs = vital_signs;
 }
 
 @JsonProperty("family_history")
-public List<String> getFamily_history() {
+public List<FamilyCondition> getFamily_history() {
 	return family_history;
 }
 
 @JsonProperty("family_history")
-public void setFamily_history(List<String> family_history) {
+public void setFamily_history(List<FamilyCondition> family_history) {
 	this.family_history = family_history;
 }
 
@@ -307,8 +312,18 @@ public PatientOccupation getOccupation() {
 }
 
 @JsonProperty("occupation")
-private void setOccupation(PatientOccupation occupation) {
+public void setOccupation(PatientOccupation occupation) {
 	this.occupation = occupation;
+}
+
+@JsonProperty("medications")
+public List<Medication> getMedication() {
+	return this.medications;
+}
+
+@JsonProperty("medications")
+public void setMedication(List<Medication> medications){
+	this.medications = medications;
 }
 
 @Override
@@ -359,6 +374,7 @@ public void readFields(DataInput in) throws IOException {
 	this.vital_signs = mapper.readValue(in.readUTF(), mapper.getTypeFactory().constructCollectionType(List.class, Vital_sign.class));
 	this.family_history = mapper.readValue(in.readUTF(), mapper.getTypeFactory().constructCollectionType(List.class, String.class));
 	this.occupation = mapper.readValue(in.readUTF(), PatientOccupation.class);
+	this.medications = mapper.readValue(in.readUTF(), mapper.getTypeFactory().constructCollectionType(List.class, Medication.class));
 }
 
 public void write(DataOutput out) throws IOException {
@@ -382,6 +398,7 @@ public void write(DataOutput out) throws IOException {
 	out.writeUTF(mapper.writeValueAsString(this.vital_signs));
 	out.writeUTF(mapper.writeValueAsString(this.family_history));
 	out.writeUTF(mapper.writeValueAsString(this.occupation));
+	out.writeUTF(mapper.writeValueAsString(this.medications));
 }
 
 public int compareTo(Object o) {

@@ -37,6 +37,7 @@ public class DataController {
 	private String fileDownloadLocation = "/home/kashyap/CMPE295B/Maven Project/PopulationAnalytics/src/main/resources/WHOData/";
 	private String fileName = "";
 	private CrawlerUtils crawlerUtils;
+	private int count = 0;
 	
 	{
 		logger.info("Initializing the Maps to store data links");
@@ -196,6 +197,20 @@ public class DataController {
 		} else {
 			return "{\"error\": \"File" + name + " is empty\"}";
 		}
-    }
+   }
+	
+   @RequestMapping(value = "/data/emr/status", method = RequestMethod.GET)
+   public @ResponseBody String returnEMRStatus(ModelMap model) throws InterruptedException {
+	  String[] status = {"Starting", "Running", "Shutting down", "Complete"};
+	  if(count == 0) {
+		  count++;
+		  return "{\"status\": \"" + status[0] + "\"}";
+	  }
+	  else {
+		  String statusToReturn = status[count];
+		  count++;
+		  return "{\"status\": \"" + statusToReturn + "\"}";
+	  }
+   }
 }
 

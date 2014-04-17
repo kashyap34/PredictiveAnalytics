@@ -12,25 +12,19 @@ import org.bson.types.ObjectId;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.mongodb.core.MongoOperations;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.mongodb.core.query.Update;
 
+import com.beans.FamilyCondition;
 import com.beans.PatientData;
 import com.beans.PatientOccupation;
 import com.beans.PatientStatistics;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
-import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
-import com.mongodb.MongoException;
 import com.mongodb.WriteResult;
 import com.mongodb.util.JSON;
 import com.patient.Condition;
@@ -157,7 +151,7 @@ public class MongoUtils {
 			List<Procedures> procedureList = new ArrayList<Procedures>();
 			List<String> tagList = new ArrayList<String>();
 			List<Values> valueList = new ArrayList<Values>();
-			List<String> familyHistory = new ArrayList<String>();
+			List<FamilyCondition> familyHistory = new ArrayList<FamilyCondition>();
 			PatientOccupation occupation;
 			
 			while(cursor.hasNext()) {
@@ -242,20 +236,47 @@ public class MongoUtils {
 		}
 	}
 	
-	public String updateOccupation(String key, String occupation, String medical_record_number) {
+	public String updateDocument(String key, String value, String medical_record_number) {
 		try {
-			BasicDBObject occupationObject = (BasicDBObject)JSON.parse(occupation);
-			BasicDBObject setNewField = new BasicDBObject("$set", new BasicDBObject().append(key, occupationObject));
+			BasicDBObject setNewField;
+			if(value.startsWith("[") && value.endsWith("]")) {
+				//the string contains JSON List object
+				BasicDBList valueObject = (BasicDBList)JSON.parse(value);
+				setNewField = new BasicDBObject("$set", new BasicDBObject().append(key, valueObject));
+			}
+			else {
+				BasicDBObject valueObject = (BasicDBObject)JSON.parse(value);
+				setNewField = new BasicDBObject("$set", new BasicDBObject().append(key, valueObject));
+			}
+			
 			WriteResult result = collection.update(new BasicDBObject().append("medical_record_number", medical_record_number), setNewField);
 			
 			if(result != null) 
 				return "{\"success\": \"Patient's information updated successfully\"}";
 			else
-				return "{\"error\": \"Error in updating the information of the selected user\"}";
+				return "{\"error\": \"Error in updating the information of the selected patient\"}";
 		} catch(Exception e) {
 			logger.error("Error in updating the document");
 			e.printStackTrace();
-			return "{\"error\": \"Error in updating the information of the selected user\"}";
+			return "{\"error\": \"Error in updating the information of the selected patient\"}";
+		}
+	}
+	
+	public Patient retrievePatientInfo(String medical_record_number) {
+		try {
+			basicDbObject = new BasicDBObject("medical_record_number", medical_record_number);
+			cursor = collection.find(basicDbObject);
+			Patient patient = null;
+			while(cursor.hasNext()) {
+				patient = mapper.readValue(cursor.next().toString(), Patient.class);
+			}
+			
+			return patient;
+			
+		} catch(Exception e) {
+			logger.error("Error in retrieving patient informaton for medical record number: " + medical_record_number);
+			e.printStackTrace();
+			return null;
 		}
 	}
 }

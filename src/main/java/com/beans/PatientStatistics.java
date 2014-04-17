@@ -11,7 +11,7 @@ public class PatientStatistics implements Serializable{
 	private List<String> tagList;
 	private Map<Integer, Integer> yearVsEncounterMap;
 	private int sinceYear;
-	private List<String> familyHistory;
+	private List<FamilyCondition> familyHistory;
 	private String title;
 	
 	
@@ -28,10 +28,10 @@ public class PatientStatistics implements Serializable{
 	public void setOccupation(PatientOccupation occupation) {
 		this.occupation = occupation;
 	}*/
-	public List<String> getFamilyHistory() {
+	public List<FamilyCondition> getFamilyHistory() {
 		return familyHistory;
 	}
-	public void setFamilyHistory(List<String> familyHistory) {
+	public void setFamilyHistory(List<FamilyCondition> familyHistory) {
 		this.familyHistory = familyHistory;
 	}
 	public int getSinceYear() {
