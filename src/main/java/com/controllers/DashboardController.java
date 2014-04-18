@@ -85,8 +85,13 @@ public class DashboardController {
 			Map<Integer, Integer> yearVsCasesMap = dao.getCasesYearWiseForCountry(country, disease);
 			if(yearVsCasesMap != null) {
 				//ArrayList<Double> predictedInstances = rUtils.predictInstance(yearVsCasesMap);
-				if(!RUtils.rEngine.isAlive()) {
+				if(RUtils.rEngine == null) {
 					new RUtils().init();
+				}
+				else {
+					if(!RUtils.rEngine.isAlive()) {
+						new RUtils().init();
+					}
 				}
 				ArrayList<Double> predictedInstances = rUtils.predictInstanceUsingTimeSeries(yearVsCasesMap);
 				System.out.println("{\"cases\":" + mapper.writeValueAsString(yearVsCasesMap) + ", \"predictions\":" + mapper.writeValueAsString(predictedInstances) +"}");
@@ -211,7 +216,8 @@ public class DashboardController {
 			String prediction;
 			if(patient != null) {
 				prediction = new Diabetes().predictDiabetes(patient, dbQues);
-				return "{\"diabetes_prediction\": " + prediction + "}";
+				logger.info("Generating response: {\"diabetes_prediction\": " + mapper.writeValueAsString(prediction) + "}");
+				return "{\"diabetes_prediction\": " + mapper.writeValueAsString(prediction) + "}";
 			}
 			else {
 				return "{\"error\": \"Error in predicting diabetes for the selected user\"}";

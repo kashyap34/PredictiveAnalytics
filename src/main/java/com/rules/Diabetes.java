@@ -16,6 +16,8 @@ import com.beans.DiabetesQuestionnaire;
 import com.beans.FamilyCondition;
 import com.beans.PatientOccupation;
 import com.dao.MysqlDao;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.patient.Condition;
 import com.patient.Encounter;
 import com.patient.Medication;
@@ -45,6 +47,7 @@ public class Diabetes {
 	private MysqlDao dao = new MysqlDao();
 	private RUtils rUtils = new RUtils(); 
 	private static Logger logger = LoggerFactory.getLogger(Diabetes.class);
+	private ObjectMapper mapper = new ObjectMapper();
 	
 	public String checkProbabilityOfDiabates(Patient patient) {
 		long birthTimeEpoch = (long)patient.getBirthdate() * 1000;
@@ -96,12 +99,12 @@ public class Diabetes {
 							System.out.println("Total Lab tests :" + vitalSign.getValues().size());
 							labTestValue = Integer.parseInt(vitalSign.getValues().get(0).getScalar());
 							labTestEpochs.put(labTestValue, (long)vitalSign.getEnd_time());
-						}
-					}
-					long mostRecentEpoch = Collections.max(labTestEpochs.values());
-					for(Entry<Integer, Long> entry : labTestEpochs.entrySet()) {
-						if(entry.getValue() == mostRecentEpoch) {
-							labTestValue = entry.getKey();
+							long mostRecentEpoch = Collections.max(labTestEpochs.values());
+							for(Entry<Integer, Long> entry : labTestEpochs.entrySet()) {
+								if(entry.getValue() == mostRecentEpoch) {
+									labTestValue = entry.getKey();
+								}
+							}
 						}
 					}
 				}
@@ -122,21 +125,22 @@ public class Diabetes {
 				return "Normal";
 			}
 			else {
-				return "zero";
+				return "Low";
 			}
 		}
 		else {
-			return "zero";
+			return "Low";
 		}
 	}
 	
-	public Map<String, String> checkProbabilityFromFamilyHistory(Patient patient, DiabetesQuestionnaire dbQues) {
+	public Map<String, String> checkProbabilityFromFamilyHistory(Patient patient, DiabetesQuestionnaire dbQues) throws JsonProcessingException {
 		currentState = checkProbabilityOfDiabates(patient);
 		logger.info("Current diabetes state for selected patient is: " + currentState);
 		familyHistoryList = patient.getFamily_history();
 		int startAge, endAge;
 		boolean riskOfDiabetes = false;
-		if(dbQues.getQuestion1() == "off" || dbQues.getQuestion2() == "off" || dbQues.getQuestion3() == "off" || dbQues.getQuestion4() == "off") {
+		if(dbQues.getQuestion1().equalsIgnoreCase("off") || dbQues.getQuestion2().equalsIgnoreCase("off") || 
+				dbQues.getQuestion3().equalsIgnoreCase("off") || dbQues.getQuestion4().equalsIgnoreCase("off")) {
 			logger.info("Based on patient's answers to the questionnaire, the risk of diabetes is high");
 			riskOfDiabetes = true;
 		}
@@ -144,57 +148,108 @@ public class Diabetes {
 		Map<String, String> familyDiseases = new LinkedHashMap<String, String>();
 		for(FamilyCondition familyCondition : familyHistoryList) {
 			if(StringUtils.containsIgnoreCase(familyCondition.getDisease(), "Diabetes") || riskOfDiabetes) {
+				logger.info("Family history indicative of Diabetes");
 				startAge = familyCondition.getStartAge();
 				endAge = familyCondition.getEndAge();
 				if(patientAge >= startAge && patientAge <= endAge) {
+					logger.info("Patient in history range");
 						switch (currentState) {
 						case "Critical":
 							familyDiseases.put("Diabetes", "Based on your family history and current medical conditions, the risk of diabetes in future is " + currentState
 									+ ".\n\t- Your immediate family member had history of diabetes from " + startAge + " to " + endAge + ".");
+							break;
 						case "Very High":
 							familyDiseases.put("Diabetes", "Based on your family history and current medical conditions, the risk of diabetes in future is " + currentState
 									+ ". \n\t- Your immediate family member had history of diabetes from " + startAge + " to " + endAge + ".");
+							break;
 						case "High":
 							familyDiseases.put("Diabetes", "Based on your family history and current medical conditions, the risk of diabetes in future is " + currentState
 									+ ". \n\t- Your immediate family member had history of diabetes from " + startAge + " to " + endAge +".");
+							break;
 						case "Moderate":
 							familyDiseases.put("Diabetes", "Based on your family history and current medical conditions, the risk of diabetes in future is " + currentState
 									+ ". \n\t- Your immediate family member had history of diabetes from " + startAge + " to " + endAge + ".");
+							break;
 						case "Normal":
 							familyDiseases.put("Diabetes", "Based on your family history and current medical conditions, the risk of diabetes in future is " + currentState
 									+ ". \nWatch out for that extra sugar though.");
-						case "zero":
+							break;
+						case "Low":
 							familyDiseases.put("Diabetes", "Based on your family history and current medical conditions, the risk of diabetes in future is " + currentState
 									+ "\nGood Job ! Keep going.");
+							break;
 						default:
 							return null;
 						}
 				}
+				else {
+					switch (currentState) {
+					case "Critical":
+						familyDiseases.put("Diabetes", "Based on your family history and current medical conditions, the risk of diabetes in future is " + currentState
+								+ ".\n\t- Your immediate family member had history of diabetes from " + startAge + " to " + endAge + ".");
+						break;
+					case "Very High":
+						familyDiseases.put("Diabetes", "Based on your family history and current medical conditions, the risk of diabetes in future is " + currentState
+								+ ". \n\t- Your immediate family member had history of diabetes from " + startAge + " to " + endAge + ".");
+						break;
+					case "High":
+						familyDiseases.put("Diabetes", "Based on your family history and current medical conditions, the risk of diabetes in future is " + currentState
+								+ ". \n\t- Your immediate family member had history of diabetes from " + startAge + " to " + endAge +".");
+						break;
+					case "Moderate":
+						familyDiseases.put("Diabetes", "Based on your family history and current medical conditions, the risk of diabetes in future is " + currentState
+								+ ". \n\t- Your immediate family member had history of diabetes from " + startAge + " to " + endAge + ".");
+						break;
+					case "Normal":
+						familyDiseases.put("Diabetes", "Based on your family history and current medical conditions, the risk of diabetes in future is " + currentState
+								+ ". \nHowever, your immediate family memenber had history of diabetes from" + startAge + " to " + endAge + ". Hence, watch your "
+								+ "sugar levels between " + startAge  + "& " + endAge);
+						break;
+					case "Low":
+						familyDiseases.put("Diabetes", "Based on your family history and current medical conditions, the risk of diabetes in future is " + currentState
+								+ "\nGood Job ! Keep going. Since, your immediate family member had history of diabetes from " + startAge + " to " + endAge + ", watch"
+										+ " your sugar levels between " + startAge + "& " + endAge);
+						break;
+					default:
+						logger.warn("Default case");
+						return null;
+					}
+				}
 			}
 			else {
+				int predictionYear = familyCondition.getStartAge() - patientAge;
 				familyDiseases.put(familyCondition.getDisease(), "Your immediate relative had " + familyCondition.getDisease() + " starting "
 						+ "at " + familyCondition.getStartAge() + " and ending at " + familyCondition.getEndAge() + ". So, there is a chance that"
-						+ "you may have " + familyCondition.getDisease() + " in next 5-7 years.");
+						+ "you may have " + familyCondition.getDisease() + " in next "+ predictionYear + "-" + (predictionYear+2) + " years.");
 			}
 		}
-		
+		//System.out.println(mapper.writeValueAsString(familyDiseases));
 		return familyDiseases;
 	}
 		
 	
-	public String predictDiabetes(Patient patient, DiabetesQuestionnaire dbQues) {
+	public String predictDiabetes(Patient patient, DiabetesQuestionnaire dbQues) throws JsonProcessingException {
 		StringBuilder responseBuilder = new StringBuilder();
 		Map<String, String> familyDiseases = checkProbabilityFromFamilyHistory(patient, dbQues);
-		
-		responseBuilder.append(familyDiseases.get("Diabetes"));
+		if(familyDiseases != null) {
+			responseBuilder.append((String)familyDiseases.get("Diabetes"));
+		}
+		else {
+			responseBuilder.append("Family History not indicative of Diabetes");
+		}
 		Map<Integer, Integer> yearVsCasesMap = dao.getCasesYearWiseForCountry("United States of America", "Diabetes");
 		if(yearVsCasesMap != null) {
 			//ArrayList<Double> predictedInstances = rUtils.predictInstance(yearVsCasesMap);
-			if(!RUtils.rEngine.isAlive()) {
+			if(RUtils.rEngine == null) {
 				new RUtils().init();
 			}
+			else {
+				if(!RUtils.rEngine.isAlive()) {
+					new RUtils().init();
+				}
+			}
 			ArrayList<Double> predictedInstances = rUtils.predictInstanceUsingTimeSeries(yearVsCasesMap);
-			if(predictedInstances.get(predictedInstances.size()) > predictedInstances.get(0)) {
+			if(predictedInstances.get(predictedInstances.size() - 1) > predictedInstances.get(0)) {
 				//the number of cases are rising in next 5 years.
 				PatientOccupation occupation = patient.getOccupation();
 				String activityLevel = occupation.getActivityLevel();

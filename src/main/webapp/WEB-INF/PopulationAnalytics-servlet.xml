@@ -12,7 +12,7 @@
 	<context:component-scan base-package="com.controllers" />
 
 	<mvc:annotation-driven />
-	<mvc:resources location="/resources/Admin_Template/" mapping="/resources/**"/>
+	<mvc:resources location="/resources/sb-admin-v2/" mapping="/resources/**"/>
 	<mvc:resources location="/resources/poll/" mapping="/resources/poll/**"/>
 	
 	<bean
