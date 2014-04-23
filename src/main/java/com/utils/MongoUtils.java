@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import org.apache.commons.io.FileUtils;
 import org.bson.types.ObjectId;
@@ -42,6 +43,13 @@ public class MongoUtils {
 	private DBCursor cursor;
 	private ObjectMapper mapper;
 	private BasicDBObject basicDbObject;
+	private String[] randomNames = {"Valeri Kinloch", "Lana Estelle", "Danilo Pal", "Rod Siegal", "Iesha Boze", "Dino Monier", "Concepcion Rochon", 
+                     "Jamie Natale", "Martin Pullman", "Arlen Blahnik", "Ines Scull", "Shanell Medlin", "Teodora Hollier", "Annie Lamkin",
+                     "Tijuana Marcellus", "Theo Pettey", "Luanna Haverty", "Aleta Vernon", "Christel Haris", "Ned Mertz", "Rusty Frisbie",
+                     "Danita Blake", "Sueann Ashurst", "Dion Doman", "Blair Collinsworth", "Christena Swick", "Jesica Cazares", "Marcellus Trombetta",
+                     "Hue Wyche", "Marcus Barros", "Scot Ralph", "Dallas Trombley", "Kathy Bundrick", "Meryl Bloomberg", "Tracy Renfroe", "Eula Briles",
+                     "Arianna Chin", "Benny Zebrowski", "Iola Kopecky", "Nell Stamps", "Leroy Pauls", "Rossie Kropf", "Christie Perera", 
+                     "Asa Neilsen", "Morris Motsinger", "Jonathan Shoulders", "Daphne Mcphearson", "Naomi Snowden", "Reva Wenger", "Reta Baines"};
 	
 	public MongoUtils() {
 		try {
@@ -102,7 +110,16 @@ public class MongoUtils {
 				PatientData patientData = new PatientData();
 				
 				patientData.setMedical_record_no(patient.getMedical_record_number());
-				patientData.setName(patient.getName());
+				
+				if(patient.getName() == null) {
+					Random r = new Random();
+					int randomIndex = r.nextInt(randomNames.length);
+					String name = randomNames[randomIndex];
+					patientData.setName(name);
+				}
+				else {
+					patientData.setName(patient.getName());
+				}
 				
 				long epoch = (long)patient.getBirthdate() * 1000;
 				DateTime yearOfBirth = new DateTime(epoch);

@@ -55,7 +55,7 @@
 								</div>
 								<div class="clearfix"></div>
 								
-								<button type="submit" class="btn btn-lg btn-success btn-block">Login</button>
+								<p align="center"><button type="submit" class="btn btn-lg btn-success btn-block">Login</button></p>
 							</fieldset>
 						</form>
 					</div>

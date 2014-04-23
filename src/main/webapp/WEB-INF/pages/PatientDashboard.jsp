@@ -1,389 +1,573 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8">
-	<title>Dashboard</title>
-	<!-- The styles -->
-	<%-- <link id="bs-css" href="${pageContext.request.contextPath}/resources/css/bootstrap-cerulean.css" rel="stylesheet"> --%>
-	<style type="text/css">
-		.row{
-		    margin-top:40px;
-		    padding: 0 10px;
-		}
-		.clickable{
-		    cursor: pointer;   
-		}
+<meta charset="utf-8">
+<title>Dashboard</title>
+<!-- The styles -->
+<link id="bs-css"
+	href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css"
+	rel="stylesheet">
+<link
+	href="${pageContext.request.contextPath}/resources/font-awesome/css/font-awesome.css"
+	rel="stylesheet">
+<link
+	href="${pageContext.request.contextPath}/resources/css/sb-admin.css"
+	rel="stylesheet">
+<style type="text/css">
+.row {
+	margin-top: 40px;
+	padding: 0 10px;
+}
 
-		.panel-heading div {
-			margin-top: -18px;
-			font-size: 15px;
-		}
-		.panel-heading div span{
-			margin-left:5px;
-		}
-		.panel-body{
-			display: none;
-		}
-		.panel-primary{
-		border-color:#428bca
-		}
-		input {
-		display: block;
-		}
-		.centerText td {
-  			text-align: center;
-  			vertical-align: middle;
-		}
-		.chart-gauge {
-  			width: 400px;
-  			margin: auto;
-		}
+.clickable {
+	cursor: pointer;
+}
 
-		.chart-color1 {
-  			fill: #008000;
-		}
-	
-		.chart-color2 {
-  			fill: #FFFF00;
-		}
+.panel-heading div {
+	margin-top: -18px;
+	font-size: 15px;
+}
 
-		.chart-color3 {
-  			fill: #FF0000;
-		}
+.panel-heading div span {
+	margin-left: 5px;
+}
 
-		.needle,
-		.needle-center {
-  			fill: #464a4f;
-		}
-	</style>
-	<link href="${pageContext.request.contextPath}/resources/css/bootstrap-classic.css" rel="stylesheet">
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
-	<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-	<!-- <link href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.11/themes/flick/jquery-ui.css" rel="stylesheet" type="text/css" /> -->
-	<%-- <link href="${pageContext.request.contextPath}/resources/css/charisma-app.css" rel="stylesheet"> --%>
-	<%-- <link href="${pageContext.request.contextPath}/resources/css/jquery-ui-1.8.21.custom.css" rel="stylesheet"> --%>
-	<%-- <link href='${pageContext.request.contextPath}/resources/css/chosen.css' rel='stylesheet'> --%>
-	<%-- <link href='${pageContext.request.contextPath}/resources/css/uniform.default.css' rel='stylesheet'> --%>
-	
+.panel-body {
+	display: none;
+}
 
-	<!-- The HTML5 shim, for IE6-8 support of HTML5 elements -->
-	<!--[if lt IE 9]>
+.panel-primary {
+	border-color: #428bca
+}
+
+input {
+	display: block;
+}
+
+.centerText td {
+	text-align: center;
+	vertical-align: middle;
+}
+
+.chart-gauge {
+	width: 400px;
+	margin: auto;
+}
+
+.chart-color1 {
+	fill: #008000;
+}
+
+.chart-color2 {
+	fill: #FFFF00;
+}
+
+.chart-color3 {
+	fill: #FF0000;
+}
+
+.needle,.needle-center {
+	fill: #464a4f;
+}
+
+.twitter-typeahead .tt-query,.twitter-typeahead .tt-hint {
+	margin-bottom: 0;
+}
+
+.twitter-typeahead .tt-hint {
+	display: block;
+	height: 34px;
+	padding: 6px 12px;
+	font-size: 14px;
+	line-height: 1.428571429;
+	border: 1px solid transparent;
+	border-radius: 4px;
+}
+
+.twitter-typeahead .hint-small {
+	height: 30px;
+	padding: 5px 10px;
+	font-size: 12px;
+	border-radius: 3px;
+	line-height: 1.5;
+}
+
+.twitter-typeahead .hint-large {
+	height: 45px;
+	padding: 10px 16px;
+	font-size: 18px;
+	border-radius: 6px;
+	line-height: 1.33;
+}
+
+.tt-dropdown-menu {
+	min-width: 160px;
+	margin-top: 2px;
+	padding: 5px 0;
+	background-color: #fff;
+	border: 1px solid #ccc;
+	border: 1px solid rgba(0, 0, 0, .2);
+	*border-right-width: 2px;
+	*border-bottom-width: 2px;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+	-webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+	-moz-box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+	box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+	-webkit-background-clip: padding-box;
+	-moz-background-clip: padding;
+	background-clip: padding-box;
+}
+
+.tt-suggestion {
+	display: block;
+	padding: 3px 20px;
+}
+
+.tt-suggestion.tt-is-under-cursor {
+	color: #fff;
+	background-color: #0081c2;
+	background-image: -moz-linear-gradient(top, #0088cc, #0077b3);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#0088cc),
+		to(#0077b3));
+	background-image: -webkit-linear-gradient(top, #0088cc, #0077b3);
+	background-image: -o-linear-gradient(top, #0088cc, #0077b3);
+	background-image: linear-gradient(to bottom, #0088cc, #0077b3);
+	background-repeat: repeat-x;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0088cc',
+		endColorstr='#ff0077b3', GradientType=0)
+}
+
+.tt-suggestion.tt-is-under-cursor a {
+	color: #fff;
+}
+
+.tt-suggestion p {
+	margin: 0;
+}
+</style>
+<!-- The HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!--[if lt IE 9]>
 	  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
 
-	<!-- The fav icon -->
-	<link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/img/favicon.ico">
-		
+<!-- The fav icon -->
+<link rel="shortcut icon"
+	href="${pageContext.request.contextPath}/resources/img/favicon.ico">
+
 </head>
 
 <body>
 	<!-- topbar starts -->
-	<div class="navbar">
-		<div class="navbar-inner">
-			<div class="container-fluid">
-				<a class="btn btn-navbar" data-toggle="collapse"
-					data-target=".top-nav.nav-collapse,.sidebar-nav.nav-collapse">
-					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
-					class="icon-bar"></span>
-				</a> <a class="brand" href="#"><span>Predictive Analytics</span></a>
+	<div id="wrapper">
 
-				<!-- user dropdown starts -->
-				<div class="btn-group pull-right">
-					<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-						<i class="icon-user"></i><span class="hidden-phone"> ${userName}</span>
-						<span class="caret"></span>
-					</a>
-					<ul class="dropdown-menu">
-						<li><a href="#">Profile</a></li>
+		<nav class="navbar navbar-default navbar-fixed-top" role="navigation"
+			style="margin-bottom: 0">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target=".sidebar-collapse">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="${pageContext.request.contextPath}/"><strong>Predictive
+						Analytics</strong></a>
+			</div>
+			<!-- /.navbar-header -->
+
+			<ul class="nav navbar-top-links navbar-right">
+				<!-- <li class="sidebar-search">
+                            <div class="input-group custom-search-form">
+                                <input type="text" class="form-control" placeholder="Search...">
+                                <span class="input-group-btn">
+                                <button class="btn btn-default" type="button">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                            </div>
+                            /input-group
+                        </li> -->
+				<li class="dropdown"><a class="dropdown-toggle"
+					data-toggle="dropdown" href="#"> <i
+						class="fa fa-dashboard fa-fw"></i> <i class="fa fa-caret-down"></i>
+				</a>
+					<ul class="dropdown-menu dropdown-user">
+						<li><a href="${pageContext.request.contextPath}/dashboard/">
+								<i class="fa fa-globe fa-fw"> World</i>
+						</a></li>
 						<li class="divider"></li>
-						<li><a href="login.html">Logout</a></li>
-					</ul>
-				</div>
-				<!-- user dropdown ends -->
+						<li><a
+							href="${pageContext.request.contextPath}/dashboard/patient">
+								<i class="fa fa-user fa-fw"> Patient</i>
+						</a></li>
+					</ul></li>
+				<li class="dropdown"><a class="dropdown-toggle"
+					data-toggle="dropdown" href="#"> <i class="fa fa-user fa-fw">
+							${user.fname}</i> <i class="fa fa-caret-down"></i>
+				</a>
+					<ul class="dropdown-menu dropdown-user">
+						<li><a href="${pageContext.request.contextPath}/profile"><i
+								class="fa fa-user-md fa-fw"></i> Profile</a></li>
+						<li><a
+							href="${pageContext.request.contextPath}/admin/data/who"><i
+								class="fa fa-gear fa-fw"></i> Admin</a></li>
+						<li class="divider"></li>
+						<li><a href="${pageContext.request.contextPath}/"><i
+								class="fa fa-sign-out fa-fw"></i> Logout</a></li>
+					</ul> <!-- /.dropdown-user --></li>
+				<!-- /.dropdown -->
+			</ul>
+			<!-- /.navbar-top-links -->
 
-				<div class="top-nav nav-collapse">
-					<ul class="nav">
-						<li><a href="#">Visit Site</a></li>
-						<li>
-							<form class="navbar-search pull-left">
-								<input placeholder="Search" class="search-query span2"
-									name="query" type="text">
-							</form>
+			<div class="navbar-default navbar-static-side" role="navigation">
+				<div class="sidebar-collapse">
+					<ul class="nav" id="side-menu">
+						<li class="sidebar-search">
+							<div class="input-group custom-search-form">
+								<input type="text" class="form-control" placeholder="Search...">
+								<span class="input-group-btn">
+									<button class="btn btn-default" type="button">
+										<i class="fa fa-search"></i>
+									</button>
+								</span>
+							</div> <!-- /input-group -->
 						</li>
+						<li><a href="#"><i class="fa fa-dashboard fa-fw"></i>
+								Dashboard<span class="fa arrow"></span></a>
+							<ul class="nav nav-second-level">
+								<li><a href="${pageContext.request.contextPath}/dashboard/">
+										<i class="fa fa-globe"> World</i>
+								</a></li>
+								<li><a
+									href="${pageContext.request.contextPath}/dashboard/patient">
+										<i class="fa fa-user"> Patient</i>
+								</a></li>
+							</ul> <!-- /.nav-second-level --></li>
+						<li><a href="#"><i class="fa fa-archive fa-fw"></i> Data
+								Management<span class="fa arrow"></span></a>
+							<ul class="nav nav-second-level">
+								<li><a
+									href="${pageContext.request.contextPath}/admin/data/who"> <i
+										class="fa fa-cloud-upload"> Upload</i>
+								</a></li>
+								<li><a
+									href="${pageContext.request.contextPath}/admin/data/who"> <i
+										class="fa fa-cloud-download"> Download</i>
+								</a></li>
+							</ul> <!-- /.nav-second-level --></li>
+						<li><a
+							href="${pageContext.request.contextPath}/admin/data/who"><i
+								class="fa fa-folder-open fa-fw"></i> Browse WHO Data Repo</a></li>
+						<li><a
+							href="${pageContext.request.contextPath}/admin/data/who"><i
+								class="fa fa-tasks fa-fw"></i> Run EMR Job</a></li>
+						<li><a href="#"><i class="fa fa-print fa-fw"></i>
+								Generate Report<span class="fa arrow"></span></a>
+							<ul class="nav nav-second-level">
+								<li><a href="${pageContext.request.contextPath}/dashboard/">
+										<i class="fa fa-globe"> World</i>
+								</a></li>
+								<li><a
+									href="${pageContext.request.contextPath}/dashboard/patient">
+										<i class="fa fa-user"> Patient</i>
+								</a></li>
+							</ul> <!-- /.nav-second-level --></li>
+						<li><a href="${pageContext.request.contextPath}/contact"><i
+								class="fa fa-envelope fa-fw"></i> Contact Us</a></li>
 					</ul>
+					<!-- /#side-menu -->
 				</div>
-				<!--/.nav-collapse -->
+				<!-- /.sidebar-collapse -->
 			</div>
-		</div>
-	</div>
-	<!-- topbar ends -->
+			<!-- /.navbar-static-side -->
+		</nav>
 
-		<div class="container-fluid">
-		<div class="row-fluid">
-		
-		<!-- left menu starts -->
-			<div class="span2 main-menu-span">
-				<div class="well nav-collapse sidebar-nav">
-					<ul class="nav nav-tabs nav-stacked main-menu">
-						<li class="nav-header hidden-tablet">Main</li>
-						<li><a class="ajax-link" href="${pageContext.request.contextPath}/dashboard"><i
-								class="icon-home"></i><span class="hidden-tablet">
-									Dashboard</span></a></li>
-						<li><a class="ajax-link" href="ui.html"><i
-								class="icon-eye-open"></i><span class="hidden-tablet"> UI
-									Features</span></a></li>
-						<li><a class="ajax-link" href="form.html"><i
-								class="icon-edit"></i><span class="hidden-tablet"> Forms</span></a></li>
-						<li><a class="ajax-link" href="chart.html"><i
-								class="icon-list-alt"></i><span class="hidden-tablet">
-									Charts</span></a></li>
-						<li><a class="ajax-link" href="typography.html"><i
-								class="icon-font"></i><span class="hidden-tablet">
-									Typography</span></a></li>
-						<li><a class="ajax-link" href="gallery.html"><i
-								class="icon-picture"></i><span class="hidden-tablet">
-									Gallery</span></a></li>
-						<li class="nav-header hidden-tablet">Sample Section</li>
-						<li><a class="ajax-link" href="table.html"><i
-								class="icon-align-justify"></i><span class="hidden-tablet">
-									Tables</span></a></li>
-						<li><a class="ajax-link" href="calendar.html"><i
-								class="icon-calendar"></i><span class="hidden-tablet">
-									Calendar</span></a></li>
-						<li><a class="ajax-link" href="grid.html"><i
-								class="icon-th"></i><span class="hidden-tablet"> Grid</span></a></li>
-						<li><a class="ajax-link" href="file-manager.html"><i
-								class="icon-folder-open"></i><span class="hidden-tablet">
-									File Manager</span></a></li>
-						<li><a href="tour.html"><i class="icon-globe"></i><span
-								class="hidden-tablet"> Tour</span></a></li>
-						<li><a class="ajax-link" href="icon.html"><i
-								class="icon-star"></i><span class="hidden-tablet"> Icons</span></a></li>
-						<li><a href="error.html"><i class="icon-ban-circle"></i><span
-								class="hidden-tablet"> Error Page</span></a></li>
-						<li><a href="login.html"><i class="icon-lock"></i><span
-								class="hidden-tablet"> Login Page</span></a></li>
-					</ul>
-					<label id="for-is-ajax" class="hidden-tablet" for="is-ajax"><input
-						id="is-ajax" type="checkbox"> Ajax on menu</label>
-				</div>
-				<!--/.well -->
+		<noscript>
+			<div class="alert alert-block span10">
+				<h4 class="alert-heading">Warning!</h4>
+				<p>
+					You need to have <a href="http://en.wikipedia.org/wiki/JavaScript"
+						target="_blank">JavaScript</a> enabled to use this site.
+				</p>
 			</div>
-			<!--/span-->
-			<!-- left menu ends -->
+		</noscript>
 
-			<noscript>
-				<div class="alert alert-block span10">
-					<h4 class="alert-heading">Warning!</h4>
-					<p>
-						You need to have <a href="http://en.wikipedia.org/wiki/JavaScript"
-							target="_blank">JavaScript</a> enabled to use this site.
-					</p>
+		<!-- content starts -->
+		<div id="page-wrapper">
+			<div class="row">
+				<div class="col-lg-12">
+					<h1 class="page-header">Patient Dashboard</h1>
 				</div>
-			</noscript>
-			
-			<div id="content" class="span10">
-				<!-- content starts -->
-				<div>
-					<ul class="breadcrumb">
-						<li><a href="#">Home</a> <span class="divider">/</span></li>
-						<li><a href="#">Dashboard</a></li>
-					</ul>
-				</div>
-				<!-- Patient data grid starts -->
-				<div class="span11">
-					<div class="panel panel-primary">
-						<div class="panel-heading">
-							<h3 class="panel-title">Patients</h3>
+				<div id="content" class="row">
+					<!-- <div>
+						<ul class="breadcrumb">
+							<li><a href="#">Home</a> <span class="divider">/</span></li>
+							<li><a href="#">Dashboard</a></li>
+						</ul>
+					</div> -->
+					<!-- Patient data grid starts -->
+					<div class="col-md-10">
+						<div class="panel panel-primary">
+							<div class="panel-heading">
+								<h3 class="panel-title">Patients</h3>
 								<div class="pull-right">
-									<span class="clickable filter" data-container="body">
-										<i class="icon-filter"></i>
+									<span class="clickable filter" data-toggle="tooltip"
+										title="Filter patients" data-container="body"> <i
+										class="fa fa-filter"></i>
 									</span>
 								</div>
-						</div>
-						<div class="panel-body">
-							<input type="text" style="height: 35px; width: 500px" id="patient-table-filter" data-action="filter" data-filters="#patient-table" placeholder="Filter Patients" />
-						</div>
-						<c:choose>
-							<c:when test="${error != null}">
-								<div class="alert alert-danger">
-									${error}
-								</div>
-							</c:when>
-							<c:otherwise>
-							<div style="height: 300 px; overflow-y: auto; text-align: center;">
-								<table class="table table-bordered table-hover table-condensed centerText" id="patient-table">
-									<thead>
-										<tr class="info">
-											<th style="display: none">Record #</th>
-											<th>Name</th>
-											<th>Age</th>
-											<th>Gender</th>
-											<th>Ethnicity</th>
-											<th>Race</th>
-											<th>Disease</th>
-										</tr>
-									</thead>
-									<tbody>
-										<c:forEach items="${patientList}" var="patient">
-											<tr>
-												<td style="display: none;">${patient.medical_record_no}</td>
-												<td>${patient.name}</td>
-												<td>${patient.age}</td>
-												<td>${patient.gender}</td>
-												<td>${patient.ethnicity}</td>
-												<td>${patient.race}</td>
-												<td style="width: 300px">
-													<c:forEach items="${patient.disease}" var="diseaseList" varStatus="item">
+							</div>
+							<div class="panel-body">
+								<input type="text" style="height: 35px; width: 500px"
+									id="patient-table-filter" data-action="filter"
+									data-filters="#patient-table" placeholder="Filter Patients"
+									class="form-control" />
+							</div>
+							<c:choose>
+								<c:when test="${error != null}">
+									<div class="alert alert-danger">${error}</div>
+								</c:when>
+								<c:otherwise>
+									<div
+										style="height: 300px; overflow-y: auto; text-align: center;">
+										<table
+											class="table table-bordered table-hover table-condensed centerText"
+											id="patient-table">
+											<thead>
+												<tr class="info">
+													<th style="display: none">Record #</th>
+													<th>Name</th>
+													<th>Age</th>
+													<th>Gender</th>
+													<th>Ethnicity</th>
+													<th>Race</th>
+													<th>Disease</th>
+												</tr>
+											</thead>
+											<tbody>
+												<c:forEach items="${patientList}" var="patient">
+													<tr>
+														<td style="display: none;">${patient.medical_record_no}</td>
+														<td>${patient.name}</td>
+														<td>${patient.age}</td>
+														<td>${patient.gender}</td>
+														<td>${patient.ethnicity}</td>
+														<td>${patient.race}</td>
+														<td style="width: 300px"><c:forEach
+																items="${patient.disease}" var="diseaseList"
+																varStatus="item">
 														${diseaseList}
 														<c:if test="${!item.last}">,</c:if>
-													</c:forEach>
-												</td>
-											</tr>
-										</c:forEach>
-									</tbody>
-								</table>
-							</div>
-							</c:otherwise>
-						</c:choose>
-					</div>
-				</div> <!-- Patient data grid ends -->
-				<div id="error" class="alert alert-danger"></div>
-				<hr id="data-grid-column-chart-separator">
-				
-				<div id="column-chart-container"></div>
-				<hr id="column-tag-cloud-separator">
-			
-				<br/>
-								
-				<strong><p id="tagCloudLabel" align="center" style="font-family: inherit; font-size-adjust: inherit"></p></strong>
-				<div id="tag-cloud-container" class="span6"></div>
-				<hr id="column-family-history-separator">
-				
-				<div id="family-history-container" class="control-group">
-					<h4>Enter family history conditions</h4><br/>
-						<div id="family-history-group" class="control-group" style="padding-left: 10px">
+															</c:forEach></td>
+													</tr>
+												</c:forEach>
+											</tbody>
+										</table>
+									</div>
+								</c:otherwise>
+							</c:choose>
 						</div>
-					<button class="btn btn-success" type="button" id="family-history-btn">
-						<i class="icon-plus-sign"></i>
-						Add family history
-					</button>
-				</div>
-				
-				<div id="occupation-data-container">
+						<div id="error" class="alert alert-danger"></div>
+					</div>
+					<!-- Patient data grid ends -->
+					<div class="row">
+						<div class="col-md-12">
+							<hr id="data-grid-column-chart-separator">
+						</div>
+					</div>
+					<div id="column-chart-container"
+						style="display: inline-block; margin-top: 0px"></div>
+					<!-- <hr id="column-tag-cloud-separator"> -->
+					<div style="display: inline-block;" class="panel-body">
+						<br />
+						<br />
+						<strong><p id="tagCloudLabel" align="center"
+								style="font-family: sans-serif; font-size: 18px; color: #3E576F; padding-bottom: -20px"></p></strong>
+						<div id="tag-cloud-container"></div>
+					</div>
+					
+					<div class="row">
+						<div class="col-md-12">
+							<hr id="column-family-history-separator">
+						</div>
+					</div>
+					
+					<!-- <hr id="column-family-history-separator"> -->
+
+					<!-- <div class="col-md-6">
+						<div class="panel panel-default" id="family-history-panel">
+							<div class="panel-heading">
+								<i class="fa fa-users"></i> Add Patient's Family History
+							</div>
+							<div class="panel-body"> -->
+					<div id="family-history-container" class="control-group">
+						<h4>Enter family history conditions</h4>
+						<br />
+						<div id="family-history-group" class="control-group"
+							style="padding-left: 10px"></div>
+						<button class="btn btn-success" type="button"
+							id="family-history-btn">
+							<i class="fa fa-plus"></i> Add family history
+						</button>
+					</div>
+					<!-- </div>
+						</div>
+					</div> -->
+
+					<!-- <div class="col-md-6">
+						<div class="panel panel-default" id="occupation-panel">
+							<div class="panel-heading">
+								<i class="fa fa-briefcase"></i> Add Patient's Occupation
+							</div>
+							<div class="panel-body"> -->
+					<div id="occupation-data-container">
+						<table style="width: auto">
+							<tr>
+								<td>
+									<h4>Please enter patient's occupation</h4>
+									<br />
+								</td>
+								<td style="padding-left: 10px"><input type="text"
+									id="search-occupation" style="height: 35px; width: 500px"
+									placeholder="For e.g. Engineer" class="form-control typeahead"
+									data-provide="typeahead" data-items="8" /></td>
+							</tr>
+						</table>
+						<!-- <button type="button" class="btn btn-success" id="update-btn">Update</button> -->
+					</div>
+					<!-- </div>
+						</div>
+					</div> -->
+
+
 					<table style="width: auto">
-					<tr>
-						<td>
-							<h4>Please enter patient's occupation</h4><br/>
-						</td>
-						<td style="padding-left: 10px">
-							<input type="text" id="search-occupation" style="height: 35px; width: 500px" placeholder="For e.g. Engineer" class="span6 typeahead" data-provide="typeahead"
-								data-items="8"/>
-						</td>
-					</tr>
-					</table> 
-				</div>
-				<table style="width: auto">
-					<tr>
-						<button type="button" class="btn btn-success" id="update-btn">Update</button>
-					</tr>
-				</table>
-				
-				<div id="diabetes-questionnaire">
-					<p><h4>Please check all the boxes that closely relates to the patient family's historical conditions</h4></p>
-					<table class="table table-condensed">
 						<tr>
-							<td>
-								Does anyone in the family have type 2 diabetes?
-							</td>
-							<td>
-								<input type="checkbox" id="q1"> 
-							</td>
-						</tr>
-						<tr>
-							<td>
-								Has anyone in the family been told they might get diabetes?
-							</td>
-							<td>
-								<input type="checkbox" id="q2"> 
-							</td>
-						</tr>
-						<tr>
-							<td>
-								Has anyone in the family been told they need to lower their weight or increase their physical activity to prevent type 2 diabetes?
-							</td>
-							<td>
-								<input type="checkbox" id="q3"> 
-							</td>
-						</tr>
-						<tr>
-							<td>
-								Did your mother get diabetes when she was pregnant? [This is also known as gestational diabetes (GDM)].
-							</td>
-							<td>
-								<input type="checkbox" id="q4"> 
-							</td>
+							<button type="button" class="btn btn-success" id="update-btn">
+								<i class="fa fa-save"></i>Update
+							</button>
 						</tr>
 					</table>
-				<table style="width: auto">
-					<tr>
-						<button type="button" class="btn btn-success" id="generate-predictions">
-							<i class="fa fa-bar-chart-o"> Predict Diabetes</i>
-						</button>
-					</tr>
-				</table>
+
+					<!-- <div class="col-md-10">
+						<div class="panel panel-default" id="diabetes-questionnaire-panel">
+							<div class="panel-heading">
+								<i class="fa fa-question"></i> Diabetes Questionnaire
+							</div>
+							<div class="panel-body"> -->
+					<div id="diabetes-questionnaire">
+						<p>
+						<h4>Please check all the boxes that closely relates to the
+							patient family's historical conditions</h4>
+						</p>
+						<table class="table table-condensed">
+							<tr>
+								<td>Does anyone in the family have type 2 diabetes?</td>
+								<td><input type="checkbox" id="q1"></td>
+							</tr>
+							<tr>
+								<td>Has anyone in the family been told they might get
+									diabetes?</td>
+								<td><input type="checkbox" id="q2"></td>
+							</tr>
+							<tr>
+								<td>Has anyone in the family been told they need to lower
+									their weight or increase their physical activity to prevent
+									type 2 diabetes?</td>
+								<td><input type="checkbox" id="q3"></td>
+							</tr>
+							<tr>
+								<td>Did your mother get diabetes when she was pregnant?
+									[This is also known as gestational diabetes (GDM)].</td>
+								<td><input type="checkbox" id="q4"></td>
+							</tr>
+						</table>
+						<table style="width: auto">
+							<tr>
+								<button type="button" class="btn btn-success"
+									id="generate-predictions">
+									<i class="fa fa-bar-chart-o"></i> Predict Diabetes
+								</button>
+							</tr>
+						</table>
+					</div>
+
+					<!-- </div>
+						</div>
+					</div> -->
+
+					<!-- <div class="col-md-8">
+						<div class="panel panel-default"
+							id="diabetes-prediction-explanation-panel">
+							<div class="panel-heading">
+								<i class="fa fa-sitemap"></i> Diabetes Prediction Explanation
+							</div>
+							<div class="panel-body"> -->
+					<div id="diabetes-prediction-gauge" class="chart-gauge" style="width: 300px; height: 150px"></div>
+
+					<div id="diabetes-gauge-label" align="center"
+						style="font-family: sans-serif; font-size: 12px; color: #3E576F"></div>
+					<div id="diabetes-prediction-container"></div>
+					<!-- </div>
+						</div>
+					</div> -->
+
+
+
+
 				</div>
-				
-				<div id="diabetes-prediction-container"></div>
-				
-				<div id="diabetes-prediction-gauge" class="chart-gauge"></div>
-				
-				<strong><div id="diabetes-gauge-label" align="center" style="font-family: inherit; font-size-adjust: inherit"></div></strong>
-			
-				</div><!--/row-->
-	</div>
+				<!--/row-->
+			</div>
 
-	<!-- external javascript
+			<!-- external javascript
 	================================================== -->
-	<!-- Placed at the end of the document so the pages load faster -->
+			<!-- Placed at the end of the document so the pages load faster -->
 
-	<%-- <!-- jQuery -->
+			<%-- <!-- jQuery -->
 	<script src="${pageContext.request.contextPath}/resources/js/jquery-1.7.2.min.js"></script>
 	<!-- jQuery UI -->
 	<script src="${pageContext.request.contextPath}/resources/js/jquery-ui-1.8.21.custom.min.js"></script> --%>
-	
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js" type="text/javascript"></script>
-	<!-- <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script> -->
-	<script src="${pageContext.request.contextPath}/resources/js/jquery.ui.core.min.js" type="text/javascript"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/jquery.ui.widget.min.js" type="text/javascript"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/jquery.ui.position.min.js" type="text/javascript"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/jquery.ui.autocomplete.min.js" type="text/javascript"></script>
-	
-	<!-- autocomplete library -->
-	<script src="${pageContext.request.contextPath}/resources/js/bootstrap-typeahead.js"></script>
-	<script src="http://jquery.bassistance.de/validate/jquery.validate.js"></script>
-	
-	<!-- High Charts -->
-	<script src="http://code.highcharts.com/highcharts.js"></script>
-	<script src="http://code.highcharts.com/modules/exporting.js"></script>
-	
-	<!-- D3.js -->
-	<script src="http://www.jasondavies.com/d3.min.js" charset="utf-8"></script>
-	<script src="http://www.jasondavies.com/wordcloud/d3.layout.cloud.js"></script>
-	
-	<!-- Word Cloud -->
-	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/wordcloud2.js"></script>
-	
-	<!-- Noty plugin -->
-	<script src="${pageContext.request.contextPath}/resources/js/jquery.noty.js"></script>
-	
-	
-	<!-- Filter table results script -->
-	<script type="text/javascript">
+
+			<!-- Core Scripts - Include with every page -->
+			<script
+				src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.js"></script>
+			<script
+				src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
+			<script
+				src="${pageContext.request.contextPath}/resources/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+
+			<!-- SB Admin Scripts - Include with every page -->
+			<script
+				src="${pageContext.request.contextPath}/resources/js/sb-admin.js"></script>
+			<!-- autocomplete library -->
+			<script
+				src="${pageContext.request.contextPath}/resources/js/bootstrap-typeahead.js"></script>
+			<script
+				src="http://jquery.bassistance.de/validate/jquery.validate.js"></script>
+
+			<!-- High Charts -->
+			<script src="http://code.highcharts.com/highcharts.js"></script>
+			<script src="http://code.highcharts.com/modules/exporting.js"></script>
+
+			<!-- D3.js -->
+			<script src="http://www.jasondavies.com/d3.min.js" charset="utf-8"></script>
+			<script src="http://www.jasondavies.com/wordcloud/d3.layout.cloud.js"></script>
+
+			<!-- Word Cloud -->
+			<script type="text/javascript"
+				src="${pageContext.request.contextPath}/resources/js/wordcloud2.js"></script>
+
+			<!-- Noty plugin -->
+			<script
+				src="${pageContext.request.contextPath}/resources/js/jquery.noty.js"></script>
+
+
+			<!-- Filter table results script -->
+			<script type="text/javascript">
 	(function(){
 	    'use strict';
 		var $ = jQuery;
@@ -419,6 +603,7 @@
 		$('#occupation-data-container').hide();
 		$('#update-btn').hide();
 		$('#diabetes-questionnaire').hide();
+		$('div[id*="-panel"]').hide();
 	    // attach table filter plugin to inputs
 		$('[data-action="filter"]').filterTable();
 		
@@ -433,14 +618,39 @@
 		});
 		$('[data-toggle="tooltip"]').tooltip();
 	});
-	</script> <!-- end filter results script -->
-	
-	<!-- Script to get the clicked row from the table and retrieve its data -->
-	<script type="text/javascript">
+</script>
+			<!-- end filter results script -->
+
+			<!-- Script to get the clicked row from the table and retrieve its data -->
+			<script type="text/javascript">
 		var medical_record_no;
 		var patientName;
 		var familyHistoryGroupCount = 1;
 		var diseaseList;
+		
+		var substringMatcher = function(strs) {
+			  return function findMatches(q, cb) {
+			    var matches, substringRegex;
+			 
+			    // an array that will be populated with substring matches
+			    matches = [];
+			 
+			    // regex used to determine if a string contains the substring `q`
+			    substrRegex = new RegExp(q, 'i');
+			 
+			    // iterate through the pool of strings and for any string that
+			    // contains the substring `q`, add it to the `matches` array
+			    $.each(strs, function(i, str) {
+			      if (substrRegex.test(str)) {
+			        // the typeahead jQuery plugin expects suggestions to a
+			        // JavaScript object, refer to typeahead docs for more info
+			        matches.push({ value: str });
+			      }
+			    });
+			 
+			    cb(matches);
+			  };
+			};
 		
 		$('#patient-table tr').click(function(){
 			medical_record_no = $(this).closest('tr').find('td').first().text();
@@ -469,10 +679,12 @@
 				});
 				
 				//alert(encounters);
-				
 				 $('#column-chart-container').highcharts({
 			            chart: {
-			                type: 'column'
+			                type: 'column',
+			                width: 200,
+			                height: 400,
+			                spacingTop: 0
 			            },
 			            title: {
 			                text: patientName + "'s number of encounters since " + sinceYear
@@ -506,13 +718,15 @@
 			            }]
 			        });
 				 
-				 $('#tagCloudLabel').html("<h3>Summary of " + patientName + "'s medical encounters</h3>");
+				 
+				 
+				 //$('#tagCloudLabel').html("Summary of " + patientName + "'s medical encounters");
 				 
 				 var fill = d3.scale.category20();
 
-				 var layout =  d3.layout.cloud().size([960, 600])
+				 var layout =  d3.layout.cloud().size([700, 400])
 				      .words(tagList.map(function(d) {
-				        return {text: d, size: 25};
+				        return {text: d, size: 20};
 				      }))
 				      .padding(1)
 				      .rotate(function() { return ~~(Math.random() * 2) * 0; })
@@ -524,10 +738,14 @@
 				  
 				function draw(words) {
 				    d3.select("#tag-cloud-container").append("svg")
-				        .attr("width", 1000)
+				        .attr("width", 700)
 				        .attr("height", 400)
+				        .attr("text-anchor", "middle")
+				        .style("font-size", "16px")
+				        .style("font-family", "sans-seriff")
+				        .text("Summary of " + patientName + "'s medical encounters")
 				      .append("g")
-				        .attr("transform", "translate(400,200)")
+				        .attr("transform", "translate(500,200)")
 				      .selectAll("text")
 				        .data(words)
 				      .enter().append("text")
@@ -540,6 +758,9 @@
 				        })
 				        .text(function(d) { return d.text; });
 				  }
+				
+				$('#tag-cloud-panel').show();
+				
 			if(!familyHistory.length) {
 				$('#family-history-container').show();
 				//$('#update-btn').show();
@@ -553,8 +774,18 @@
 				$.get("${pageContext.request.contextPath}/dashboard/patient/occupationsList", function(data){
         			var obj = jQuery.parseJSON(data);
         			var occupationsList = obj.occupationsList;
-        			var autoComplete = $('#search-occupation').typeahead();
-        			autoComplete.data('typeahead').source = occupationsList;
+        			/* var autoComplete = $('#search-occupation').typeahead();
+        			autoComplete.data('typeahead').source = occupationsList; */
+        			$('#search-occupation').typeahead({
+        				hint: true,
+        				highlight: true,
+        				minLength: 1
+        			},
+        			{
+        				name: 'occupations',
+        				displayKey: 'value',
+        				source: substringMatcher(occupationsList)
+        			});
         			$('#occupation-data-container').show();
         			//$('#update-btn').show();
         		});
@@ -641,7 +872,7 @@
 			
 			$('#family-history-group').append(
 					  '<div id="family-history-group-' + familyHistoryGroupCount + '" class="control-group">'
-					+ '<input type="text" id="family-history-text-' + familyHistoryGroupCount + '" placeholder="Condition (For e.g. Diabetes)" style="height: 35px; width: 300px;" data-provide="typeahead" data-items="8" class="typeahead" required>'
+					+ '<input type="text" id="family-history-text-' + familyHistoryGroupCount + '" placeholder="Condition (For e.g. Diabetes)" style="height: 35px; width: 300px;" data-provide="typeahead" data-items="8" class="typeahead form-control" required>'
 					+ '<input type="text" id="start-age-' + familyHistoryGroupCount + '" placeholder="Start Age (For e.g. 30)" style="height: 35px; width: auto; margin-left: 10px" required>'
 					+ '<input type="text" id="end-age-' + familyHistoryGroupCount + '" placeholder="End Age (For e.g. 50)" style="height: 35px; width: auto; margin-left: 10px" required>'
 					+ '<span class="icon-remove" id="remove-group-"' + familyHistoryGroupCount + 'style="margin-left: 10px"></span>'
@@ -654,8 +885,18 @@
 		});
 		
 		$('body').on('DOMNodeInserted', 'div[id*="family-history-group"]', function(){
-			var autoComplete = $(this).find('.typeahead').typeahead();
-			autoComplete.data('typeahead').source = diseaseList;
+			/* var autoComplete = $(this).find('.typeahead').typeahead();
+			autoComplete.data('typeahead').source = diseaseList; */
+			$('.typeahead').typeahead({
+				hint: true,
+				highlight: true,
+				minLength: 1
+			},
+			{
+				name: 'diseases',
+				displayKey: 'value',
+				source: substringMatcher(diseaseList)
+			});
 		});
 
 		$('body').on('click', 'span[id*="remove-group-"]', function(){
@@ -824,9 +1065,10 @@
 					  $('#diabetes-prediction-container').html('<div class="alert alert-danger">' + obj.error + '</div>');
 				  }
 			   });
+			   
+			   $('#diabetes-prediction-explanation-panel').show();
 		});
 		
 	</script>
-		
 </body>
 </html>

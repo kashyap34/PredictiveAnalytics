@@ -13,7 +13,19 @@
 	<style type="text/css">
 	input {
 		display: block;
+		//margin-top: 15px;
+		//padding-left: 15px;
 	}
+	td {
+		width: 400px;
+		padding-left: 15px;
+	}
+	.center {
+		margin: 0 auto;
+	}
+	body {
+ 		padding-bottom: 40px;
+ 	  }
 	.ui-autocomplete-loading { background: white url("/images/ui-anim_basic_16x16.gif") right center no-repeat; }
 	</style>
 
@@ -30,9 +42,9 @@
 		<div class="container">
 		<div class="row">
 		
-			<div class="row-fluid">
-				<div class="span12 center login-header">
-					<h2>Welcome to Population Analytics</h2>
+			<div class="row">
+				<div class="span10 center login-header">
+					<h2><center>Welcome to Population Analytics</center></h2>
 				</div><!--/span-->
 			</div><!--/row-->
 			
@@ -45,9 +57,9 @@
 					Success! You are now a registered user of Population Analytics. Please click <a href="${pageContext.request.contextPath}/login">here</a> to log in.
 				</div>
 			
-			<div class="row" id="register"> 
-				<div class="well span5 center">
-					<div class="alert alert-info">
+			<div class="row center" id="register" style="padding-left: 25%"> 
+				<div class="well col-md-8 center">
+					<div class="alert alert-info" align="center">
 						Please provide all the below details.
 					</div>
 					<form action="${pageContext.request.contextPath}/register" method="post">
@@ -55,27 +67,15 @@
 						<table width="auto" align="center" id="form-container">
 							<tr>
 								<td>
-									<div class="input-group" title="Firstname" data-rel="tooltip">
-									<input autofocus name="fname" id="fname" type="text" placeholder="First Name (e.g. John)" required="required" size="35"/>
+									<div class="input-group" title="Firstname" data-rel="tooltip" style="margin-bottom: 15px">
+									<span class="input-group-addon"><i class="fa fa-user"></i></span>
+									<input autofocus name="fname" id="fname" type="text" placeholder="First Name (e.g. John)" required="required" size="35" class="form-control"/>
 									</div>
 								</td>
 								<td>
-									<div class="input-group" title="Lastname" data-rel="tooltip">
-									<input name="lname" id="lname" type="text" placeholder="Last Name (e.g. Doe)" required="required" size="35"/>
-									</div>
-								</td>
-							</tr>
-							<div class="clearfix"></div>
-							
-							<tr>
-								<td>
-									<div class="input-group" title="Password" data-rel="tooltip">
-									<input name="pwd" id="pwd" type="password" placeholder="Password (8 to 20 characters)" required="required" size="35" maxlength="20"/>
-									</div>
-								</td>
-								<td>
-									<div class="input-group" title="ConfirmPassword" data-rel="tooltip">
-									<input name="confpwd" id="confpwd" type="password" placeholder="Confirm Password" required="required" size="35" maxlength="20"/>
+									<div class="input-group" title="Lastname" data-rel="tooltip" style="margin-bottom: 15px">
+									<span class="input-group-addon"><i class="fa fa-user"></i></span>
+									<input name="lname" id="lname" type="text" placeholder="Last Name (e.g. Doe)" required="required" size="35" class="form-control"/>
 									</div>
 								</td>
 							</tr>
@@ -83,27 +83,15 @@
 							
 							<tr>
 								<td>
-									<div class="input-group" title="Email" data-rel="tooltip">
-									<input name="email" id="email" type="email" placeholder="Email (e.g. John@abc.com)" required="required" size="35"/>
+									<div class="input-group" title="Password" data-rel="tooltip" style="margin-bottom: 15px">
+									<span class="input-group-addon"><i class="fa fa-key"></i></span>
+									<input name="pwd" id="pwd" type="password" placeholder="Password (8 to 20 characters)" required="required" size="35" maxlength="20" class="form-control"/>
 									</div>
 								</td>
 								<td>
-									<div class="input-group" title="Contact" data-rel="tooltip">
-									<input name="contact" id="contact" type="tel" placeholder="Contact No (e.g. 0123456789)" data-format="+1 (ddd) ddd-dddd" required="required" size="35" maxlength="10"/>
-									</div>
-								</td>
-							</tr>
-							<div class="clearfix"></div>
-							
-							<tr>
-								<td>
-									<div class="input-group" title="Street1" data-rel="tooltip">
-									<input name="street1" id="street1" type="text" placeholder="Street Name (e.g. 1 N St.)" required="required" size="35"/>
-									</div>
-								</td>
-								<td>
-									<div class="input-group" title="Apt" data-rel="tooltip">
-									<input name="apt" id="apt" type="text" placeholder="Apt/Suite (e.g. Apt. 1)" required="required" size="35"/>
+									<div class="input-group" title="ConfirmPassword" data-rel="tooltip" style="margin-bottom: 15px">
+									<span class="input-group-addon"><i class="fa fa-key"></i></span>
+									<input name="confpwd" id="confpwd" type="password" placeholder="Confirm Password" required="required" size="35" maxlength="20" class="form-control"/>
 									</div>
 								</td>
 							</tr>
@@ -111,30 +99,66 @@
 							
 							<tr>
 								<td>
-									<div class="input-group" title="ZipCode" data-rel="tooltip">
-									<input name="zipcode" id="zipcode" type="text" placeholder="Zip Code (e.g. 12345)" required="required" size="35" maxlength="5"/>
+									<div class="input-group" title="Email" data-rel="tooltip" style="margin-bottom: 15px">
+									<span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+									<input name="email" id="email" type="email" placeholder="Email (e.g. John@abc.com)" required="required" size="35" class="form-control"/>
+									</div>
+								</td>
+								<td>
+									<div class="input-group" title="Contact" data-rel="tooltip" style="margin-bottom: 15px">
+									<span class="input-group-addon"><i class="fa fa-mobile"></i></span>
+									<input name="contact" id="contact" type="tel" placeholder="Contact No (e.g. 0123456789)" data-format="+1 (ddd) ddd-dddd" required="required" size="35" maxlength="10" class="form-control"/>
+									</div>
+								</td>
+							</tr>
+							<div class="clearfix"></div>
+							
+							<tr>
+								<td>
+									<div class="input-group" title="Street1" data-rel="tooltip" style="margin-bottom: 15px">
+									<span class="input-group-addon"><i class="fa fa-road"></i></span>
+									<input name="street1" id="street1" type="text" placeholder="Street Name (e.g. 1 N St.)" required="required" size="35" class="form-control"/>
+									</div>
+								</td>
+								<td>
+									<div class="input-group" title="Apt" data-rel="tooltip" style="margin-bottom: 15px">
+									<span class="input-group-addon"><i class="fa fa-home"></i></span>
+									<input name="apt" id="apt" type="text" placeholder="Apt/Suite (e.g. Apt. 1)" required="required" size="35" class="form-control"/>
+									</div>
+								</td>
+							</tr>
+							<div class="clearfix"></div>
+							
+							<tr>
+								<td>
+									<div class="input-group" title="ZipCode" data-rel="tooltip" style="margin-bottom: 15px">
+									<span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
+									<input name="zipcode" id="zipcode" type="text" placeholder="Zip Code (e.g. 12345)" required="required" size="35" maxlength="5" class="form-control"/>
 									</div>
 									<div class="text-error"></div>
 								</td>
 								<td>
-									<div class="input-group" title="City" data-rel="tooltip">
-									<input name="city" id="city" type="text" placeholder="City (e.g. San Jose)" required="required" size="35"/>
+									<div class="input-group" title="City" data-rel="tooltip" style="margin-bottom: 15px">
+									<span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
+									<input name="city" id="city" type="text" placeholder="City (e.g. San Jose)" required="required" size="35" class="form-control"/>
 									</div>
 								</td>
 							</tr>
 							<tr>
 								<td>
-									<div class="input-group" title="State" data-rel="tooltip">
-									<input name="state" id="state" type="text" placeholder="State (e.g. CA)" required="required" size="35"/>
+									<div class="input-group" title="State" data-rel="tooltip" style="margin-bottom: 15px">
+									<span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
+									<input name="state" id="state" type="text" placeholder="State (e.g. CA)" required="required" size="35" class="form-control"/>
 									</div>
 								</td>
 							</tr>
 						</table>	
-							<div class="clearfix"></div>
-							<p class="center span5">
-							<button type="submit" class="btn btn-primary" id="button">Register</button>
-							</p>
+						<div class="clearfix"></div>
 						</fieldset>
+					<div style="text-align: center;">
+							
+						<button type="submit" class="btn btn-success" id="button" style="width: 200px"><i class="fa fa-sign-in"> Register</i></button>
+					</div>
 					</form>
 				</div><!--/span-->
 			</div><!--/row-->

@@ -3,6 +3,7 @@ package com.utils;
 import java.io.IOException;
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.jsoup.Jsoup;
@@ -20,10 +21,9 @@ public class CrawlerUtils {
 	//private static java.util.logging.Logger logger = java.util.logging.Logger.getLogger(DataSearchController.class.getName());
 	private ArrayList<String> linksList;
 	//keeps count of depth of links traveled
-	private boolean isDone = false;
+	
 	//private Map<String, Link> dataMap;
-	//Map for link name vs. link url
-	private Map<String, String> dataMap;
+	
 	
 	public ArrayList<String> searchLinksFromURL(String url) {
 		try {
@@ -34,7 +34,18 @@ public class CrawlerUtils {
 
 			linksList.clear();
 			for (Element link : links) {
-				linksList.add(link.text());
+				if(link.text().isEmpty() || link.text() == null || link.text().equalsIgnoreCase("Home") || 
+						link.text().equalsIgnoreCase("Data analysis") || link.text().equalsIgnoreCase("By Topic")
+						|| link.text().equalsIgnoreCase("By country") || link.text().equalsIgnoreCase("By indicator") 
+						|| link.text().equalsIgnoreCase("Visualizations") || link.text().equalsIgnoreCase("Metadata")
+						|| link.text().equalsIgnoreCase("Resources") || link.text().equalsIgnoreCase("Toggle menu")
+						|| link.text().equalsIgnoreCase("Feedback") || link.text().equalsIgnoreCase("Share")
+						|| link.text().equalsIgnoreCase("? WHO 2013")) {
+					//we need to skip these links. So do nothing
+				}
+				else {
+					linksList.add(link.text());
+				}
 			}
 			return linksList;
 
@@ -78,8 +89,11 @@ public class CrawlerUtils {
 		return "";
 	}
 
-	public boolean searchForData(String url) {
+	public Map<String, String> searchForData(String url) {
 		try {
+			//Map for link name vs. link url
+			Map<String, String> dataMap = new LinkedHashMap<String, String>();
+			boolean isDone = false;
 			Document doc = Jsoup.connect(url).get();
 			Elements iframes = doc.select("iframe");
 
@@ -125,16 +139,21 @@ public class CrawlerUtils {
 //				System.out.println("Found data Link: " + dataLink);
 			}
 			if(isDone)
-				return true;
+				return dataMap;
 			else
-				return false;
+				return null;
 
+		}catch(SocketTimeoutException timeout) {
+			logger.error("Timeout while waiting to crawl the URL");
+			timeout.printStackTrace();
+			linksList.clear();
+			return null;
 		}catch(IOException e){
 			logger.error("Error in searching data in the URL");
 			e.printStackTrace();
-			System.exit(0);
+			//System.exit(0);
+			return null;
 		}
-		return false;
 	}
 
 }

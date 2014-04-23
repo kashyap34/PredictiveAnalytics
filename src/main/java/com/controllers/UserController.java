@@ -31,7 +31,7 @@ public class UserController {
 		return "Register";
 	}
 	
-	@RequestMapping(value = "/register", method = RequestMethod.POST, consumes="application/json", headers="Accept=application/json")
+	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public @ResponseBody String registerUser(@RequestBody UserInfo user, ModelMap model) {
 		logger.info("Registering new user");
 		

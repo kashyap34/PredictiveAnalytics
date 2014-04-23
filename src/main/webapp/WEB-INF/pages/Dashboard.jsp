@@ -1,240 +1,405 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8">
-	<title>Dashboard</title>
-	<!-- The styles -->
-	<link id="bs-css" href="${pageContext.request.contextPath}/resources/css/bootstrap-cerulean.css" rel="stylesheet">
-	<style type="text/css">
-	  body {
-		padding-bottom: 40px;
-	  }
-	  .sidebar-nav {
-		padding: 9px 0;
-	  }
-	</style>
-	<style type="text/css">
-	.ui-menu .ui-menu-item a,.ui-menu .ui-menu-item a.ui-state-hover, .ui-menu .ui-menu-item a.ui-state-active {
-		font-weight: normal;
-		margin: -1px;
-		text-align:left;
-		font-size:14px;
-	}
-	.ui-autocomplete-loading { background: white url("/images/ui-anim_basic_16x16.gif") right center no-repeat; }
-	</style>
-	<link href="${pageContext.request.contextPath}/resources/css/bootstrap-classic.css" rel="stylesheet">
-	<link href="${pageContext.request.contextPath}/resources/css/charisma-app.css" rel="stylesheet">
-	<link href="${pageContext.request.contextPath}/resources/css/jquery-ui-1.8.21.custom.css" rel="stylesheet">
-	<link href='${pageContext.request.contextPath}/resources/css/fullcalendar.css' rel='stylesheet'>
-	<link href='${pageContext.request.contextPath}/resources/css/fullcalendar.print.css' rel='stylesheet'  media='print'>
-	<link href='${pageContext.request.contextPath}/resources/css/chosen.css' rel='stylesheet'>
-	<link href='${pageContext.request.contextPath}/resources/css/uniform.default.css' rel='stylesheet'>
-	<link href='${pageContext.request.contextPath}/resources/css/colorbox.css' rel='stylesheet'>
-	<link href='${pageContext.request.contextPath}/resources/css/jquery.cleditor.css' rel='stylesheet'>
-	<link href='${pageContext.request.contextPath}/resources/css/jquery.noty.css' rel='stylesheet'>
-	<link href='${pageContext.request.contextPath}/resources/css/noty_theme_default.css' rel='stylesheet'>
-	<link href='${pageContext.request.contextPath}/resources/css/elfinder.min.css' rel='stylesheet'>
-	<link href='${pageContext.request.contextPath}/resources/css/elfinder.theme.css' rel='stylesheet'>
-	<link href='${pageContext.request.contextPath}/resources/css/jquery.iphone.toggle.css' rel='stylesheet'>
-	<link href='${pageContext.request.contextPath}/resources/css/opa-icons.css' rel='stylesheet'>
-	<link href='${pageContext.request.contextPath}/resources/css/uploadify.css' rel='stylesheet'>
-	<link href='${pageContext.request.contextPath}/resources/css/jquery-ui-1.10.4.custom.css' rel='stylesheet'>
-	<link href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.11/themes/flick/jquery-ui.css" rel="stylesheet" type="text/css" />
-	
+<meta charset="utf-8">
+<title>Dashboard</title>
+<!-- The styles -->
+<link id="bs-css"
+	href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css"
+	rel="stylesheet">
+<link
+	href="${pageContext.request.contextPath}/resources/font-awesome/css/font-awesome.css"
+	rel="stylesheet">
+<link
+	href="${pageContext.request.contextPath}/resources/css/sb-admin.css"
+	rel="stylesheet">
+<style type="text/css">
+td {
+	width: 400px;
+	padding-left: 15px;
+}
 
-	<!-- The HTML5 shim, for IE6-8 support of HTML5 elements -->
-	<!--[if lt IE 9]>
+body {
+	padding-bottom: 40px;
+}
+
+.sidebar-nav {
+	padding: 9px 0;
+}
+
+.ui-menu .ui-menu-item a,.ui-menu .ui-menu-item a.ui-state-hover,.ui-menu .ui-menu-item a.ui-state-active
+	{
+	font-weight: normal;
+	margin: -1px;
+	text-align: left;
+	font-size: 14px;
+}
+
+.ui-autocomplete-loading {
+	background: white url("/images/ui-anim_basic_16x16.gif") right center
+		no-repeat;
+}
+
+.twitter-typeahead .tt-query,.twitter-typeahead .tt-hint {
+	margin-bottom: 0;
+}
+
+.twitter-typeahead .tt-hint {
+	display: block;
+	height: 34px;
+	padding: 6px 12px;
+	font-size: 14px;
+	line-height: 1.428571429;
+	border: 1px solid transparent;
+	border-radius: 4px;
+}
+
+.twitter-typeahead .hint-small {
+	height: 30px;
+	padding: 5px 10px;
+	font-size: 12px;
+	border-radius: 3px;
+	line-height: 1.5;
+}
+
+.twitter-typeahead .hint-large {
+	height: 45px;
+	padding: 10px 16px;
+	font-size: 18px;
+	border-radius: 6px;
+	line-height: 1.33;
+}
+
+.tt-dropdown-menu {
+	min-width: 160px;
+	margin-top: 2px;
+	padding: 5px 0;
+	background-color: #fff;
+	border: 1px solid #ccc;
+	border: 1px solid rgba(0, 0, 0, .2);
+	*border-right-width: 2px;
+	*border-bottom-width: 2px;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+	-webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+	-moz-box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+	box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+	-webkit-background-clip: padding-box;
+	-moz-background-clip: padding;
+	background-clip: padding-box;
+}
+
+.tt-suggestion {
+	display: block;
+	padding: 3px 20px;
+}
+
+.tt-suggestion.tt-is-under-cursor {
+	color: #fff;
+	background-color: #0081c2;
+	background-image: -moz-linear-gradient(top, #0088cc, #0077b3);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#0088cc),
+		to(#0077b3));
+	background-image: -webkit-linear-gradient(top, #0088cc, #0077b3);
+	background-image: -o-linear-gradient(top, #0088cc, #0077b3);
+	background-image: linear-gradient(to bottom, #0088cc, #0077b3);
+	background-repeat: repeat-x;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0088cc',
+		endColorstr='#ff0077b3', GradientType=0)
+}
+
+.tt-suggestion.tt-is-under-cursor a {
+	color: #fff;
+}
+
+.tt-suggestion p {
+	margin: 0;
+}
+</style>
+
+<!-- The HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!--[if lt IE 9]>
 	  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
 
-	<!-- The fav icon -->
-	<link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/img/favicon.ico">
-		
+<!-- The fav icon -->
+<link rel="shortcut icon"
+	href="${pageContext.request.contextPath}/resources/img/favicon.ico">
+
 </head>
 
 <body>
 	<!-- topbar starts -->
-	<div class="navbar">
-		<div class="navbar-inner">
-			<div class="container-fluid">
-				<a class="btn btn-navbar" data-toggle="collapse"
-					data-target=".top-nav.nav-collapse,.sidebar-nav.nav-collapse">
-					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
-					class="icon-bar"></span>
-				</a> <a class="brand" href="#"><span>Predictive Analytics</span></a>
+	<div id="wrapper">
 
-				<!-- user dropdown starts -->
-				<div class="btn-group pull-right">
-					<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-						<i class="icon-user"></i><span class="hidden-phone"> ${userName}</span>
-						<span class="caret"></span>
-					</a>
-					<ul class="dropdown-menu">
-						<li><a href="#">Profile</a></li>
+		<nav class="navbar navbar-default navbar-fixed-top" role="navigation"
+			style="margin-bottom: 0">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target=".sidebar-collapse">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="${pageContext.request.contextPath}/"><strong>Predictive
+						Analytics</strong></a>
+			</div>
+			<!-- /.navbar-header -->
+
+			<ul class="nav navbar-top-links navbar-right">
+				<!-- <li class="sidebar-search">
+                            <div class="input-group custom-search-form">
+                                <input type="text" class="form-control" placeholder="Search...">
+                                <span class="input-group-btn">
+                                <button class="btn btn-default" type="button">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                            </div>
+                            /input-group
+                        </li> -->
+				<li class="dropdown"><a class="dropdown-toggle"
+					data-toggle="dropdown" href="#"> <i
+						class="fa fa-dashboard fa-fw"></i> <i class="fa fa-caret-down"></i>
+				</a>
+					<ul class="dropdown-menu dropdown-user">
+						<li><a href="${pageContext.request.contextPath}/dashboard/">
+								<i class="fa fa-globe fa-fw"> World</i>
+						</a></li>
 						<li class="divider"></li>
-						<li><a href="login.html">Logout</a></li>
-					</ul>
-				</div>
-				<!-- user dropdown ends -->
+						<li><a
+							href="${pageContext.request.contextPath}/dashboard/patient">
+								<i class="fa fa-user fa-fw"> Patient</i>
+						</a></li>
+					</ul></li>
+				<li class="dropdown"><a class="dropdown-toggle"
+					data-toggle="dropdown" href="#"> <i class="fa fa-user fa-fw">
+							${user.fname}</i> <i class="fa fa-caret-down"></i>
+				</a>
+					<ul class="dropdown-menu dropdown-user">
+						<li><a href="${pageContext.request.contextPath}/profile"><i
+								class="fa fa-user-md fa-fw"></i> Profile</a></li>
+						<li><a
+							href="${pageContext.request.contextPath}/admin/data/who"><i
+								class="fa fa-gear fa-fw"></i> Admin</a></li>
+						<li class="divider"></li>
+						<li><a href="${pageContext.request.contextPath}/"><i
+								class="fa fa-sign-out fa-fw"></i> Logout</a></li>
+					</ul> <!-- /.dropdown-user --></li>
+				<!-- /.dropdown -->
+			</ul>
+			<!-- /.navbar-top-links -->
 
-				<div class="top-nav nav-collapse">
-					<ul class="nav">
-						<li><a href="#">Visit Site</a></li>
-						<li>
-							<form class="navbar-search pull-left">
-								<input placeholder="Search" class="search-query span2"
-									name="query" type="text">
-							</form>
+			<div class="navbar-default navbar-static-side" role="navigation">
+				<div class="sidebar-collapse">
+					<ul class="nav" id="side-menu">
+						<li class="sidebar-search">
+							<div class="input-group custom-search-form">
+								<input type="text" class="form-control" placeholder="Search...">
+								<span class="input-group-btn">
+									<button class="btn btn-default" type="button">
+										<i class="fa fa-search"></i>
+									</button>
+								</span>
+							</div> <!-- /input-group -->
 						</li>
+						<li><a href="#"><i class="fa fa-dashboard fa-fw"></i>
+								Dashboard<span class="fa arrow"></span></a>
+							<ul class="nav nav-second-level">
+								<li><a href="${pageContext.request.contextPath}/dashboard/">
+										<i class="fa fa-globe"> World</i>
+								</a></li>
+								<li><a
+									href="${pageContext.request.contextPath}/dashboard/patient">
+										<i class="fa fa-user"> Patient</i>
+								</a></li>
+							</ul> <!-- /.nav-second-level --></li>
+						<li><a href="#"><i class="fa fa-archive fa-fw"></i> Data
+								Management<span class="fa arrow"></span></a>
+							<ul class="nav nav-second-level">
+								<li><a
+									href="${pageContext.request.contextPath}/admin/data/who"> <i
+										class="fa fa-cloud-upload"> Upload</i>
+								</a></li>
+								<li><a
+									href="${pageContext.request.contextPath}/admin/data/who"> <i
+										class="fa fa-cloud-download"> Download</i>
+								</a></li>
+							</ul> <!-- /.nav-second-level --></li>
+						<li><a
+							href="${pageContext.request.contextPath}/admin/data/who"><i
+								class="fa fa-folder-open fa-fw"></i> Browse WHO Data Repo</a></li>
+						<li><a
+							href="${pageContext.request.contextPath}/admin/data/who"><i
+								class="fa fa-tasks fa-fw"></i> Run EMR Job</a></li>
+						<li><a href="#"><i class="fa fa-print fa-fw"></i>
+								Generate Report<span class="fa arrow"></span></a>
+							<ul class="nav nav-second-level">
+								<li><a href="${pageContext.request.contextPath}/dashboard/">
+										<i class="fa fa-globe"> World</i>
+								</a></li>
+								<li><a
+									href="${pageContext.request.contextPath}/dashboard/patient">
+										<i class="fa fa-user"> Patient</i>
+								</a></li>
+							</ul> <!-- /.nav-second-level --></li>
+						<li><a href="${pageContext.request.contextPath}/contact"><i
+								class="fa fa-envelope fa-fw"></i> Contact Us</a></li>
 					</ul>
+					<!-- /#side-menu -->
 				</div>
-				<!--/.nav-collapse -->
+				<!-- /.sidebar-collapse -->
 			</div>
-		</div>
-	</div>
-	<!-- topbar ends -->
+			<!-- /.navbar-static-side -->
+		</nav>
 
-		<div class="container-fluid">
-		<div class="row-fluid">
-		
-		<!-- left menu starts -->
-			<div class="span2 main-menu-span">
-				<div class="well nav-collapse sidebar-nav">
-					<ul class="nav nav-tabs nav-stacked main-menu">
-						<li class="nav-header hidden-tablet">Main</li>
-						<li><a class="ajax-link" href="${pageContext.request.contextPath}/dashboard"><i
-								class="icon-home"></i><span class="hidden-tablet">
-									Dashboard</span></a></li>
-						<li><a class="ajax-link" href="ui.html"><i
-								class="icon-eye-open"></i><span class="hidden-tablet"> UI
-									Features</span></a></li>
-						<li><a class="ajax-link" href="form.html"><i
-								class="icon-edit"></i><span class="hidden-tablet"> Forms</span></a></li>
-						<li><a class="ajax-link" href="chart.html"><i
-								class="icon-list-alt"></i><span class="hidden-tablet">
-									Charts</span></a></li>
-						<li><a class="ajax-link" href="typography.html"><i
-								class="icon-font"></i><span class="hidden-tablet">
-									Typography</span></a></li>
-						<li><a class="ajax-link" href="gallery.html"><i
-								class="icon-picture"></i><span class="hidden-tablet">
-									Gallery</span></a></li>
-						<li class="nav-header hidden-tablet">Sample Section</li>
-						<li><a class="ajax-link" href="table.html"><i
-								class="icon-align-justify"></i><span class="hidden-tablet">
-									Tables</span></a></li>
-						<li><a class="ajax-link" href="calendar.html"><i
-								class="icon-calendar"></i><span class="hidden-tablet">
-									Calendar</span></a></li>
-						<li><a class="ajax-link" href="grid.html"><i
-								class="icon-th"></i><span class="hidden-tablet"> Grid</span></a></li>
-						<li><a class="ajax-link" href="file-manager.html"><i
-								class="icon-folder-open"></i><span class="hidden-tablet">
-									File Manager</span></a></li>
-						<li><a href="tour.html"><i class="icon-globe"></i><span
-								class="hidden-tablet"> Tour</span></a></li>
-						<li><a class="ajax-link" href="icon.html"><i
-								class="icon-star"></i><span class="hidden-tablet"> Icons</span></a></li>
-						<li><a href="error.html"><i class="icon-ban-circle"></i><span
-								class="hidden-tablet"> Error Page</span></a></li>
-						<li><a href="login.html"><i class="icon-lock"></i><span
-								class="hidden-tablet"> Login Page</span></a></li>
-					</ul>
-					<label id="for-is-ajax" class="hidden-tablet" for="is-ajax"><input
-						id="is-ajax" type="checkbox"> Ajax on menu</label>
-				</div>
-				<!--/.well -->
+		<noscript>
+			<div class="alert alert-block span10">
+				<h4 class="alert-heading">Warning!</h4>
+				<p>
+					You need to have <a href="http://en.wikipedia.org/wiki/JavaScript"
+						target="_blank">JavaScript</a> enabled to use this site.
+				</p>
 			</div>
-			<!--/span-->
-			<!-- left menu ends -->
+		</noscript>
 
-			<noscript>
-				<div class="alert alert-block span10">
-					<h4 class="alert-heading">Warning!</h4>
-					<p>
-						You need to have <a href="http://en.wikipedia.org/wiki/JavaScript"
-							target="_blank">JavaScript</a> enabled to use this site.
-					</p>
+		<!-- content starts -->
+		<div id="page-wrapper" >
+			<div class="row">
+				<div class="col-lg-12">
+					<h1 class="page-header">World Dashboard</h1>
 				</div>
-			</noscript>
-			
-			<div id="content" class="span10">
-				<!-- content starts -->
-				<div>
-					<ul class="breadcrumb">
-						<li><a href="#">Home</a> <span class="divider">/</span></li>
-						<li><a href="#">Dashboard</a></li>
-					</ul>
-				</div>
-				
-				<div class="box span10">
-					<div class="box-header well" data-original-title>
-						<h2><i class="icon-list-alt"></i> Health Trends around the world</h2>
-						<div class="box-icon">
-							<a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
-							<a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a>
-						</div>
+			</div>
+			<div id="content" class="row">
+				<!-- <div>
+						<ul class="breadcrumb">
+							<li><a href="#">Home</a> <span class="divider">/</span></li>
+							<li><a href="#">Dashboard</a></li>
+						</ul>
+					</div> -->
+				<div class="row placeholders">
+					<div class="col-xs-6 col-sm-3 placeholder">
+						<svg height="100" width="100">
+  							<circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="red"/>
+						</svg>
+						<h4>People are suffering from diabetes worldwide.</h4>
+						<span class="text-muted">Something else</span>
 					</div>
-					<div class="box-content">
-						<div id="pie-chart-container">
-							<c:if test="${error != null}">
-								<div class="alert alert-danger">${error}</div>
-							</c:if>
+					<div class="col-xs-6 col-sm-3 placeholder">
+						<img data-src="${pageContext.request.contextPath}/resources/js/holder.js/200x200/auto/vine" class="img-responsive"
+							alt="Generic placeholder thumbnail">
+						<h4>People died from cancer in 2012</h4>
+						<span class="text-muted">Something else</span>
+					</div>
+					<div class="col-xs-6 col-sm-3 placeholder">
+						<img data-src="${pageContext.request.contextPath}/resources/js/holder.js/200x200/auto/sky" class="img-responsive"
+							alt="Generic placeholder thumbnail">
+						<h4>People died from malaria in 2012</h4>
+						<span class="text-muted">Something else</span>
+					</div>
+					<div class="col-xs-6 col-sm-3 placeholder">
+						<img data-src="${pageContext.request.contextPath}/resources/js/holder.js/200x200/auto/vine" class="img-responsive"
+							alt="Generic placeholder thumbnail">
+						<h4>People died from tuberculosis in 2012</h4>
+						<span class="text-muted">Something else</span>
+					</div>
+				</div>
+				<div class="col-md-10">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<i class="fa fa-bar-chart-o"></i> Health Trends around the world
 						</div>
-						<div id="filter-data">
-							<label for="searchText"><strong>Filter data by Country </strong></label>
-							<input type="text" id="searchText" placeholder="Enter search country here" class="span6 typeahead" data-provide="typeahead"
-								data-items="8"/>
-							<button class="btn btn-primary" id="btn-filter" value="filter" type="button">Filter</button>
+						<div class="panel-body">
+							<div id="pie-chart-container">
+								<c:if test="${error != null}">
+									<div class="alert alert-danger">${error}</div>
+								</c:if>
+							</div>
+							<br />
+							<div id="filter-data"
+								style="display: inline-block; margin-left: 25%">
+								<p>
+									<strong>Filter data by Country </strong>
+								</p>
+								<input type="text" id="searchText"
+									placeholder="Enter search country here"
+									class="form-control typeahead" data-provide="typeahead"
+									data-items="8" style="width: 300px; height: 35px" required />
+								<button class="btn btn-success" id="btn-filter" value="filter"
+									type="button">
+									<i class="fa fa-filter"></i> Filter
+								</button>
+							</div>
+							<div id="alert-error" class="alert alert-danger"></div>
 						</div>
-						<div id="alert-error" class="alert alert-danger"></div>
 						<hr id="pie-bar-separator">
 						<div id="bar-chart-container"></div>
-						<br/>
-						<br/>
+						<br /> <br />
 						<hr id="bar-line-separator">
 						<div id="line-chart-container"></div>
 					</div>
-				</div><!--/span-->
-			</div><!--/row-->
-				
-	</div>
+				</div>
+				<!--/span-->
+			</div>
+			<!--/row-->
 
-	<!-- external javascript
+		</div>
+
+		<!-- external javascript
 	================================================== -->
-	<!-- Placed at the end of the document so the pages load faster -->
+		<!-- Placed at the end of the document so the pages load faster -->
 
-	<%-- <!-- jQuery -->
-	<script src="${pageContext.request.contextPath}/resources/js/jquery-1.7.2.min.js"></script>
-	<!-- jQuery UI -->
-	<script src="${pageContext.request.contextPath}/resources/js/jquery-ui-1.8.21.custom.min.js"></script>
-	<!-- transition / effect library -->
-	<script src="${pageContext.request.contextPath}/resources/js/bootstrap-transition.js"></script>
-	<!-- alert enhancer library -->
-	<script src="${pageContext.request.contextPath}/resources/js/bootstrap-alert.js"></script>
-	<!-- popover effect library -->
-	<script src="${pageContext.request.contextPath}/resources/js/bootstrap-popover.js"></script>
-	<!-- application script for Charisma demo -->
-	<script src="${pageContext.request.contextPath}/resources/js/charisma.js"></script> --%>
-	
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js" type="text/javascript"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/jquery.ui.core.min.js" type="text/javascript"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/jquery.ui.widget.min.js" type="text/javascript"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/jquery.ui.position.min.js" type="text/javascript"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/jquery.ui.autocomplete.min.js" type="text/javascript"></script>
-	<!-- autocomplete library -->
-	<script src="${pageContext.request.contextPath}/resources/js/bootstrap-typeahead.js"></script>
-	<script src="http://jquery.bassistance.de/validate/jquery.validate.js"></script>
-	
-	<!-- High Charts -->
-	<script src="http://code.highcharts.com/highcharts.js"></script>
-	<script src="http://code.highcharts.com/modules/exporting.js"></script>
-	
-	<script type="text/javascript">
+		<!-- Core Scripts - Include with every page -->
+		<script
+			src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.js"></script>
+		<script
+			src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
+		<script
+			src="${pageContext.request.contextPath}/resources/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+		
+		<script type="text/javascript" src="http://getbootstrap.com/assets/js/docs.min.js"></script>
+
+		<!-- SB Admin Scripts - Include with every page -->
+		<script
+			src="${pageContext.request.contextPath}/resources/js/sb-admin.js"></script>
+		<!-- autocomplete library -->
+		<script
+			src="${pageContext.request.contextPath}/resources/js/bootstrap-typeahead.js"></script>
+		<script src="http://jquery.bassistance.de/validate/jquery.validate.js"></script>
+
+		<!-- High Charts -->
+		<script src="http://code.highcharts.com/highcharts.js"></script>
+		<script src="http://code.highcharts.com/modules/exporting.js"></script>
+
+		<script type="text/javascript">
 	var disease;
+	var substringMatcher = function(strs) {
+		  return function findMatches(q, cb) {
+		    var matches, substringRegex;
+		 
+		    // an array that will be populated with substring matches
+		    matches = [];
+		 
+		    // regex used to determine if a string contains the substring `q`
+		    substrRegex = new RegExp(q, 'i');
+		 
+		    // iterate through the pool of strings and for any string that
+		    // contains the substring `q`, add it to the `matches` array
+		    $.each(strs, function(i, str) {
+		      if (substrRegex.test(str)) {
+		        // the typeahead jQuery plugin expects suggestions to a
+		        // JavaScript object, refer to typeahead docs for more info
+		        matches.push({ value: str });
+		      }
+		    });
+		 
+		    cb(matches);
+		  };
+		};
 	$(function () {
 	$('#pie-bar-separator').hide();
 	$('#bar-line-separator').hide();
@@ -245,10 +410,12 @@
 	        chart: {
 	            plotBackgroundColor: null,
 	            plotBorderWidth: null,
-	            plotShadow: false
+	            plotShadow: false//,
+	           /*  height: 400,
+	            width: 500 */
 	        },
 	        title: {
-	            text: 'Disease share in United States since 2006 (Avg. number of cases)'
+	            text: 'Disease share around the world since 2006 <br />(Avg. number of cases)'
 	        },
 	        tooltip: {
 	    	    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -280,8 +447,16 @@
 		            		$.get("${pageContext.request.contextPath}/dashboard/country/" + disease, function(data){
 		            			var obj = jQuery.parseJSON(data);
 		            			var countries = obj.countryList;
-		            			var autoComplete = $('#searchText').typeahead();
-		            			autoComplete.data('typeahead').source = countries;
+		            			$('.typeahead').typeahead({
+		            				hint: true,
+		            				highlight: true,
+		            				minLength: 1
+		            			},
+		            			{
+		            				name: 'countries',
+		            				displayKey: 'value',
+		            				source: substringMatcher(countries)
+		            			});
 		            			$('#filter-data').show();
 		            			
 		            		});
@@ -417,7 +592,6 @@
 		
 	});
 	
-</script>	
-		
+</script>
 </body>
 </html>

@@ -7,42 +7,15 @@
 	<meta charset="utf-8">
 	<title>Profile</title>
 	<!-- The styles -->
-	<link id="bs-css" href="${pageContext.request.contextPath}/resources/css/bootstrap-cerulean.css" rel="stylesheet">
+	<link id="bs-css" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath}/resources/font-awesome/css/font-awesome.css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath}/resources/css/sb-admin.css" rel="stylesheet">
 	<style type="text/css">
-	  body {
-		padding-bottom: 40px;
-	  }
-	  .sidebar-nav {
-		padding: 9px 0;
-	  }
-	</style>
-	<style type="text/css">
-	.ui-menu .ui-menu-item a,.ui-menu .ui-menu-item a.ui-state-hover, .ui-menu .ui-menu-item a.ui-state-active {
-		font-weight: normal;
-		margin: -1px;
-		text-align:left;
-		font-size:14px;
+	td {
+		width: 400px;
+		padding-left: 15px;
 	}
-	.ui-autocomplete-loading { background: white url("/images/ui-anim_basic_16x16.gif") right center no-repeat; }
 	</style>
-	<link href="${pageContext.request.contextPath}/resources/css/bootstrap-classic.css" rel="stylesheet">
-	<link href="${pageContext.request.contextPath}/resources/css/charisma-app.css" rel="stylesheet">
-	<link href="${pageContext.request.contextPath}/resources/css/jquery-ui-1.8.21.custom.css" rel="stylesheet">
-	<link href='${pageContext.request.contextPath}/resources/css/fullcalendar.css' rel='stylesheet'>
-	<link href='${pageContext.request.contextPath}/resources/css/fullcalendar.print.css' rel='stylesheet'  media='print'>
-	<link href='${pageContext.request.contextPath}/resources/css/chosen.css' rel='stylesheet'>
-	<link href='${pageContext.request.contextPath}/resources/css/uniform.default.css' rel='stylesheet'>
-	<link href='${pageContext.request.contextPath}/resources/css/colorbox.css' rel='stylesheet'>
-	<link href='${pageContext.request.contextPath}/resources/css/jquery.cleditor.css' rel='stylesheet'>
-	<link href='${pageContext.request.contextPath}/resources/css/jquery.noty.css' rel='stylesheet'>
-	<link href='${pageContext.request.contextPath}/resources/css/noty_theme_default.css' rel='stylesheet'>
-	<link href='${pageContext.request.contextPath}/resources/css/elfinder.min.css' rel='stylesheet'>
-	<link href='${pageContext.request.contextPath}/resources/css/elfinder.theme.css' rel='stylesheet'>
-	<link href='${pageContext.request.contextPath}/resources/css/jquery.iphone.toggle.css' rel='stylesheet'>
-	<link href='${pageContext.request.contextPath}/resources/css/opa-icons.css' rel='stylesheet'>
-	<link href='${pageContext.request.contextPath}/resources/css/uploadify.css' rel='stylesheet'>
-	<link href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.11/themes/flick/jquery-ui.css" rel="stylesheet" type="text/css" />
-	
 
 	<!-- The HTML5 shim, for IE6-8 support of HTML5 elements -->
 	<!--[if lt IE 9]>
@@ -56,99 +29,147 @@
 
 <body>
 	<!-- topbar starts -->
-	<div class="navbar">
-		<div class="navbar-inner">
-			<div class="container-fluid">
-				<a class="btn btn-navbar" data-toggle="collapse"
-					data-target=".top-nav.nav-collapse,.sidebar-nav.nav-collapse">
-					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
-					class="icon-bar"></span>
-				</a> <a class="brand" href="#"><span>Predictive Analytics</span></a>
+<div id="wrapper">
 
-				<!-- user dropdown starts -->
-				<div class="btn-group pull-right">
-					<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-						<i class="icon-user"></i><span class="hidden-phone"> ${userName}</span>
-						<span class="caret"></span>
-					</a>
-					<ul class="dropdown-menu">
-						<li><a href="#">Profile</a></li>
-						<li class="divider"></li>
-						<li><a href="login.html">Logout</a></li>
-					</ul>
-				</div>
-				<!-- user dropdown ends -->
+        <nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="${pageContext.request.contextPath}/"><strong>Predictive Analytics</strong></a>
+            </div>
+            <!-- /.navbar-header -->
 
-				<div class="top-nav nav-collapse">
-					<ul class="nav">
-						<li><a href="#">Visit Site</a></li>
-						<li>
-							<form class="navbar-search pull-left">
-								<input placeholder="Search" class="search-query span2"
-									name="query" type="text">
-							</form>
-						</li>
-					</ul>
-				</div>
-				<!--/.nav-collapse -->
-			</div>
-		</div>
-	</div>
-	<!-- topbar ends -->
-
-		<div class="container-fluid">
-		<div class="row-fluid">
-		
-		<!-- left menu starts -->
-			<div class="span2 main-menu-span">
-				<div class="well nav-collapse sidebar-nav">
-					<ul class="nav nav-tabs nav-stacked main-menu">
-						<li class="nav-header hidden-tablet">Main</li>
-						<li><a class="ajax-link" href="index.html"><i
-								class="icon-home"></i><span class="hidden-tablet">
-									Dashboard</span></a></li>
-						<li><a class="ajax-link" href="ui.html"><i
-								class="icon-eye-open"></i><span class="hidden-tablet"> UI
-									Features</span></a></li>
-						<li><a class="ajax-link" href="form.html"><i
-								class="icon-edit"></i><span class="hidden-tablet"> Forms</span></a></li>
-						<li><a class="ajax-link" href="chart.html"><i
-								class="icon-list-alt"></i><span class="hidden-tablet">
-									Charts</span></a></li>
-						<li><a class="ajax-link" href="typography.html"><i
-								class="icon-font"></i><span class="hidden-tablet">
-									Typography</span></a></li>
-						<li><a class="ajax-link" href="gallery.html"><i
-								class="icon-picture"></i><span class="hidden-tablet">
-									Gallery</span></a></li>
-						<li class="nav-header hidden-tablet">Sample Section</li>
-						<li><a class="ajax-link" href="table.html"><i
-								class="icon-align-justify"></i><span class="hidden-tablet">
-									Tables</span></a></li>
-						<li><a class="ajax-link" href="calendar.html"><i
-								class="icon-calendar"></i><span class="hidden-tablet">
-									Calendar</span></a></li>
-						<li><a class="ajax-link" href="grid.html"><i
-								class="icon-th"></i><span class="hidden-tablet"> Grid</span></a></li>
-						<li><a class="ajax-link" href="file-manager.html"><i
-								class="icon-folder-open"></i><span class="hidden-tablet">
-									File Manager</span></a></li>
-						<li><a href="tour.html"><i class="icon-globe"></i><span
-								class="hidden-tablet"> Tour</span></a></li>
-						<li><a class="ajax-link" href="icon.html"><i
-								class="icon-star"></i><span class="hidden-tablet"> Icons</span></a></li>
-						<li><a href="error.html"><i class="icon-ban-circle"></i><span
-								class="hidden-tablet"> Error Page</span></a></li>
-						<li><a href="login.html"><i class="icon-lock"></i><span
-								class="hidden-tablet"> Login Page</span></a></li>
-					</ul>
-					<label id="for-is-ajax" class="hidden-tablet" for="is-ajax"><input
-						id="is-ajax" type="checkbox"> Ajax on menu</label>
-				</div>
-				<!--/.well -->
-			</div>
-			<!--/span-->
-			<!-- left menu ends -->
+            <ul class="nav navbar-top-links navbar-right">
+            	<!-- <li class="sidebar-search">
+                            <div class="input-group custom-search-form">
+                                <input type="text" class="form-control" placeholder="Search...">
+                                <span class="input-group-btn">
+                                <button class="btn btn-default" type="button">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                            </div>
+                            /input-group
+                        </li> -->
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-dashboard fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li>
+                            <a href="${pageContext.request.contextPath}/dashboard/">
+                                	<i class="fa fa-globe fa-fw"> World</i>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="${pageContext.request.contextPath}/dashboard/patient">
+                                <i class="fa fa-user fa-fw"> Patient</i>
+                            </a>
+                        </li>
+                        </ul>
+                 </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-user fa-fw"> ${user.fname}</i>  <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a href="${pageContext.request.contextPath}/profile"><i class="fa fa-user-md fa-fw"></i> Profile</a>
+                        </li>
+                        <li><a href="${pageContext.request.contextPath}/admin/data/who"><i class="fa fa-gear fa-fw"></i> Admin</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li><a href="${pageContext.request.contextPath}/"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
+                <!-- /.dropdown -->
+            </ul>
+            <!-- /.navbar-top-links -->
+			
+			<div class="navbar-default navbar-static-side" role="navigation">
+                <div class="sidebar-collapse">
+                    <ul class="nav" id="side-menu">
+                        <li class="sidebar-search">
+                            <div class="input-group custom-search-form">
+                                <input type="text" class="form-control" placeholder="Search...">
+                                <span class="input-group-btn">
+                                <button class="btn btn-default" type="button">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                            </div>
+                            <!-- /input-group -->
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-dashboard fa-fw"></i> Dashboard<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="${pageContext.request.contextPath}/dashboard/">
+                                    	<i class="fa fa-globe"> World</i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="${pageContext.request.contextPath}/dashboard/patient">
+										<i class="fa fa-user"> Patient</i>
+									</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-archive fa-fw"></i> Data Management<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="${pageContext.request.contextPath}/admin/data/who">
+                                    	<i class="fa fa-cloud-upload"> Upload</i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="${pageContext.request.contextPath}/admin/data/who">
+										<i class="fa fa-cloud-download"> Download</i>
+									</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        <li>
+                            <a href="${pageContext.request.contextPath}/admin/data/who"><i class="fa fa-folder-open fa-fw"></i> Browse WHO Data Repo</a>
+                        </li>
+                        <li>
+                            <a href="${pageContext.request.contextPath}/admin/data/who"><i class="fa fa-tasks fa-fw"></i> Run EMR Job</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-print fa-fw"></i> Generate Report<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="${pageContext.request.contextPath}/dashboard/">
+                                    	<i class="fa fa-globe"> World</i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="${pageContext.request.contextPath}/dashboard/patient">
+                                    	<i class="fa fa-user"> Patient</i>
+                                    </a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        <li>
+                            <a href="${pageContext.request.contextPath}/contact"><i class="fa fa-envelope fa-fw"></i> Contact Us</a>
+                        </li>
+                    </ul>
+                    <!-- /#side-menu -->
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+        </nav>
 
 			<noscript>
 				<div class="alert alert-block span10">
@@ -160,21 +181,24 @@
 				</div>
 			</noscript>
 			
-			<div id="content" class="span10">
+	<div id="page-wrapper">
 				<!-- content starts -->
 
 
-				<div>
+				<!-- <div>
 					<ul class="breadcrumb">
-						<li><a href="#">Home</a> <span class="divider">/</span></li>
+						<li><a href="#">Home</a> <span class="divider"></span></li>
 						<li><a href="#">Dashboard</a></li>
 					</ul>
-				</div>
-				
-			<div class="row-fluid">
+				</div> -->
+                <!-- /.col-lg-12 -->	
+			<div class="row">
 			<c:if test="${user != null}">
-				<div class="span12 center login-header">
-					<h2>Hi There! Please check your registered information. You can choose to update the registered information</h2>
+			<div class="col-lg-12">
+                    <h1 class="page-header">${user.fname}'s Profile</h1>
+            </div>
+				<div  style="padding-left: 10%">
+					<h4>Hi There! Please check your registered information. You can choose to update the registered information</h4>
 				</div><!--/span-->
 			</div><!--/row-->
 			
@@ -185,110 +209,108 @@
 					Success! You have successfully updated your information.
 				</div>
 			
-			<div class="row-fluid" id="register"> 
-				<div class="well span12 center login-box">
-					<div class="alert alert-info">
+			<div class="row center" id="register" style="padding-left: 25%"> 
+				<div class="well col-md-8 center">
+					<div class="alert alert-info" align="center">
 						Please provide all the below details.
 					</div>
 					<form class="form-horizontal" action="${pageContext.request.contextPath}/profile/update" method="post">
 						<fieldset>
 						<table width="auto" align="center" id="form-container">
 							<tr>
-								<td><label>First Name</label></td>
 								<td>
-									<div class="input-prepend" title="Firstname" data-rel="tooltip">
-									<input autofocus name="fname" id="fname" type="text" value="${user.fname}" placeholder="First Name (e.g. John)" required="required" size="35"/>
+									<div class="input-group" title="Firstname" data-rel="tooltip" style="margin-bottom: 15px">
+									<span class="input-group-addon"><i class="fa fa-user"></i></span>
+									<input autofocus name="fname" id="fname" type="text" value="${user.fname}" placeholder="First Name (e.g. John)" required="required" size="35" class="form-control"/>
 									</div>
 								</td>
-								<td><label>Last Name</label></td>
 								<td>
-									<div class="input-prepend" title="Lastname" data-rel="tooltip">
-									<input name="lname" id="lname" type="text" value="${user.lname}" placeholder="Last Name (e.g. Doe)" required="required" size="35"/>
-									</div>
-								</td>
-							</tr>
-							<div class="clearfix"></div>
-							
-							<tr>
-								<td><label>Password</label></td>
-								<td>
-									<div class="input-prepend" title="Password" data-rel="tooltip">
-									<input name="pwd" id="pwd" type="password" value="${user.password}" placeholder="Password (8 to 20 characters)" required="required" size="35" maxlength="20"/>
+									<div class="input-group" title="Lastname" data-rel="tooltip" style="margin-bottom: 15px">
+									<span class="input-group-addon"><i class="fa fa-user"></i></span>
+									<input name="lname" id="lname" type="text" value="${user.lname}" placeholder="Last Name (e.g. Doe)" required="required" size="35" class="form-control"/>
 									</div>
 								</td>
 							</tr>
 							<div class="clearfix"></div>
 							
 							<tr>
-								<td><label>E-mail</label></td>
 								<td>
-									<div class="input-prepend" title="Email" data-rel="tooltip">
-									<input name="email" id="email" type="email" value="${user.email}" placeholder="Email (e.g. John@abc.com)" required="required" size="35"/>
-									</div>
-								</td>
-								<td><label>Contact</label></td>
-								<td>
-									<div class="input-prepend" title="Contact" data-rel="tooltip">
-									<input name="contact" id="contact" type="tel" value="${user.contact}" placeholder="Contact No (e.g. 0123456789)" required="required" size="35" maxlength="10"/>
+									<div class="input-group" title="Password" data-rel="tooltip" style="margin-bottom: 15px">
+									<span class="input-group-addon"><i class="fa fa-key"></i></span>
+									<input name="pwd" id="pwd" type="password" value="${user.password}" placeholder="Password (8 to 20 characters)" required="required" size="35" maxlength="20" class="form-control"/>
 									</div>
 								</td>
 							</tr>
 							<div class="clearfix"></div>
 							
 							<tr>
-								<td><label>Street</label></td>
 								<td>
-									<div class="input-prepend" title="Street1" data-rel="tooltip">
-									<input name="street1" id="street1" type="text" value="${user.street}" placeholder="Street Name (e.g. 1 N St.)" required="required" size="35"/>
+									<div class="input-group" title="Email" data-rel="tooltip" style="margin-bottom: 15px">
+									<span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+									<input name="email" id="email" type="email" value="${user.email}" placeholder="Email (e.g. John@abc.com)" required="required" size="35" class="form-control"/>
 									</div>
 								</td>
-								<td><label>Apt/Suite</label></td>
 								<td>
-									<div class="input-prepend" title="Apt" data-rel="tooltip">
-									<input name="apt" id="apt" type="text" value="${user.aptOrSuite}" placeholder="Apt/Suite (e.g. Apt. 1)" required="required" size="35"/>
+									<div class="input-group" title="Contact" data-rel="tooltip" style="margin-bottom: 15px">
+									<span class="input-group-addon"><i class="fa fa-mobile"></i></span>
+									<input name="contact" id="contact" type="tel" value="${user.contact}" placeholder="Contact No (e.g. 0123456789)" required="required" size="35" maxlength="10" class="form-control"/>
 									</div>
 								</td>
 							</tr>
 							<div class="clearfix"></div>
 							
 							<tr>
-								<td><label>Zipcode</label></td>
 								<td>
-									<div class="input-prepend" title="ZipCode" data-rel="tooltip">
-									<input name="zipcode" id="zipcode" type="text" value="${user.zip}" placeholder="Zip Code (e.g. 12345)" required="required" size="35" maxlength="5"/>
+									<div class="input-group" title="Street1" data-rel="tooltip" style="margin-bottom: 15px">
+									<span class="input-group-addon"><i class="fa fa-road"></i></span>
+									<input name="street1" id="street1" type="text" value="${user.street}" placeholder="Street Name (e.g. 1 N St.)" required="required" size="35" class="form-control"/>
+									</div>
+								</td>
+								<td>
+									<div class="input-group" title="Apt" data-rel="tooltip" style="margin-bottom: 15px">
+									<span class="input-group-addon"><i class="fa fa-home"></i></span>
+									<input name="apt" id="apt" type="text" value="${user.aptOrSuite}" placeholder="Apt/Suite (e.g. Apt. 1)" required="required" size="35" class="form-control"/>
+									</div>
+								</td>
+							</tr>
+							<div class="clearfix"></div>
+							
+							<tr>
+								<td>
+									<div class="input-group" title="ZipCode" data-rel="tooltip" style="margin-bottom: 15px">
+									<span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
+									<input name="zipcode" id="zipcode" type="text" value="${user.zip}" placeholder="Zip Code (e.g. 12345)" required="required" size="35" maxlength="5" class="form-control"/>
 									</div>
 									<div class="text-error"></div>
 								</td>
-								<td><label>City</label></td>
 								<td>
-									<div class="input-prepend" title="City" data-rel="tooltip">
-									<input name="city" id="city" type="text" value="${user.city}" placeholder="City (e.g. San Jose)" required="required" size="35"/>
+									<div class="input-group" title="City" data-rel="tooltip" style="margin-bottom: 15px">
+									<span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
+									<input name="city" id="city" type="text" value="${user.city}" placeholder="City (e.g. San Jose)" required="required" size="35" class="form-control"/>
 									</div>
 								</td>
 							</tr>
 							<tr>
-								<td><label>State</label></td>
 								<td>
-									<div class="input-prepend" title="State" data-rel="tooltip">
-									<input name="state" id="state" type="text" value="${user.state}" placeholder="State (e.g. CA)" required="required" size="35"/>
+									<div class="input-group" title="State" data-rel="tooltip" style="margin-bottom: 15px">
+									<span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
+									<input name="state" id="state" type="text" value="${user.state}" placeholder="State (e.g. CA)" required="required" size="35" class="form-control"/>
 									</div>
 								</td>
 							</tr>
 						</table>	
 							<div class="clearfix"></div>
-							<table align="center">
-								<tr>	
-									<td>
-										<button type="button" class="btn btn-success" id="editBtn">Edit</button>
-									</td>
-									<td>
-										<button type="submit" class="btn btn-primary" id="button">Update</button>
-									</td>
-								</tr>
-							</table>
 						</fieldset>
 					</form>
-				</div><!--/span-->
+					<div style="text-align: center;">
+						<table align="center">
+							<tr>
+								<button type="button" class="btn btn-warning" id="editBtn" style="width: 150px"><i class="fa fa-edit"> Edit</i></button>
+								&nbsp;&nbsp;&nbsp;
+								<button type="submit" class="btn btn-success" id="button" style="width: 150px"><i class="fa fa-sign-in"> Update</i></button>
+							</tr>
+						</table>
+					</div><!--/span-->
 			</div><!--/row-->
 				</div><!--/fluid-row-->
 			</c:if>
@@ -302,22 +324,14 @@
 	================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
 
-	<!-- jQuery -->
-	<script src="${pageContext.request.contextPath}/resources/js/jquery-1.7.2.min.js"></script>
-	<!-- jQuery UI -->
-	<script src="${pageContext.request.contextPath}/resources/js/jquery-ui-1.8.21.custom.min.js"></script>
-	<!-- transition / effect library -->
-	<script src="${pageContext.request.contextPath}/resources/js/bootstrap-transition.js"></script>
-	<!-- alert enhancer library -->
-	<script src="${pageContext.request.contextPath}/resources/js/bootstrap-alert.js"></script>
-	<!-- popover effect library -->
-	<script src="${pageContext.request.contextPath}/resources/js/bootstrap-popover.js"></script>
-	<!-- application script for Charisma demo -->
-	<script src="${pageContext.request.contextPath}/resources/js/charisma.js"></script>
-	
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js" type="text/javascript"></script>
-	<script src="http://jquery.bassistance.de/validate/jquery.validate.js"></script>
-	
+	<!-- Core Scripts - Include with every page -->
+    <script src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+
+    <!-- SB Admin Scripts - Include with every page -->
+    <script src="${pageContext.request.contextPath}/resources/js/sb-admin.js"></script>	
+		
 	<script type="text/javascript">//<![CDATA[
 	$(function() {
 		// IMPORTANT: Fill in your client key
@@ -457,7 +471,7 @@
 <!-- This JavaScript corresponds to editing the user information -->
 <script type="text/javascript">
 	$(function(){
-		$('input').prop('readonly', true);
+		$('#register :input').prop('readonly', true);
 	});
 	
 	$('#editBtn').click(function(){

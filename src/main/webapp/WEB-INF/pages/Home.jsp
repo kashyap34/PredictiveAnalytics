@@ -95,10 +95,13 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <!-- jQuery -->
-	<script src="${pageContext.request.contextPath}/resources/js/jquery-1.7.2.min.js"></script>
-	<!-- jQuery UI -->
-	<script src="${pageContext.request.contextPath}/resources/js/jquery-ui-1.8.21.custom.min.js"></script>
+    <!-- Core Scripts - Include with every page -->
+		<script
+			src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.js"></script>
+		<script
+			src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
+		<script
+			src="${pageContext.request.contextPath}/resources/js/plugins/metisMenu/jquery.metisMenu.js"></script>
 	<!-- High Charts -->
 	<script src="http://code.highcharts.com/highcharts.js"></script>
 	<script src="http://code.highcharts.com/modules/exporting.js"></script>

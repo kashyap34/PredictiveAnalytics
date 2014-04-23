@@ -1,0 +1,318 @@
+{
+  "birthdate": -788691600,
+  "conditions": [
+    {
+      "causeOfDeath": null,
+      "codes": {
+        "SNOMED-CT": [
+          "10273003"
+        ],
+        "ICD-9-CM": [
+          "410.00"
+        ],
+        "ICD-10-CM": [
+          "I21.01"
+        ]
+      },
+      "description": "Diagnosis, Active: Hospital Measures - AMI (Code List: 2.16.840.1.113883.3.666.5.3011)",
+      "end_time": 1335805200,
+      "free_text": null,
+      "mood_code": "EVN",
+      "name": null,
+      "negationInd": null,
+      "negationReason": null,
+      "oid": "2.16.840.1.113883.3.560.1.2",
+      "ordinality": {
+        "code_system": "SNOMED-CT",
+        "code": "63161005",
+        "title": "Hospital Measures - Principal"
+      },
+      "priority": null,
+      "reason": null,
+      "severity": null,
+      "specifics": null,
+      "start_time": 1335792000,
+      "status_code": {
+        "SNOMED-CT": [
+          "55561003"
+        ],
+        "HL7 ActStatus": [
+          "active"
+        ]
+      },
+      "time": null,
+      "time_of_death": null,
+      "type": null,
+      "_type": "Condition"
+    }
+  ],
+  "description": "",
+  "encounters": [
+    {
+      "admitTime": 1335790800,
+      "admitType": null,
+      "codes": {
+        "SNOMED-CT": [
+          "112689000"
+        ]
+      },
+      "description": "Encounter, Performed: Hospital Measures-Encounter Inpatient (Code List: 2.16.840.1.113883.3.666.5.625)",
+      "dischargeDisposition": null,
+      "dischargeTime": 1335805200,
+      "end_time": 1335805200,
+      "free_text": null,
+      "mood_code": "EVN",
+      "negationInd": null,
+      "negationReason": null,
+      "oid": "2.16.840.1.113883.3.560.1.79",
+      "performer_id": null,
+      "reason": null,
+      "specifics": null,
+      "start_time": 1335790800,
+      "status_code": {
+        "HL7 ActStatus": [
+          "performed"
+        ]
+      },
+      "time": null,
+      "transferFrom": null,
+      "transferTo": null,
+      "_type": "Encounter"
+    }
+  ],
+  "ethnicity": {
+    "code": "2186-5",
+    "name": "Not Hispanic or Latino",
+    "codeSystem": "CDC Race"
+  },
+  "expired": false,
+  "first": "AMI_ADULT",
+  "gender": "F",
+  "insurance_providers": [
+    {
+      "codes": {
+        "SOP": [
+          "349"
+        ]
+      },
+      "end_time": null,
+      "financial_responsibility_type": {
+        "code": "SELF",
+        "codeSystem": "HL7 Relationship Code"
+      },
+      "free_text": null,
+      "member_id": "1234567890",
+      "name": "Other",
+      "payer": {
+        "name": "Other"
+      },
+      "relationship": null,
+      "start_time": 1199163600,
+      "time": null,
+      "type": "OT"
+    }
+  ],
+  "languages": [
+
+  ],
+  "last": "A",
+  "measure_ids": [
+    "0142",
+    "0639",
+    "0163",
+    "0371",
+    "0497",
+    "0437",
+    "0438",
+    "0376",
+    "0164",
+    "0372"
+  ],
+  "measure_period_end": 1356930000000,
+  "measure_period_start": 1325394000000,
+  "medical_record_number": "caf50e70e548d61d097c68e9001ded60",
+  "medications": [
+    {
+      "administrationTiming": null,
+      "codes": {
+        "RxNorm": [
+          "346773"
+        ]
+      },
+      "cumulativeMedicationDuration": null,
+      "deliveryMethod": null,
+      "description": "Medication, Administered: Hospital Measures-Fibrinolytic Therapy (Code List: 2.16.840.1.113883.3.666.5.736)",
+      "dose": null,
+      "doseIndicator": null,
+      "doseRestriction": null,
+      "end_time": 1335803400,
+      "freeTextSig": null,
+      "free_text": null,
+      "fulfillmentInstructions": null,
+      "indication": null,
+      "mood_code": "EVN",
+      "negationInd": null,
+      "negationReason": null,
+      "oid": "2.16.840.1.113883.3.560.1.14",
+      "patientInstructions": null,
+      "productForm": null,
+      "reaction": null,
+      "reason": null,
+      "route": null,
+      "site": null,
+      "specifics": null,
+      "start_time": 1335801600,
+      "statusOfMedication": null,
+      "status_code": {
+        "HL7 ActStatus": [
+          "administered"
+        ]
+      },
+      "time": null,
+      "typeOfMedication": null,
+      "vehicle": null,
+      "_type": "Medication"
+    }
+  ],
+  "procedures": [
+    {
+      "codes": {
+        "LOINC": [
+          "8601-7"
+        ]
+      },
+      "description": "Diagnostic Study, Result: Hospital Measures-ECG Impression (Code List: 2.16.840.1.113883.3.666.5.3018)",
+      "end_time": 1335791400,
+      "free_text": null,
+      "incisionTime": null,
+      "mood_code": "EVN",
+      "negationInd": null,
+      "negationReason": null,
+      "oid": "2.16.840.1.113883.3.560.1.11",
+      "ordinality": null,
+      "performer_id": null,
+      "reason": null,
+      "site": null,
+      "source": null,
+      "specifics": null,
+      "start_time": 1335791400,
+      "status_code": {
+        "HL7 ActStatus": [
+          null
+        ]
+      },
+      "time": null,
+      "values": [
+        {
+          "codes": {
+            "SNOMED-CT": [
+              "10273003"
+            ],
+            "ICD-9-CM": [
+              "410.00"
+            ],
+            "ICD-10-CM": [
+              "I21.01"
+            ]
+          },
+          "description": "Hospital Measures-Acute or Evolving MI",
+          "_type": "CodedResultValue"
+        }
+      ],
+      "_type": "Procedure"
+    }
+  ],
+  "race": {
+    "code": "1002-5",
+    "name": "American Indian or Alaska Native",
+    "codeSystem": "CDC Race"
+  },
+  "results": [
+
+  ],
+  "source_data_criteria": [
+    {
+      "id": "EncounterPerformedHospitalMeasuresEncounterInpatient",
+      "start_date": 1335805200000,
+      "end_date": 1335819600000,
+      "value": [
+
+      ],
+      "negation": "",
+      "negation_code_list_id": null,
+      "field_values": {
+        "DISCHARGE_DATETIME": {
+          "type": "TS",
+          "value": "04/30/2012 17:00"
+        },
+        "ADMISSION_DATETIME": {
+          "type": "TS",
+          "value": "04/30/2012 13:00"
+        }
+      },
+      "oid": "2.16.840.1.113883.3.666.5.625",
+      "definition": "encounter",
+      "status": "performed"
+    },
+    {
+      "id": "DiagnosticStudyResultHospitalMeasuresEcgImpression",
+      "start_date": 1335805800000,
+      "end_date": 1335805800000,
+      "value": [
+        {
+          "type": "CD",
+          "code_list_id": "2.16.840.1.113883.3.666.5.3022",
+          "title": "Attribute Hospital Measures Acute Or Evolving Mi"
+        }
+      ],
+      "negation": "",
+      "negation_code_list_id": null,
+      "field_values": {
+      },
+      "oid": "2.16.840.1.113883.3.666.5.3018",
+      "definition": "diagnostic_study_result",
+      "status": null
+    },
+    {
+      "id": "DiagnosisActiveHospitalMeasuresAmi",
+      "start_date": 1335806400000,
+      "end_date": 1335819600000,
+      "value": [
+
+      ],
+      "negation": "",
+      "negation_code_list_id": null,
+      "field_values": {
+        "ORDINAL": {
+          "type": "CD",
+          "code_list_id": "2.16.840.1.113883.3.666.5.3010",
+          "title": "Hospital Measures - Principal"
+        }
+      },
+      "oid": "2.16.840.1.113883.3.666.5.3011",
+      "definition": "diagnosis",
+      "status": "active"
+    },
+    {
+      "id": "MedicationAdministeredHospitalMeasuresFibrinolyticTherapy",
+      "start_date": 1335816000000,
+      "end_date": 1335817800000,
+      "value": [
+
+      ],
+      "negation": "",
+      "negation_code_list_id": null,
+      "field_values": {
+      },
+      "oid": "2.16.840.1.113883.3.666.5.736",
+      "definition": "medication",
+      "status": "administered"
+    },
+    {
+      "id": "MeasurePeriod",
+      "start_date": 1325394000000,
+      "end_date": 1356930000000
+    }
+  ],
+  "type": "eh"
+}
