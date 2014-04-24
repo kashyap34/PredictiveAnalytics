@@ -208,7 +208,7 @@ public class MysqlDao {
 		}
 	}
 	
-	public String getVoteCount() {
+	private String getVoteCount() {
 		try {
 			query = "Select * from User.Poll";
 			pstmt = conn.prepareStatement(query);
@@ -345,7 +345,7 @@ public class MysqlDao {
 	/*
 	 * Retrieve cases for all the diseases country wise
 	 */
-	public Map<String, CountryData> getCasesCountryWise() {
+	private Map<String, CountryData> getCasesCountryWise() {
 		try {
 			String[] diseases = {"Diabetes", "Cholera", "Malaria", "Tuberculosis"};
 			Map<String, CountryData> diseaseVsCountryDataMap = new LinkedHashMap<String, CountryData>();
@@ -379,7 +379,7 @@ public class MysqlDao {
 	/*
 	 * Retrieve cases for @param disease country wise
 	 */
-	public Map<String, CountryData> getCasesCountryWise(String disease) {
+	private Map<String, CountryData> getCasesCountryWise(String disease) {
 		try {
 			Map<String, CountryData> diseaseVsCountryDataMap = new LinkedHashMap<String, CountryData>();
 			CountryData countryData = new CountryData();
@@ -406,7 +406,7 @@ public class MysqlDao {
 		}
 	}
 	
-	public Map<Integer, List<Integer>> getDiseaseCasesYearWise(String disease) {
+	private Map<Integer, List<Integer>> getDiseaseCasesYearWise(String disease) {
 		try{
 			logger.info("Retreiving the year wise case data for: " + disease);
 			int[] years = {2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013};
@@ -440,7 +440,7 @@ public class MysqlDao {
 		}
 	}
 	
-	public Map<String, List<Integer>> getCasesCountryWiseForDisease(String disease) {
+	private Map<String, List<Integer>> getCasesCountryWiseForDisease(String disease) {
 		try {
 			Map<String, List<Integer>> countryVsCasesDataMap = new LinkedHashMap<String, List<Integer>>();
 			

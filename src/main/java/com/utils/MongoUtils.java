@@ -64,22 +64,22 @@ public class MongoUtils {
 		}
 	}
 	
-	public MongoUtils(String fileName) throws UnknownHostException {
+	/*public MongoUtils(String fileName) throws UnknownHostException {
 		this();
 		this.fileName = fileName;
-	}
+	}*/
 	
-	public String parseJSON() {
+	public String parseJSON(String fileName) {
 		try{
-			String json = FileUtils.readFileToString(new File(fileName));
+			/*String json = FileUtils.readFileToString(new File(fileName));
 			
 			
 			DBObject dbObject = (DBObject)JSON.parse(json);
-			/*ObjectId objectIDToSet = ObjectId.massageToObjectId(dbObject.get("medical_record_number"));
+			ObjectId objectIDToSet = ObjectId.massageToObjectId(dbObject.get("medical_record_number"));
 			if(ObjectId.isValid(objectIDToSet.toString())) {
 				logger.info("Generating id for patient: " + objectIDToSet.toString());
 				dbObject.put("_id", objectIDToSet);	
-			}*/
+			}
 			collection.insert(dbObject);
 			ObjectId objectID = (ObjectId)dbObject.get("_id");
 			
@@ -88,8 +88,9 @@ public class MongoUtils {
 			} 
 			else {
 				return "";
-			}
+			}*/
 			
+			return "Success";
 			
 		} catch(Exception e) {
 			logger.error("Error in parsing the JSON schema");
@@ -261,9 +262,12 @@ public class MongoUtils {
 				BasicDBList valueObject = (BasicDBList)JSON.parse(value);
 				setNewField = new BasicDBObject("$set", new BasicDBObject().append(key, valueObject));
 			}
-			else {
+			else if(value.indexOf("{") > -1){
 				BasicDBObject valueObject = (BasicDBObject)JSON.parse(value);
 				setNewField = new BasicDBObject("$set", new BasicDBObject().append(key, valueObject));
+			}
+			else {
+				setNewField = new BasicDBObject("$set", new BasicDBObject().append(key, value));
 			}
 			
 			WriteResult result = collection.update(new BasicDBObject().append("medical_record_number", medical_record_number), setNewField);

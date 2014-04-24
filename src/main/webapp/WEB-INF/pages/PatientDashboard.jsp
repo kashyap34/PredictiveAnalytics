@@ -18,10 +18,10 @@
 	href="${pageContext.request.contextPath}/resources/css/sb-admin.css"
 	rel="stylesheet">
 <style type="text/css">
-.row {
+/* .row {
 	margin-top: 40px;
 	padding: 0 10px;
-}
+} */
 
 .clickable {
 	cursor: pointer;
@@ -42,10 +42,6 @@
 
 .panel-primary {
 	border-color: #428bca
-}
-
-input {
-	display: block;
 }
 
 .centerText td {
@@ -122,6 +118,8 @@ input {
 	-webkit-background-clip: padding-box;
 	-moz-background-clip: padding;
 	background-clip: padding-box;
+	height: 120px;
+	overflow-y: auto;
 }
 
 .tt-suggestion {
@@ -311,7 +309,7 @@ input {
 						</ul>
 					</div> -->
 					<!-- Patient data grid starts -->
-					<div class="col-md-10">
+					<div class="col-md-12">
 						<div class="panel panel-primary">
 							<div class="panel-heading">
 								<h3 class="panel-title">Patients</h3>
@@ -380,89 +378,90 @@ input {
 							<hr id="data-grid-column-chart-separator">
 						</div>
 					</div>
-					<div id="column-chart-container"
-						style="display: inline-block; margin-top: 0px"></div>
+					<div id="column-chart-container" style="display: inline-block;"></div>
 					<!-- <hr id="column-tag-cloud-separator"> -->
-					<div style="display: inline-block;" class="panel-body">
-						<br />
-						<br />
-						<strong><p id="tagCloudLabel" align="center"
-								style="font-family: sans-serif; font-size: 18px; color: #3E576F; padding-bottom: -20px"></p></strong>
+					<div style="display: inline-block;">
+						<div id="tag-cloud-label"></div>
 						<div id="tag-cloud-container"></div>
 					</div>
-					
+
 					<div class="row">
 						<div class="col-md-12">
 							<hr id="column-family-history-separator">
 						</div>
 					</div>
-					
-					<!-- <hr id="column-family-history-separator"> -->
 
-					<!-- <div class="col-md-6">
-						<div class="panel panel-default" id="family-history-panel">
-							<div class="panel-heading">
-								<i class="fa fa-users"></i> Add Patient's Family History
+					<!-- <div id="family-history-container" class="form-group col-md-12">
+						<h4>Enter family history conditions</h4> <br />
+						<div id="family-history-group" style="padding-left: 10px" class="form-group">
+							<div id="family-history-group-1" class="form-group">
+								<input type="text" id="family-history-text-1" placeholder="Condition (For e.g. Diabetes)" data-provide="typeahead" data-items="8" style="height: 35px; width: 300px; display: inline-block;" class="typeahead form-control" required>
+								<input type="text" id="start-age-1" placeholder="Start Age (For e.g. 30)" style="height: 35px; width: auto; margin-left: 10px; display: inline-block;" class="form-control" required>
+								<input type="text" id="end-age-1" placeholder="End Age (For e.g. 50)" style="height: 35px; width: auto; margin-left: 10px; display: inline-block;" class="form-control" required>
+								<span class="fa fa-times" id="remove-group-1" style="margin-left: 10px"></span></td>
 							</div>
-							<div class="panel-body"> -->
-					<div id="family-history-container" class="control-group">
-						<h4>Enter family history conditions</h4>
-						<br />
-						<div id="family-history-group" class="control-group"
-							style="padding-left: 10px"></div>
-						<button class="btn btn-success" type="button"
+							<div id="family-history-group-2" class="form-group">
+								<input type="text" id="family-history-text-2" placeholder="Condition (For e.g. Diabetes)" data-provide="typeahead" data-items="8" style="height: 35px; width: 300px; display: inline-block;" class="typeahead form-control" required>
+								<input type="text" id="start-age-2" placeholder="Start Age (For e.g. 30)" style="height: 35px; width: auto; margin-left: 10px; display: inline-block;" class="form-control" required>
+								<input type="text" id="end-age-2" placeholder="End Age (For e.g. 50)" style="height: 35px; width: auto; margin-left: 10px; display: inline-block;" class="form-control" required>
+								<span class="fa fa-times" id="remove-group-2" style="margin-left: 10px"></span></td>
+							</div>
+							<div id="family-history-group-3" class="form-group">
+								<input type="text" id="family-history-text-3" placeholder="Condition (For e.g. Diabetes)" data-provide="typeahead" data-items="8" style="height: 35px; width: 300px; display: inline-block;" class="typeahead form-control" required>
+								<input type="text" id="start-age-3" placeholder="Start Age (For e.g. 30)" style="height: 35px; width: auto; margin-left: 10px; display: inline-block;" class="form-control" required>
+								<input type="text" id="end-age-3" placeholder="End Age (For e.g. 50)" style="height: 35px; width: auto; margin-left: 10px; display: inline-block;" class="form-control" required>
+								<span class="fa fa-times" id="remove-group-3" style="margin-left: 10px"></span></td>
+							</div>
+							<div id="family-history-group-4" class="form-group">
+								<input type="text" id="family-history-text-4" placeholder="Condition (For e.g. Diabetes)" data-provide="typeahead" data-items="8" style="height: 35px; width: 300px; display: inline-block;" class="typeahead form-control" required>
+								<input type="text" id="start-age-4" placeholder="Start Age (For e.g. 30)" style="height: 35px; width: auto; margin-left: 10px; display: inline-block;" class="form-control" required>
+								<input type="text" id="end-age-4" placeholder="End Age (For e.g. 50)" style="height: 35px; width: auto; margin-left: 10px; display: inline-block;" class="form-control" required>
+								<span class="fa fa-times" id="remove-group-4" style="margin-left: 10px"></span></td>
+							</div>
+							<div id="family-history-group-5" class="form-group">
+								<input type="text" id="family-history-text-5" placeholder="Condition (For e.g. Diabetes)" data-provide="typeahead" data-items="8" style="height: 35px; width: 300px; display: inline-block;" class="typeahead form-control" required>
+								<input type="text" id="start-age-5" placeholder="Start Age (For e.g. 30)" style="height: 35px; width: auto; margin-left: 10px; display: inline-block;" class="form-control" required>
+								<input type="text" id="end-age-5" placeholder="End Age (For e.g. 50)" style="height: 35px; width: auto; margin-left: 10px; display: inline-block;" class="form-control" required>
+								<span class="fa fa-times" id="remove-group-5" style="margin-left: 10px"></span></td>
+							</div>
+						</div>
+						<br /><button class="btn btn-success" type="button"
 							id="family-history-btn">
 							<i class="fa fa-plus"></i> Add family history
 						</button>
-					</div>
-					<!-- </div>
-						</div>
 					</div> -->
-
-					<!-- <div class="col-md-6">
-						<div class="panel panel-default" id="occupation-panel">
-							<div class="panel-heading">
-								<i class="fa fa-briefcase"></i> Add Patient's Occupation
-							</div>
-							<div class="panel-body"> -->
+					
+					<div id="family-history-container" class="form-group col-md-12">
+ 					<h4>Enter family history conditions</h4>
+ 						<div id="family-history-group" class="form-group" style="padding-left: 10px">
+ 						</div>
+ 					<button class="btn btn-success" type="button" id="family-history-btn">
+ 						<i class="fa fa-plus"></i>
+ 						Add family history
+ 					</button>
+  				</div>
+										
 					<div id="occupation-data-container">
-						<table style="width: auto">
-							<tr>
-								<td>
 									<h4>Please enter patient's occupation</h4>
-									<br />
-								</td>
-								<td style="padding-left: 10px"><input type="text"
+								<input type="text"
 									id="search-occupation" style="height: 35px; width: 500px"
 									placeholder="For e.g. Engineer" class="form-control typeahead"
-									data-provide="typeahead" data-items="8" /></td>
-							</tr>
-						</table>
+									data-provide="typeahead" data-items="8" />
 						<!-- <button type="button" class="btn btn-success" id="update-btn">Update</button> -->
 					</div>
-					<!-- </div>
-						</div>
-					</div> -->
-
-
+					<br />
 					<table style="width: auto">
 						<tr>
 							<button type="button" class="btn btn-success" id="update-btn">
-								<i class="fa fa-save"></i>Update
+								<i class="fa fa-save"></i> Save
 							</button>
 						</tr>
 					</table>
 
-					<!-- <div class="col-md-10">
-						<div class="panel panel-default" id="diabetes-questionnaire-panel">
-							<div class="panel-heading">
-								<i class="fa fa-question"></i> Diabetes Questionnaire
-							</div>
-							<div class="panel-body"> -->
 					<div id="diabetes-questionnaire">
 						<p>
-						<h4>Please check all the boxes that closely relates to the
-							patient family's historical conditions</h4>
+						<h4><strong>Please check all the boxes that closely relates to the
+							patient family's historical conditions</strong></h4>
 						</p>
 						<table class="table table-condensed">
 							<tr>
@@ -507,7 +506,8 @@ input {
 								<i class="fa fa-sitemap"></i> Diabetes Prediction Explanation
 							</div>
 							<div class="panel-body"> -->
-					<div id="diabetes-prediction-gauge" class="chart-gauge" style="width: 300px; height: 150px"></div>
+					<div id="diabetes-prediction-gauge" class="chart-gauge"
+						style="width: 300px; height: 150px"></div>
 
 					<div id="diabetes-gauge-label" align="center"
 						style="font-family: sans-serif; font-size: 12px; color: #3E576F"></div>
@@ -533,8 +533,9 @@ input {
 	<script src="${pageContext.request.contextPath}/resources/js/jquery-ui-1.8.21.custom.min.js"></script> --%>
 
 			<!-- Core Scripts - Include with every page -->
-			<script
-				src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.js"></script>
+			<%-- <script
+				src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.js"></script> --%>
+				<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js" type="text/javascript"></script>
 			<script
 				src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
 			<script
@@ -545,7 +546,7 @@ input {
 				src="${pageContext.request.contextPath}/resources/js/sb-admin.js"></script>
 			<!-- autocomplete library -->
 			<script
-				src="${pageContext.request.contextPath}/resources/js/bootstrap-typeahead.js"></script>
+				src="${pageContext.request.contextPath}/resources/js/bootstrap-typeahead_1.js"></script>
 			<script
 				src="http://jquery.bassistance.de/validate/jquery.validate.js"></script>
 
@@ -567,7 +568,7 @@ input {
 
 
 			<!-- Filter table results script -->
-			<script type="text/javascript">
+<script type="text/javascript">
 	(function(){
 	    'use strict';
 		var $ = jQuery;
@@ -603,7 +604,6 @@ input {
 		$('#occupation-data-container').hide();
 		$('#update-btn').hide();
 		$('#diabetes-questionnaire').hide();
-		$('div[id*="-panel"]').hide();
 	    // attach table filter plugin to inputs
 		$('[data-action="filter"]').filterTable();
 		
@@ -622,7 +622,7 @@ input {
 			<!-- end filter results script -->
 
 			<!-- Script to get the clicked row from the table and retrieve its data -->
-			<script type="text/javascript">
+<script type="text/javascript">
 		var medical_record_no;
 		var patientName;
 		var familyHistoryGroupCount = 1;
@@ -655,13 +655,14 @@ input {
 		$('#patient-table tr').click(function(){
 			medical_record_no = $(this).closest('tr').find('td').first().text();
 			patientName = $(this).closest('tr').find('td').eq(1).text();
-			
+			alert(medical_record_no);
 			$.get("${pageContext.request.contextPath}/dashboard/patient?medical_record_no=" + medical_record_no, function(data){
 			$('#tag-cloud-container').empty();
 			$('input:checkbox').removeAttr('checked');
 			//$('#diabetes-questionnaire').hide();
 			$('#diabetes-prediction-container').empty();
 			$('#diabetes-prediction-gauge').empty();
+			$('#diabetes-gauge-label').empty();
 			//$('#family-history-container').hide();
 			//$('#occupation-data-container').hide();
 			
@@ -682,7 +683,7 @@ input {
 				 $('#column-chart-container').highcharts({
 			            chart: {
 			                type: 'column',
-			                width: 200,
+			                width: 250,
 			                height: 400,
 			                spacingTop: 0
 			            },
@@ -737,15 +738,14 @@ input {
 				//layout.stop();
 				  
 				function draw(words) {
-				    d3.select("#tag-cloud-container").append("svg")
+				   d3.select("#tag-cloud-container").append("svg")
 				        .attr("width", 700)
 				        .attr("height", 400)
 				        .attr("text-anchor", "middle")
 				        .style("font-size", "16px")
 				        .style("font-family", "sans-seriff")
-				        .text("Summary of " + patientName + "'s medical encounters")
 				      .append("g")
-				        .attr("transform", "translate(500,200)")
+				        .attr("transform", "translate(400,200)")
 				      .selectAll("text")
 				        .data(words)
 				      .enter().append("text")
@@ -757,9 +757,18 @@ input {
 				          return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
 				        })
 				        .text(function(d) { return d.text; });
+				 
 				  }
-				
-				$('#tag-cloud-panel').show();
+				   
+				   d3.select('#tag-cloud-container svg')
+				   .append("text")
+				   .attr("x", 700/2)             
+				   .attr("y", 20)
+				   .attr("text-anchor", "middle")
+				   .style("font-size", "20px")
+				   .style("font-family", "Helvetica")
+				   .style("text-decoration", "underline")
+				   .text("Summary of " + patientName + "'s medical encounters");
 				
 			if(!familyHistory.length) {
 				$('#family-history-container').show();
@@ -774,9 +783,9 @@ input {
 				$.get("${pageContext.request.contextPath}/dashboard/patient/occupationsList", function(data){
         			var obj = jQuery.parseJSON(data);
         			var occupationsList = obj.occupationsList;
-        			/* var autoComplete = $('#search-occupation').typeahead();
-        			autoComplete.data('typeahead').source = occupationsList; */
-        			$('#search-occupation').typeahead({
+        			var autoComplete = $('#search-occupation').typeahead();
+        			autoComplete.data('typeahead').source = occupationsList;
+        			/* $('#search-occupation').typeahead({
         				hint: true,
         				highlight: true,
         				minLength: 1
@@ -785,7 +794,7 @@ input {
         				name: 'occupations',
         				displayKey: 'value',
         				source: substringMatcher(occupationsList)
-        			});
+        			}); */
         			$('#occupation-data-container').show();
         			//$('#update-btn').show();
         		});
@@ -797,6 +806,9 @@ input {
 			
 			if(!familyHistory.length || jobTitle == null || jobTitle.length == 0) {
 				$('#update-btn').show();
+			}
+			else {
+				$('#update-btn').hide();
 			}
 				 
 			});
@@ -810,14 +822,25 @@ input {
 			
 		});
 		
+		$('.typeahead').typeahead({
+			hint: true,
+			highlight: true,
+			minLength: 1
+		},
+		{
+			name: 'diseases',
+			displayKey: 'value',
+			source: substringMatcher(diseaseList)
+		});
+		
 		$('#update-btn').click(function(){
 			var json;
 			var familyHistory = [];
 			for(i = 1; i < familyHistoryGroupCount; i++) {
-				var familyCondition = {"disease": $('#family-history-text-'+ i).val(), 
-										"startAge": parseInt($('#start-age-'+ i).val()),
-										"endAge": parseInt($('#end-age-'+ i).val())};
-				familyHistory.push(familyCondition);
+					var familyCondition = {"disease": $('#family-history-text-'+ i).val(), 
+											"startAge": parseInt($('#start-age-'+ i).val()),
+											"endAge": parseInt($('#end-age-'+ i).val())};
+					familyHistory.push(familyCondition);
 			}
 			var occupation = $('#search-occupation').val();
 			if(familyHistory.length == 0) 
@@ -863,30 +886,23 @@ input {
 		});
 		
 
-		$('#family-history-btn').click(function(){
+		/* $('#family-history-btn').click(function(){
 			
-			/* if(familyHistoryGroupCount > 10) {
+			if(familyHistoryGroupCount > 10) {
 				alert('Only 10 historical events allowed');
 				return false;
-			} */
+			}
 			
-			$('#family-history-group').append(
-					  '<div id="family-history-group-' + familyHistoryGroupCount + '" class="control-group">'
-					+ '<input type="text" id="family-history-text-' + familyHistoryGroupCount + '" placeholder="Condition (For e.g. Diabetes)" style="height: 35px; width: 300px;" data-provide="typeahead" data-items="8" class="typeahead form-control" required>'
-					+ '<input type="text" id="start-age-' + familyHistoryGroupCount + '" placeholder="Start Age (For e.g. 30)" style="height: 35px; width: auto; margin-left: 10px" required>'
-					+ '<input type="text" id="end-age-' + familyHistoryGroupCount + '" placeholder="End Age (For e.g. 50)" style="height: 35px; width: auto; margin-left: 10px" required>'
-					+ '<span class="icon-remove" id="remove-group-"' + familyHistoryGroupCount + 'style="margin-left: 10px"></span>'
-					+ '</div>'
-				);
+			$('#family-history-group-' + familyHistoryGroupCount).show();
 			
+			$('.typeahead').trigger('added');
 			
 			familyHistoryGroupCount ++;
-			
-		});
+			console.log('FamilyHistory count is: ' + familyHistoryGroupCount);
+		}); */
 		
-		$('body').on('DOMNodeInserted', 'div[id*="family-history-group"]', function(){
-			/* var autoComplete = $(this).find('.typeahead').typeahead();
-			autoComplete.data('typeahead').source = diseaseList; */
+		/* $('.typeahead').on('added', function(){
+			console.log('FamilyHistory count is: ' + familyHistoryGroupCount);
 			$('.typeahead').typeahead({
 				hint: true,
 				highlight: true,
@@ -897,9 +913,9 @@ input {
 				displayKey: 'value',
 				source: substringMatcher(diseaseList)
 			});
-		});
+		}); */
 
-		$('body').on('click', 'span[id*="remove-group-"]', function(){
+		/* $('body').on('click', 'span[id*="remove-group-"]', function(){
 			
 			if(familyHistoryGroupCount == 1) {
 				alert('No more data to delete');
@@ -907,13 +923,59 @@ input {
 			}
 			
 			familyHistoryGroupCount--;
+			var divId = this.id;
+			alert(divId);
+			var index = divId.lastIndexOf("-");
+			var id = divId.substring(index+1);
+			var currentDivIndex = parseInt(id);
+			alert(currentDivIndex);
 			
-			$('#family-history-group-' + familyHistoryGroupCount).fadeOut("slow");
-			$('#family-history-group-' + familyHistoryGroupCount).remove();
-		});
+			$('#family-history-group-' + currentDivIndex).fadeOut("slow");
+			$('#family-history-group-' + currentDivIndex).remove();
+		}); */
 		
+		
+		$('#family-history-btn').click(function(){
+			 			
+			 			/* if(familyHistoryGroupCount > 10) {
+			 				alert('Only 10 historical events allowed');
+			 				return false;
+			 			} */
+			 			
+			 			$('#family-history-group').append(
+			 					  '<div id="family-history-group-' + familyHistoryGroupCount + '" class="form-group">'
+			 					+ '<input type="text" id="family-history-text-' + familyHistoryGroupCount + '" placeholder="Condition (For e.g. Diabetes)" style="height: 35px; width: 300px; display: inline-block;" data-provide="typeahead" data-items="8" class="form-control typeahead" required>'
+			 					+ '<input type="text" id="start-age-' + familyHistoryGroupCount + '" placeholder="Start Age (For e.g. 30)" style="height: 35px; width: auto; margin-left: 10px; display: inline-block;" class="form-control" required>'
+			 					+ '<input type="text" id="end-age-' + familyHistoryGroupCount + '" placeholder="End Age (For e.g. 50)" style="height: 35px; width: auto; margin-left: 10px; display: inline-block;" class="form-control" required>'
+			 					+ '<span class="fa fa-times" id="remove-group-"' + familyHistoryGroupCount + 'style="margin-left: 10px; display: inline-block;"></span>'
+			 					+ '</div>'
+			 				);
+			 			
+			 			
+			 			familyHistoryGroupCount ++;
+			 			
+			 		});
+			 		
+			 		$('body').on('DOMNodeInserted', 'div[id*="family-history-group"]', function(){
+			 			var autoComplete = $(this).find('.typeahead').typeahead();
+			 			autoComplete.data('typeahead').source = diseaseList;
+			 		});
+			 
+			 		$('body').on('click', 'span[id*="remove-group-"]', function(){
+			 			
+			 			if(familyHistoryGroupCount == 1) {
+			 				alert('No more data to delete');
+			 				return false;
+			 			}
+			 			
+			 			familyHistoryGroupCount--;
+			 			
+			 			$('#family-history-group-' + familyHistoryGroupCount).fadeOut("slow");
+			 			$('#family-history-group-' + familyHistoryGroupCount).remove();
+			 		});
+				
 		$('#generate-predictions').click(function(){
-			 $('input:checkbox:checked').attr('value', 'off');
+		 $('input:checkbox:checked').attr('value', 'off');
 			    var vals = $('input:checkbox').map(
 			        function(){
 			            return this.id + "=" +$(this).val();
@@ -1058,7 +1120,8 @@ input {
 
 					  needle.animateOn(chart, percent);
 					  
-					  var displayText = (obj.diabetes_prediction.replace("\n", "<br />")).replace("\t", "&#9;");
+					  var displayText = (obj.diabetes_prediction.replace(/\n/g, "<br />")).replace(/\t/, "&#9;");
+					  //alert(displayText);
 					  $('#diabetes-prediction-container').html(displayText);
 				  }
 				  else {

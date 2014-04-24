@@ -91,6 +91,8 @@ body {
 	-webkit-background-clip: padding-box;
 	-moz-background-clip: padding;
 	background-clip: padding-box;
+	height: 120px;
+	overflow-y: auto;
 }
 
 .tt-suggestion {
@@ -282,32 +284,50 @@ body {
 						</ul>
 					</div> -->
 				<div class="row placeholders">
-					<div class="col-xs-6 col-sm-3 placeholder">
-						<svg height="100" width="100">
-  							<circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="red"/>
+					<div class="col-xs-6 col-sm-3 placeholder" style="text-align: center;">
+						<svg height="200" width="200">
+  							<circle cx="100" cy="100" r="70" stroke="black" stroke-width="3" fill="steelblue"/>
+  							<text x="100" y="110" font-family="sans-serif" font-size="60px" text-anchor="middle" fill="white">347</text>
+  							<text x="100" y="140" font-family="sans-serif" font-size="20px" text-anchor="middle" fill="white">million</text>
 						</svg>
 						<h4>People are suffering from diabetes worldwide.</h4>
-						<span class="text-muted">Something else</span>
+						<span class="text-muted">Source: WHO</span>
 					</div>
-					<div class="col-xs-6 col-sm-3 placeholder">
-						<img data-src="${pageContext.request.contextPath}/resources/js/holder.js/200x200/auto/vine" class="img-responsive"
-							alt="Generic placeholder thumbnail">
+					<div class="col-xs-6 col-sm-3 placeholder" style="text-align: center;">
+						<svg height="200" width="200">
+  							<circle cx="100" cy="100" r="70" stroke="black" stroke-width="3" fill="steelblue"/>
+  							<text x="100" y="110" font-family="sans-serif" font-size="60px" text-anchor="middle" fill="white">8.2</text>
+  							<text x="100" y="140" font-family="sans-serif" font-size="20px" text-anchor="middle" fill="white">million</text>
+						</svg>
 						<h4>People died from cancer in 2012</h4>
-						<span class="text-muted">Something else</span>
+						<span class="text-muted">Source: WHO</span>
 					</div>
-					<div class="col-xs-6 col-sm-3 placeholder">
-						<img data-src="${pageContext.request.contextPath}/resources/js/holder.js/200x200/auto/sky" class="img-responsive"
-							alt="Generic placeholder thumbnail">
+					<div class="col-xs-6 col-sm-3 placeholder" style="text-align: center;">
+						<svg height="200" width="200">
+  							<circle cx="100" cy="100" r="70" stroke="black" stroke-width="3" fill="steelblue"/>
+  							<text x="100" y="110" font-family="sans-serif" font-size="60px" text-anchor="middle" fill="white">627</text>
+  							<text x="100" y="140" font-family="sans-serif" font-size="20px" text-anchor="middle" fill="white">thousand</text>
+						</svg>
 						<h4>People died from malaria in 2012</h4>
-						<span class="text-muted">Something else</span>
+						<span class="text-muted">Source: WHO</span>
 					</div>
-					<div class="col-xs-6 col-sm-3 placeholder">
-						<img data-src="${pageContext.request.contextPath}/resources/js/holder.js/200x200/auto/vine" class="img-responsive"
-							alt="Generic placeholder thumbnail">
+					<div class="col-xs-6 col-sm-3 placeholder" style="text-align: center;">
+						<svg height="200" width="200">
+  							<circle cx="100" cy="100" r="70" stroke="black" stroke-width="3" fill="steelblue"/>
+  							<text x="100" y="110" font-family="sans-serif" font-size="60px" text-anchor="middle" fill="white">1.3</text>
+  							<text x="100" y="140" font-family="sans-serif" font-size="20px" text-anchor="middle" fill="white">million</text>
+						</svg>
 						<h4>People died from tuberculosis in 2012</h4>
-						<span class="text-muted">Something else</span>
+						<span class="text-muted">Source: WHO</span>
 					</div>
 				</div>
+				
+				<div class="row">
+						<div class="col-md-12">
+							<hr>
+						</div>
+					</div>
+				
 				<div class="col-md-10">
 					<div class="panel panel-default">
 						<div class="panel-heading">
@@ -366,6 +386,10 @@ body {
 		<!-- SB Admin Scripts - Include with every page -->
 		<script
 			src="${pageContext.request.contextPath}/resources/js/sb-admin.js"></script>
+			
+		<!-- D3.js -->
+		<script src="http://www.jasondavies.com/d3.min.js" charset="utf-8"></script>
+			
 		<!-- autocomplete library -->
 		<script
 			src="${pageContext.request.contextPath}/resources/js/bootstrap-typeahead.js"></script>
@@ -375,7 +399,7 @@ body {
 		<script src="http://code.highcharts.com/highcharts.js"></script>
 		<script src="http://code.highcharts.com/modules/exporting.js"></script>
 
-		<script type="text/javascript">
+<script type="text/javascript">
 	var disease;
 	var substringMatcher = function(strs) {
 		  return function findMatches(q, cb) {
@@ -400,6 +424,7 @@ body {
 		    cb(matches);
 		  };
 		};
+		
 	$(function () {
 	$('#pie-bar-separator').hide();
 	$('#bar-line-separator').hide();
@@ -497,7 +522,7 @@ body {
 		            yAxis: {
 		                min: 0,
 		                title: {
-		                    text: 'Cases',
+		                    text: 'Cases (numbers in 100k)',
 		                    align: 'low'
 		                },
 		                labels: {
@@ -565,7 +590,7 @@ body {
 		            },
 		            yAxis: {
 		                title: {
-		                    text: 'Number of cases'
+		                    text: 'Number of cases (numbers in 100k)'
 		                },
 		                plotLines: [{
 		                    value: 0,

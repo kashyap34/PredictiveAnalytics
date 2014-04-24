@@ -38,6 +38,13 @@
         	<artifactId>spring-data-mongodb</artifactId>
         	<version>1.4.1.RELEASE</version>
     	</dependency>
+    	<!-- Spring Tests -->
+    	<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>4.0.3.RELEASE</version>
+		</dependency>
+            
   		<!-- jsoup HTML parser library @ http://jsoup.org/ -->
 		<dependency>
   			<groupId>org.jsoup</groupId>

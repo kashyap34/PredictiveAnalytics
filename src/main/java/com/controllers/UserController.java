@@ -32,7 +32,7 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public @ResponseBody String registerUser(@RequestBody UserInfo user, ModelMap model) {
+	public @ResponseBody String registerUser(@RequestBody UserInfo user) {
 		logger.info("Registering new user");
 		
 		if(!dao.storeUserInfo(user)) {

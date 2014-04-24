@@ -65,7 +65,7 @@ public class DataController {
 	}
 	
 	@RequestMapping(method=RequestMethod.GET, value="/data/who/links")
-	public @ResponseBody String fetchContentsFromURLWOQuery(String whoURL, ModelMap model, boolean isCalledInternally) {
+	public @ResponseBody String fetchContentsFromURLWOQuery(String whoURL, boolean isCalledInternally) {
 		try{
 			if(whoURL == null || whoURL.isEmpty() || !isCalledInternally) {
 				whoURL = "http://apps.who.int/gho/data/view.main";
@@ -120,7 +120,7 @@ public class DataController {
 	}
 	
 	@RequestMapping(method=RequestMethod.GET, value="/data/who/{query}")
-	public @ResponseBody String fetchContentsFromURLWithQuery(@PathVariable String query, ModelMap model) {
+	public @ResponseBody String fetchContentsFromURLWithQuery(@PathVariable String query) {
 		String crawlerLink = null;
 		try{
 			crawlerLink = crawlerUtils.searchLinksFromURL(whoURL, query);
@@ -153,7 +153,7 @@ public class DataController {
 					model.addAttribute("crawlerError", "Unable to crawl the WHO Data Repository. It may be down for maintenance");
 				}*/
 				else
-					pageToLoad = fetchContentsFromURLWOQuery(crawlerLink, model, true);
+					pageToLoad = fetchContentsFromURLWOQuery(crawlerLink, true);
 			} else {
 				//model.addAttribute("crawlerError", "Unable to crawl the WHO Data Repository. It may be down for maintenance");
 				return "{\"error\": \"Unable to crawl the WHO Data Repository. It may be down for maintenance\"}";
@@ -167,7 +167,7 @@ public class DataController {
 	}
 	
 	@RequestMapping(value="/data/who", method=RequestMethod.POST)
-    public @ResponseBody String handleFileUpload(@RequestParam("file") MultipartFile file, ModelMap model){
+    public @ResponseBody String handleFileUpload(@RequestParam("file") MultipartFile file){
 		String name = file.getOriginalFilename();
         if (!file.isEmpty()) {
 			if (name.endsWith(".csv")) {
@@ -200,7 +200,7 @@ public class DataController {
     }
 	
 	@RequestMapping(value="/data/who/patient", method=RequestMethod.POST)
-	public @ResponseBody String handlePatientUpload(@RequestParam("patientFile") MultipartFile file, ModelMap model) {
+	public @ResponseBody String handlePatientUpload(@RequestParam("patientFile") MultipartFile file) {
 		String name = file.getOriginalFilename();
         if (!file.isEmpty()) {
 			if (name.endsWith(".json")) {
@@ -211,11 +211,11 @@ public class DataController {
 							new FileOutputStream(new File(fileName)));
 					stream.write(bytes);
 					stream.close();
-					MongoUtils mongoUtils = new MongoUtils(fileName);
-					String response = mongoUtils.parseJSON();
+					MongoUtils mongoUtils = new MongoUtils();
+					String response = mongoUtils.parseJSON(fileName);
 					if(!response.isEmpty()) {
 						return "{\"success\": \"You successfully uploaded " + name
-								+ ". Patient ID is: " + response + "\"}";
+								+ ". Patient ID is:";// + response + "\"}";
 					}
 					else {
 						return "{\"error\": \"Error in parsing the file: " + name

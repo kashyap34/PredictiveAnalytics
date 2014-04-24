@@ -31,5 +31,6 @@
 	<classpathentry kind="lib" path="/usr/local/lib/R/site-library/rJava/jri/REngine.jar"/>
 	<classpathentry kind="lib" path="/usr/local/lib/R/site-library/rJava/jri/JRIEngine.jar"/>
 	<classpathentry kind="lib" path="/usr/local/lib/R/site-library/rJava/jri/JRI.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

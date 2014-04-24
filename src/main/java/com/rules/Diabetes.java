@@ -143,11 +143,13 @@ public class Diabetes {
 				dbQues.getQuestion3().equalsIgnoreCase("off") || dbQues.getQuestion4().equalsIgnoreCase("off")) {
 			logger.info("Based on patient's answers to the questionnaire, the risk of diabetes is high");
 			riskOfDiabetes = true;
+			currentState = "Very High";
 		}
 		
 		Map<String, String> familyDiseases = new LinkedHashMap<String, String>();
+		if(riskOfDiabetes && familyHistoryList.size() >=1) {
 		for(FamilyCondition familyCondition : familyHistoryList) {
-			if(StringUtils.containsIgnoreCase(familyCondition.getDisease(), "Diabetes") || riskOfDiabetes) {
+			if(StringUtils.containsIgnoreCase(familyCondition.getDisease(), "Diabetes")) {
 				logger.info("Family history indicative of Diabetes");
 				startAge = familyCondition.getStartAge();
 				endAge = familyCondition.getEndAge();
@@ -155,28 +157,28 @@ public class Diabetes {
 					logger.info("Patient in history range");
 						switch (currentState) {
 						case "Critical":
-							familyDiseases.put("Diabetes", "Based on your family history and current medical conditions, the risk of diabetes in future is " + currentState
-									+ ".\n\t- Your immediate family member had history of diabetes from " + startAge + " to " + endAge + ".");
+							familyDiseases.put("Diabetes", "<h3>Based on your family history and current medical conditions, the risk of diabetes in future is " + currentState
+									+ ".</h3>\t<h4>- Your immediate family member had history of diabetes from " + startAge + " to " + endAge + ".</h4>");
 							break;
 						case "Very High":
-							familyDiseases.put("Diabetes", "Based on your family history and current medical conditions, the risk of diabetes in future is " + currentState
-									+ ". \n\t- Your immediate family member had history of diabetes from " + startAge + " to " + endAge + ".");
+							familyDiseases.put("Diabetes", "<h3>Based on your family history and current medical conditions, the risk of diabetes in future is " + currentState
+									+ ".</h3>\t<h4>- Your immediate family member had history of diabetes from " + startAge + " to " + endAge + ".</h4>");
 							break;
 						case "High":
-							familyDiseases.put("Diabetes", "Based on your family history and current medical conditions, the risk of diabetes in future is " + currentState
-									+ ". \n\t- Your immediate family member had history of diabetes from " + startAge + " to " + endAge +".");
+							familyDiseases.put("Diabetes", "<h3>Based on your family history and current medical conditions, the risk of diabetes in future is " + currentState
+									+ ".</h3> \t<h4>- Your immediate family member had history of diabetes from " + startAge + " to " + endAge +".</h4>");
 							break;
 						case "Moderate":
-							familyDiseases.put("Diabetes", "Based on your family history and current medical conditions, the risk of diabetes in future is " + currentState
-									+ ". \n\t- Your immediate family member had history of diabetes from " + startAge + " to " + endAge + ".");
+							familyDiseases.put("Diabetes", "<h3>Based on your family history and current medical conditions, the risk of diabetes in future is " + currentState
+									+ ". </h3>\t<h4>- Your immediate family member had history of diabetes from " + startAge + " to " + endAge + ".</h4>");
 							break;
 						case "Normal":
-							familyDiseases.put("Diabetes", "Based on your family history and current medical conditions, the risk of diabetes in future is " + currentState
-									+ ". \nWatch out for that extra sugar though.");
+							familyDiseases.put("Diabetes", "<h3>Based on your family history and current medical conditions, the risk of diabetes in future is " + currentState
+									+ ". </h3><h4>Watch out for that extra sugar though.</h4>");
 							break;
 						case "Low":
-							familyDiseases.put("Diabetes", "Based on your family history and current medical conditions, the risk of diabetes in future is " + currentState
-									+ "\nGood Job ! Keep going.");
+							familyDiseases.put("Diabetes", "<h3>Based on your family history and current medical conditions, the risk of diabetes in future is " + currentState
+									+ "</h3><h4>Good Job ! Keep going.</h4>");
 							break;
 						default:
 							return null;
@@ -185,30 +187,30 @@ public class Diabetes {
 				else {
 					switch (currentState) {
 					case "Critical":
-						familyDiseases.put("Diabetes", "Based on your family history and current medical conditions, the risk of diabetes in future is " + currentState
-								+ ".\n\t- Your immediate family member had history of diabetes from " + startAge + " to " + endAge + ".");
+						familyDiseases.put("Diabetes", "<h3>Based on your family history and current medical conditions, the risk of diabetes in future is " + currentState
+								+ ".</h3>\t<h4>- Your immediate family member had history of diabetes from " + startAge + " to " + endAge + ".</h4>");
 						break;
 					case "Very High":
-						familyDiseases.put("Diabetes", "Based on your family history and current medical conditions, the risk of diabetes in future is " + currentState
-								+ ". \n\t- Your immediate family member had history of diabetes from " + startAge + " to " + endAge + ".");
+						familyDiseases.put("Diabetes", "<h3>Based on your family history and current medical conditions, the risk of diabetes in future is " + currentState
+								+ ". </h3>\t<h4>- Your immediate family member had history of diabetes from " + startAge + " to " + endAge + ".</h4>");
 						break;
 					case "High":
-						familyDiseases.put("Diabetes", "Based on your family history and current medical conditions, the risk of diabetes in future is " + currentState
-								+ ". \n\t- Your immediate family member had history of diabetes from " + startAge + " to " + endAge +".");
+						familyDiseases.put("Diabetes", "<h3>Based on your family history and current medical conditions, the risk of diabetes in future is " + currentState
+								+ ".</h3> \t<h4>- Your immediate family member had history of diabetes from " + startAge + " to " + endAge +".</h4>");
 						break;
 					case "Moderate":
-						familyDiseases.put("Diabetes", "Based on your family history and current medical conditions, the risk of diabetes in future is " + currentState
-								+ ". \n\t- Your immediate family member had history of diabetes from " + startAge + " to " + endAge + ".");
+						familyDiseases.put("Diabetes", "<h3>Based on your family history and current medical conditions, the risk of diabetes in future is " + currentState
+								+ ".</h3> \t<h4>- Your immediate family member had history of diabetes from " + startAge + " to " + endAge + ".</h4>");
 						break;
 					case "Normal":
-						familyDiseases.put("Diabetes", "Based on your family history and current medical conditions, the risk of diabetes in future is " + currentState
-								+ ". \nHowever, your immediate family memenber had history of diabetes from" + startAge + " to " + endAge + ". Hence, watch your "
-								+ "sugar levels between " + startAge  + "& " + endAge);
+						familyDiseases.put("Diabetes", "<h3>Based on your family history and current medical conditions, the risk of diabetes in future is " + currentState
+								+ ".</h3> <h4>However, your immediate family memenber had history of diabetes from" + startAge + " to " + endAge + ". Hence, watch your "
+								+ "sugar levels between " + startAge  + "& " + endAge +"</h4>");
 						break;
 					case "Low":
-						familyDiseases.put("Diabetes", "Based on your family history and current medical conditions, the risk of diabetes in future is " + currentState
-								+ "\nGood Job ! Keep going. Since, your immediate family member had history of diabetes from " + startAge + " to " + endAge + ", watch"
-										+ " your sugar levels between " + startAge + "& " + endAge);
+						familyDiseases.put("Diabetes", "<h3>Based on your family history and current medical conditions, the risk of diabetes in future is " + currentState
+								+ "</h3><h4>Good Job ! Keep going. Since, your immediate family member had history of diabetes from " + startAge + " to " + endAge + ", watch"
+										+ " your sugar levels between " + startAge + "& " + endAge +"</h4>");
 						break;
 					default:
 						logger.warn("Default case");
@@ -216,12 +218,98 @@ public class Diabetes {
 					}
 				}
 			}
+			else if(riskOfDiabetes) {
+				familyDiseases.put("Diabetes", "<h3>Based on your family history and current medical conditions, the risk of diabetes in future is Very High</h3>");
+			}
 			else {
 				int predictionYear = familyCondition.getStartAge() - patientAge;
 				familyDiseases.put(familyCondition.getDisease(), "Your immediate relative had " + familyCondition.getDisease() + " starting "
 						+ "at " + familyCondition.getStartAge() + " and ending at " + familyCondition.getEndAge() + ". So, there is a chance that"
 						+ "you may have " + familyCondition.getDisease() + " in next "+ predictionYear + "-" + (predictionYear+2) + " years.");
 			}
+		}
+	}
+		else if(riskOfDiabetes) {
+				familyDiseases.put("Diabetes", "<h3>Based on your family history and current medical conditions, the risk of diabetes in future is Very High</h3>");
+		}
+		else if(familyHistoryList.size() > 1) {
+			for(FamilyCondition familyCondition : familyHistoryList) {
+				if(StringUtils.containsIgnoreCase(familyCondition.getDisease(), "Diabetes") || riskOfDiabetes) {
+					logger.info("Family history indicative of Diabetes");
+					startAge = familyCondition.getStartAge();
+					endAge = familyCondition.getEndAge();
+					if(patientAge >= startAge && patientAge <= endAge) {
+						logger.info("Patient in history range");
+							switch (currentState) {
+							case "Critical":
+								familyDiseases.put("Diabetes", "<h3>Based on your family history and current medical conditions, the risk of diabetes in future is " + currentState
+										+ ".</h3>\t<h4>- Your immediate family member had history of diabetes from " + startAge + " to " + endAge + ".</h4>");
+								break;
+							case "Very High":
+								familyDiseases.put("Diabetes", "<h3>Based on your family history and current medical conditions, the risk of diabetes in future is " + currentState
+										+ ".</h3> \t<h4>- Your immediate family member had history of diabetes from " + startAge + " to " + endAge + ".</h4>");
+								break;
+							case "High":
+								familyDiseases.put("Diabetes", "<h3>Based on your family history and current medical conditions, the risk of diabetes in future is " + currentState
+										+ ".</h3> \t<h4>- Your immediate family member had history of diabetes from " + startAge + " to " + endAge +".</h4>");
+								break;
+							case "Moderate":
+								familyDiseases.put("Diabetes", "<h3>Based on your family history and current medical conditions, the risk of diabetes in future is " + currentState
+										+ ".</h3> \t<h4>- Your immediate family member had history of diabetes from " + startAge + " to " + endAge + ".</h4>");
+								break;
+							case "Normal":
+								familyDiseases.put("Diabetes", "<h3>Based on your family history and current medical conditions, the risk of diabetes in future is " + currentState
+										+ ". </h3><h4>Watch out for that extra sugar though.</h4>");
+								break;
+							case "Low":
+								familyDiseases.put("Diabetes", "<h3>Based on your family history and current medical conditions, the risk of diabetes in future is " + currentState
+										+ "</h3><h4>Good Job ! Keep going.</h4>");
+								break;
+							default:
+								return null;
+							}
+					}
+					else {
+						switch (currentState) {
+						case "Critical":
+							familyDiseases.put("Diabetes", "<h3>Based on your family history and current medical conditions, the risk of diabetes in future is " + currentState
+									+ ".</h3>\t<h4>- Your immediate family member had history of diabetes from " + startAge + " to " + endAge + ".</h4>");
+							break;
+						case "Very High":
+							familyDiseases.put("Diabetes", "<h3>Based on your family history and current medical conditions, the risk of diabetes in future is " + currentState
+									+ ".</h3>\t<h4>- Your immediate family member had history of diabetes from " + startAge + " to " + endAge + ".</h4>");
+							break;
+						case "High":
+							familyDiseases.put("Diabetes", "<h3>Based on your family history and current medical conditions, the risk of diabetes in future is " + currentState
+									+ ".</h3> \t<h4>- Your immediate family member had history of diabetes from " + startAge + " to " + endAge +".</h4>");
+							break;
+						case "Moderate":
+							familyDiseases.put("Diabetes", "<h3>Based on your family history and current medical conditions, the risk of diabetes in future is " + currentState
+									+ ". </h3>\t<h4>- Your immediate family member had history of diabetes from " + startAge + " to " + endAge + ".</h4>");
+							break;
+						case "Normal":
+							familyDiseases.put("Diabetes", "<h3>Based on your family history and current medical conditions, the risk of diabetes in future is " + currentState
+									+ ". </h3><h4>However, your immediate family memenber had history of diabetes from" + startAge + " to " + endAge + ". Hence, watch your "
+									+ "sugar levels between " + startAge  + "& " + endAge + "</h4>");
+							break;
+						case "Low":
+							familyDiseases.put("Diabetes", "<h3>Based on your family history and current medical conditions, the risk of diabetes in future is " + currentState
+									+ "</h3><h4>Good Job ! Keep going. Since, your immediate family member had history of diabetes from " + startAge + " to " + endAge + ", watch"
+											+ " your sugar levels between " + startAge + "& " + endAge + "</h4>");
+							break;
+						default:
+							logger.warn("Default case");
+							return null;
+						}
+					}
+				}
+				else {
+					int predictionYear = familyCondition.getStartAge() - patientAge;
+					familyDiseases.put(familyCondition.getDisease(), "Your immediate relative had " + familyCondition.getDisease() + " starting "
+							+ "at " + familyCondition.getStartAge() + " and ending at " + familyCondition.getEndAge() + ". So, there is a chance that"
+							+ "you may have " + familyCondition.getDisease() + " in next "+ predictionYear + "-" + (predictionYear+2) + " years.");
+				}
+		}
 		}
 		//System.out.println(mapper.writeValueAsString(familyDiseases));
 		return familyDiseases;
@@ -257,73 +345,73 @@ public class Diabetes {
 				switch (currentState) {
 				case "Critical":
 					if(activityLevel == "Sedentary" || activityLevel == "Light") {
-						responseBuilder.append("\n\t- The predicted number of Diabetes cases in United States of America is rising in the next"
-								+ " 5 years. Also, based on your occupation, your activity level seems to be " + activityLevel
-								+". Hence, the probability and risk of increase in diabetes is high for the next 5-7 years");
+						responseBuilder.append("\t<h4>- The predicted number of Diabetes cases in United States of America is rising in the next"
+								+ " 5 years.</h4> \t<h4>- Also, based on your occupation, your activity level seems to be " + activityLevel
+								+". </h4><h3>Hence, the probability and risk of increase in diabetes is high for the next 5-7 years</h3>");
 					} 
 					else {
-						responseBuilder.append("\n\t- The predicted number of Diabetes cases in United States of America is rising in the next"
-								+ " 5 years. Also, based on your occupation, your activity level seems to be " + activityLevel
-								+". Hence, the probability and risk of increase in diabetes is high for the next 5-7 years");
+						responseBuilder.append("\t<h4>- The predicted number of Diabetes cases in United States of America is rising in the next"
+								+ " 5 years.</h4> \t<h4>- Also, based on your occupation, your activity level seems to be " + activityLevel
+								+".</h4> <h3>Hence, the probability and risk of increase in diabetes is high for the next 5-7 years</h3>");
 					}
 					break;
 				case "Very High":
 					if(activityLevel == "Sedentary" || activityLevel == "Light") {
-						responseBuilder.append("\n\t- The predicted number of Diabetes cases in United States of America is rising in the next"
-								+ " 5 years. Also, based on your occupation, your activity level seems to be " + activityLevel
-								+". Hence, the probability and risk of increase in diabetes is high for the next 4-6 years");
+						responseBuilder.append("\t<h4>- The predicted number of Diabetes cases in United States of America is rising in the next"
+								+ " 5 years.</h4> \t<h4>- Also, based on your occupation, your activity level seems to be " + activityLevel
+								+".</h4> <h3>Hence, the probability and risk of increase in diabetes is high for the next 4-6 years</h3>");
 					}
 					else {
-						responseBuilder.append("\n\t- The predicted number of Diabetes cases in United States of America is rising in the next"
-								+ " 5 years. Also, based on your occupation, your activity level seems to be " + activityLevel
-								+". Hence, the probability and risk of increase in diabetes is high for the next 4-6 years");
+						responseBuilder.append("\t<h4>- The predicted number of Diabetes cases in United States of America is rising in the next"
+								+ " 5 years.</h4> \t<h4>- Also, based on your occupation, your activity level seems to be " + activityLevel
+								+".</h4> <h3>Hence, the probability and risk of increase in diabetes is high for the next 4-6 years</h3>");
 					}
 					break;
 				case "High":
 					if(activityLevel == "Sedentary" || activityLevel == "Light") {
-						responseBuilder.append("\n\t- The predicted number of Diabetes cases in United States of America is rising in the next"
-								+ " 5 years. Also, based on your occupation, your activity level seems to be " + activityLevel
-								+". Hence, the probability and risk of increase in diabetes is high for the next 3-5 years");
+						responseBuilder.append("\t<h4>- The predicted number of Diabetes cases in United States of America is rising in the next"
+								+ " 5 years. </h4>\t<h4>- Also, based on your occupation, your activity level seems to be " + activityLevel
+								+".</h4> <h3>Hence, the probability and risk of increase in diabetes is high for the next 3-5 years</h3>");
 					}
 					else {
-						responseBuilder.append("\n\t- The predicted number of Diabetes cases in United States of America is rising in the next"
-								+ " 5 years. Also, based on your occupation, your activity level seems to be " + activityLevel
-								+". Hence, the probability and risk of increase in diabetes is high for the next 3-5 years");
+						responseBuilder.append("\t<h4>- The predicted number of Diabetes cases in United States of America is rising in the next"
+								+ " 5 years.</h4> \t<h4>- Also, based on your occupation, your activity level seems to be " + activityLevel
+								+". </h4><h3>Hence, the probability and risk of increase in diabetes is high for the next 3-5 years");
 					}
 					break;	
 				case "Moderate":
 					if(activityLevel == "Sedentary" || activityLevel == "Light") {
-						responseBuilder.append("\n\t- The predicted number of Diabetes cases in United States of America is rising in the next"
-								+ " 5 years. Also, based on your occupation, your activity level seems to be " + activityLevel
-								+". Hence, there is a probability that you might be diagnosed for diabetes in the next 2 years");
+						responseBuilder.append("\t<h4>- The predicted number of Diabetes cases in United States of America is rising in the next"
+								+ " 5 years.</h4> \t<h4>- Also, based on your occupation, your activity level seems to be " + activityLevel
+								+".</h4> <h3>Hence, there is a probability that you might be diagnosed for diabetes in the next 2 years</h3>");
 					}
 					else {
-						responseBuilder.append("\n\t- Based on your occupation, your activity level seems to be " + activityLevel
+						responseBuilder.append("\t<h4>- Based on your occupation, your activity level seems to be " + activityLevel
 								+ "The predicted number of Diabetes cases in United States of America is rising in the next"
-								+ " 5 years. Also, since you are Pre-Diabetic now," 
-								+" there is a probability that you might be diagnosed for diabetes in the next 2 years");
+								+ " 5 years.</h4> \t<h3>- Also, since you are Pre-Diabetic now," 
+								+" there is a probability that you might be diagnosed for diabetes in the next 2 years</h3>");
 					}
 					break;
 				case "Normal":
 					if(activityLevel == "Sedentary" || activityLevel == "Light") {
-						responseBuilder.append("\n\t- The predicted number of Diabetes cases in United States of America is rising in the next"
-								+ " 5 years. Also, based on your occupation, your activity level seems to be " + activityLevel
-								+". So if you don't watch your sugar levels, there is a probability that you might be diagnosed for diabetes in the next 2 years");
+						responseBuilder.append("\t<h4>- The predicted number of Diabetes cases in United States of America is rising in the next"
+								+ " 5 years. </h4>\t<h4>- Also, based on your occupation, your activity level seems to be " + activityLevel
+								+". </h4><h3>So if you don't watch your sugar levels, there is a probability that you might be diagnosed for diabetes in the next 2 years");
 					}
 					else {
-						responseBuilder.append("\n\t- Based on your occupation, your activity level seems to be " + activityLevel
-								+". So if you watch your sugar levels and maintain that activity level, there is a very less probability that you might be diagnosed for diabetes in the next 2 years");
+						responseBuilder.append("\t<h4>- Based on your occupation, your activity level seems to be " + activityLevel
+								+".</h4> <h3>So if you watch your sugar levels and maintain that activity level, there is a very less probability that you might be diagnosed for diabetes in the next 2 years</h3>");
 					}
 					break;
 				case "Zero":
 					if(activityLevel == "Sedentary" || activityLevel == "Light") {
-						responseBuilder.append("\n\t- The predicted number of Diabetes cases in United States of America is rising in the next"
-								+ " 5 years. Also, based on your occupation, your activity level seems to be " + activityLevel
-								+". So if you don't watch your sugar level, there is a probability that you might be diagnosed for Pre-diabetes in the next 2 years");
+						responseBuilder.append("\t<h4>- The predicted number of Diabetes cases in United States of America is rising in the next"
+								+ " 5 years.</h4> \t<h4>- Also, based on your occupation, your activity level seems to be " + activityLevel
+								+".</h4> <h3>So if you don't watch your sugar level, there is a probability that you might be diagnosed for Pre-diabetes in the next 2 years</h3>");
 					}
 					else {
-						responseBuilder.append("\n\t- Based on your occupation, your activity level seems to be " + activityLevel
-								+". So if you watch your sugar levels and maintain that activity level, there is a very less probability that you might be diagnosed for diabetes in the next 2 years");
+						responseBuilder.append("\t<h4>- Based on your occupation, your activity level seems to be " + activityLevel
+								+".</h4><h3>So if you watch your sugar levels and maintain that activity level, there is a very less probability that you might be diagnosed for diabetes in the next 2 years</h3>");
 					}
 					break;
 				default:
@@ -339,73 +427,73 @@ public class Diabetes {
 				switch (currentState) {
 				case "Critical":
 					if(activityLevel == "Sedentary" || activityLevel == "Light") {
-						responseBuilder.append("\n\t- The predicted number of Diabetes cases in United States of America are declining in the next"
-								+ " 5 years. Also, based on your occupation, your activity level seems to be " + activityLevel
-								+". Hence, the probability and risk of increase in diabetes is moderate for the next 5-7 years");
+						responseBuilder.append("\t<h4>- The predicted number of Diabetes cases in United States of America are declining in the next"
+								+ " 5 years.</h4> \t- Also, based on your occupation, your activity level seems to be " + activityLevel
+								+".</h4> <h3>Hence, the probability and risk of increase in diabetes is moderate for the next 5-7 years</h3>");
 					} 
 					else {
-						responseBuilder.append("\n\t- The predicted number of Diabetes cases in United States of America are declining in the next"
-								+ " 5 years. Also, based on your occupation, your activity level seems to be " + activityLevel
-								+". Hence, the probability and risk of increase in diabetes is moderate for the next 5-7 years");
+						responseBuilder.append("\t<h4>- The predicted number of Diabetes cases in United States of America are declining in the next"
+								+ " 5 years.</h4> \t<h4>- Also, based on your occupation, your activity level seems to be " + activityLevel
+								+".</h4> <h3>Hence, the probability and risk of increase in diabetes is moderate for the next 5-7 years</h3>");
 					}
 					break;
 				case "Very High":
 					if(activityLevel == "Sedentary" || activityLevel == "Light") {
-						responseBuilder.append("\n\t- The predicted number of Diabetes cases in United States of America are declining in the next"
-								+ " 5 years. Also, based on your occupation, your activity level seems to be " + activityLevel
-								+". Hence, the probability and risk of increase in diabetes is moderate for the next 4-6 years");
+						responseBuilder.append("\t<h4>- The predicted number of Diabetes cases in United States of America are declining in the next"
+								+ " 5 years.</h4> \t<h4>- Also, based on your occupation, your activity level seems to be " + activityLevel
+								+". </h4><h3>Hence, the probability and risk of increase in diabetes is moderate for the next 4-6 years</h3>");
 					}
 					else {
-						responseBuilder.append("\n\t- The predicted number of Diabetes cases in United States of America are declining in the next"
-								+ " 5 years. Also, based on your occupation, your activity level seems to be " + activityLevel
-								+". Hence, the probability and risk of increase in diabetes is moderate for the next 4-6 years");
+						responseBuilder.append("\t<h4>- The predicted number of Diabetes cases in United States of America are declining in the next"
+								+ " 5 years.</h4> \t<h4>- Also, based on your occupation, your activity level seems to be " + activityLevel
+								+".</h4> <h3>Hence, the probability and risk of increase in diabetes is moderate for the next 4-6 years</h3>");
 					}
 					break;
 				case "High":
 					if(activityLevel == "Sedentary" || activityLevel == "Light") {
-						responseBuilder.append("\n\t- The predicted number of Diabetes cases in United States of America are declining in the next"
-								+ " 5 years. Also, based on your occupation, your activity level seems to be " + activityLevel
-								+". Hence, the probability and risk of increase in diabetes is moderate for the next 3-5 years");
+						responseBuilder.append("\t<h4>- The predicted number of Diabetes cases in United States of America are declining in the next"
+								+ " 5 years.</h4> \t<h4>- Also, based on your occupation, your activity level seems to be " + activityLevel
+								+".</h4><h3>Hence, the probability and risk of increase in diabetes is moderate for the next 3-5 years</h3>");
 					}
 					else {
-						responseBuilder.append("\n\t- The predicted number of Diabetes cases in United States of America are declining in the next"
-								+ " 5 years. Also, based on your occupation, your activity level seems to be " + activityLevel
-								+". Hence, the probability and risk of increase in diabetes is moderate for the next 3-5 years");
+						responseBuilder.append("\t<h4>- The predicted number of Diabetes cases in United States of America are declining in the next"
+								+ " 5 years.</h4> \t<h4>- Also, based on your occupation, your activity level seems to be " + activityLevel
+								+". </h4><h3>Hence, the probability and risk of increase in diabetes is moderate for the next 3-5 years</h3>");
 					}
 					break;	
 				case "Moderate":
 					if(activityLevel == "Sedentary" || activityLevel == "Light") {
-						responseBuilder.append("\n\t- The predicted number of Diabetes cases in United States of America are declining in the next"
-								+ " 5 years. Also, based on your occupation, your activity level seems to be " + activityLevel
-								+". Hence, there is a less probability that you might be diagnosed for diabetes in the next 2 years");
+						responseBuilder.append("\t<h4>- The predicted number of Diabetes cases in United States of America are declining in the next"
+								+ " 5 years.</h4> \t<h4>- Also, based on your occupation, your activity level seems to be " + activityLevel
+								+".</h4> <h3>Hence, there is a less probability that you might be diagnosed for diabetes in the next 2 years</h3>");
 					}
 					else {
-						responseBuilder.append("\n\t- Based on your occupation, your activity level seems to be " + activityLevel
-								+ "The predicted number of Diabetes cases in United States of America are declining in the next"
-								+ " 5 years. Also, since you are Pre-Diabetic now," 
-								+" there is a less probability that you might be diagnosed for diabetes in the next 2 years");
+						responseBuilder.append("\t<h4>- Based on your occupation, your activity level seems to be " + activityLevel
+								+ "<h4>The predicted number of Diabetes cases in United States of America are declining in the next"
+								+ " 5 years.</h4> \t<h3>- Also, since you are Pre-Diabetic now," 
+								+" there is a less probability that you might be diagnosed for diabetes in the next 2 years</h3>");
 					}
 					break;
 				case "Normal":
 					if(activityLevel == "Sedentary" || activityLevel == "Light") {
-						responseBuilder.append("\n\t- The predicted number of Diabetes cases in United States of America are declining in the next"
-								+ " 5 years. Also, based on your occupation, your activity level seems to be " + activityLevel
-								+". So if you don't watch your sugar levels, there is a minor probability that you might be diagnosed for diabetes in the next 2 years");
+						responseBuilder.append("\t<h4>- The predicted number of Diabetes cases in United States of America are declining in the next"
+								+ " 5 years. \t<h4>- Also, based on your occupation, your activity level seems to be " + activityLevel
+								+". <h3>So if you don't watch your sugar levels, there is a minor probability that you might be diagnosed for diabetes in the next 2 years</h3>");
 					}
 					else {
-						responseBuilder.append("\n\t- Based on your occupation, your activity level seems to be " + activityLevel
-								+". So if you watch your sugar levels and maintain that activity level, there is a very less probability that you might be diagnosed for diabetes in the next 2 years");
+						responseBuilder.append("\t<h4>- Based on your occupation, your activity level seems to be " + activityLevel
+								+".</h4> <h3>So if you watch your sugar levels and maintain that activity level, there is a very less probability that you might be diagnosed for diabetes in the next 2 years</h3>");
 					}
 					break;
 				case "Zero":
 					if(activityLevel == "Sedentary" || activityLevel == "Light") {
-						responseBuilder.append("\n\t- The predicted number of Diabetes cases in United States of America are declining in the next"
-								+ " 5 years. Also, based on your occupation, your activity level seems to be " + activityLevel
-								+". So if you don't watch your sugar level, there is a minor probability that you might be diagnosed for Pre-diabetes in the next 2 years");
+						responseBuilder.append("\t<h4>- The predicted number of Diabetes cases in United States of America are declining in the next"
+								+ " 5 years.</h4> \t<h4>- Also, based on your occupation, your activity level seems to be " + activityLevel
+								+".</h4> <h3>So if you don't watch your sugar level, there is a minor probability that you might be diagnosed for Pre-diabetes in the next 2 years</h3>");
 					}
 					else {
-						responseBuilder.append("\n\t- Based on your occupation, your activity level seems to be " + activityLevel
-								+". So if you watch your sugar levels and maintain that activity level, there is a very less probability that you might be diagnosed for diabetes in the next 2 years");
+						responseBuilder.append("\t<h4>- Based on your occupation, your activity level seems to be " + activityLevel
+								+".</h4> <h3>So if you watch your sugar levels and maintain that activity level, there is a very less probability that you might be diagnosed for diabetes in the next 2 years</h3>");
 					}
 					break;
 				default:
@@ -418,7 +506,7 @@ public class Diabetes {
 			return responseBuilder.toString();
 		}
 		else {
-			return "Too less information to predict Diabetes.";
+			return "<h3>Too less information to predict Diabetes.<h3>";
 		}
 			
 	}

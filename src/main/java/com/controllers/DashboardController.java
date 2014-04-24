@@ -61,7 +61,7 @@ public class DashboardController {
 	}
 	
 	@RequestMapping(value = "/country/{disease}", method = RequestMethod.GET)
-	public @ResponseBody String getCountryListForDisease(@PathVariable String disease, ModelMap model) {
+	public @ResponseBody String getCountryListForDisease(@PathVariable String disease) {
 		try {
 			logger.info("Retrieving the country list data for: " + disease);
 			List<String> countryList = dao.getCountryListForDisease(disease);
@@ -124,7 +124,7 @@ public class DashboardController {
 	}
 	
 	@RequestMapping(value = "/patient", method = RequestMethod.GET, params = "medical_record_no")
-	public @ResponseBody String retreivePatientDetails(@RequestParam("medical_record_no") String mrno, ModelMap model) {
+	public @ResponseBody String retreivePatientDetails(@RequestParam("medical_record_no") String mrno) {
 		logger.info("Retreiving the details of patient with medical record no: " + mrno);
 		PatientStatistics patientStats = mongoUtils.retrieveStatisticsForPatient(mrno);
 		
@@ -139,7 +139,7 @@ public class DashboardController {
 	}
 	
 	@RequestMapping(value = "/patient/occupationsList", method = RequestMethod.GET)
-	public @ResponseBody String retrieveAllOccupations(ModelMap model) {
+	public @ResponseBody String retrieveAllOccupations() {
 		try {
 			List<String> occupationsList = dao.retrieveAllOccupations();
 			System.out.println(mapper.writeValueAsString(occupationsList));
@@ -155,7 +155,7 @@ public class DashboardController {
 	}
 	
 	@RequestMapping(value = "/patient/diseaseList", method = RequestMethod.GET)
-	public @ResponseBody String retrieveAllDisease(ModelMap model) {
+	public @ResponseBody String retrieveAllDisease() {
 		try {
 			List<String> diseaseList = dao.retrieveDiseaseList();
 			System.out.println(mapper.writeValueAsString(diseaseList));
@@ -171,8 +171,8 @@ public class DashboardController {
 	}
 	
 	@RequestMapping(value = "/patient/update", method = RequestMethod.POST , params = "medical_record_no")
-	public @ResponseBody String returnPatientsFamilyHistory(@RequestBody PatientStatistics patientStats, 
-															@RequestParam("medical_record_no") String mrno, ModelMap model) {
+	public @ResponseBody String retrievePatientsFamilyHistory(@RequestBody PatientStatistics patientStats, 
+															@RequestParam("medical_record_no") String mrno) {
 		try {
 			logger.info("Updating the information of the patient with medical record no: " + mrno);
 			String result = "";
@@ -205,8 +205,7 @@ public class DashboardController {
 														  @RequestParam("q1") String question1,
 														  @RequestParam("q2") String question2,
 														  @RequestParam("q3") String question3,
-														  @RequestParam("q4") String question4,
-														  ModelMap model) {
+														  @RequestParam("q4") String question4) {
 		try {
 			DiabetesQuestionnaire dbQues = new DiabetesQuestionnaire();
 			dbQues.setQuestion1(question1);
