@@ -219,7 +219,7 @@ public class Diabetes {
 				}
 			}
 			else if(riskOfDiabetes) {
-				familyDiseases.put("Diabetes", "<h3>Based on your family history and current medical conditions, the risk of diabetes in future is Very High</h3>");
+				familyDiseases.put("Diabetes", "<h3>Based on your family history and current medical conditions, the risk of diabetes in future is Very High.</h3>");
 			}
 			else {
 				int predictionYear = familyCondition.getStartAge() - patientAge;

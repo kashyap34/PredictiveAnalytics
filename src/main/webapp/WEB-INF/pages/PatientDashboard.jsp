@@ -18,10 +18,10 @@
 	href="${pageContext.request.contextPath}/resources/css/sb-admin.css"
 	rel="stylesheet">
 <style type="text/css">
-/* .row {
-	margin-top: 40px;
+ .row {
+	//margin-top: 40px;
 	padding: 0 10px;
-} */
+} 
 
 .clickable {
 	cursor: pointer;
@@ -173,8 +173,7 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="${pageContext.request.contextPath}/"><strong>Predictive
-						Analytics</strong></a>
+				<a class="navbar-brand" href="${pageContext.request.contextPath}/"><i class="fa fa-users"></i> <i class="fa fa-bar-chart-o"></i> Population Analytics</a>
 			</div>
 			<!-- /.navbar-header -->
 
@@ -205,7 +204,7 @@
 						</a></li>
 					</ul></li>
 				<li class="dropdown"><a class="dropdown-toggle"
-					data-toggle="dropdown" href="#"> <i class="fa fa-user fa-fw">
+					data-toggle="dropdown" href="#"> <i class="fa fa-user">
 							${user.fname}</i> <i class="fa fa-caret-down"></i>
 				</a>
 					<ul class="dropdown-menu dropdown-user">
@@ -516,9 +515,12 @@
 						</div>
 					</div> -->
 
-
-
-
+					<div class="row"> 
+						<div class="col-md-12" style="text-align: center;">
+							<button class="btn btn-success" id="generate-report" type="button"><i class="fa fa-print"></i> Generate Report</button>
+							<!-- <button class="btn btn-success" id="generate-all-report" type="button"><i class="fa fa-print"></i> Generate All Report</button> -->
+						</div>
+					</div>
 				</div>
 				<!--/row-->
 			</div>
@@ -565,9 +567,21 @@
 			<!-- Noty plugin -->
 			<script
 				src="${pageContext.request.contextPath}/resources/js/jquery.noty.js"></script>
+				
+			<!-- CanvG -->
+			<script src="http://canvg.googlecode.com/svn/trunk/rgbcolor.js"></script> 
+			<script src="http://canvg.googlecode.com/svn/trunk/canvg.js"></script> 
+		
+			<!-- jsPDF -->
+			<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jspdf.debug.js"></script>
+			<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jspdf.js"></script>
+			<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jspdf.plugin.addimage.js"></script>
+			<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jspdf.plugin.standard_fonts_metrics.js"></script>
+			<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jspdf.plugin.autoprint.js"></script>
+			<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jspdf.plugin.from_html.js"></script>
 
 
-			<!-- Filter table results script -->
+<!-- Filter table results script -->
 <script type="text/javascript">
 	(function(){
 	    'use strict';
@@ -604,6 +618,7 @@
 		$('#occupation-data-container').hide();
 		$('#update-btn').hide();
 		$('#diabetes-questionnaire').hide();
+		$('#generate-report').hide();
 	    // attach table filter plugin to inputs
 		$('[data-action="filter"]').filterTable();
 		
@@ -627,6 +642,12 @@
 		var patientName;
 		var familyHistoryGroupCount = 1;
 		var diseaseList;
+		var columnChart;
+		var tagCloud;
+		var diabetesPredictionGauge;
+		var el;
+		var tagList;
+		var displayText;
 		
 		var substringMatcher = function(strs) {
 			  return function findMatches(q, cb) {
@@ -655,7 +676,6 @@
 		$('#patient-table tr').click(function(){
 			medical_record_no = $(this).closest('tr').find('td').first().text();
 			patientName = $(this).closest('tr').find('td').eq(1).text();
-			alert(medical_record_no);
 			$.get("${pageContext.request.contextPath}/dashboard/patient?medical_record_no=" + medical_record_no, function(data){
 			$('#tag-cloud-container').empty();
 			$('input:checkbox').removeAttr('checked');
@@ -671,7 +691,7 @@
 				var yearVsEncounterMap = obj.yearVsEncounterMap;
 				var sinceYear = obj.sinceYear;
 				var years = Object.keys(yearVsEncounterMap);
-				var tagList = obj.tagList;
+				tagList = obj.tagList;
 				var familyHistory = obj.familyHistory;
 				var jobTitle = obj.title;
 				
@@ -680,12 +700,13 @@
 				});
 				
 				//alert(encounters);
-				 $('#column-chart-container').highcharts({
+				 columnChart  = new Highcharts.Chart({
 			            chart: {
 			                type: 'column',
 			                width: 250,
 			                height: 400,
-			                spacingTop: 0
+			                spacingTop: 0,
+			                renderTo: 'column-chart-container'
 			            },
 			            title: {
 			                text: patientName + "'s number of encounters since " + sinceYear
@@ -725,7 +746,7 @@
 				 
 				 var fill = d3.scale.category20();
 
-				 var layout =  d3.layout.cloud().size([700, 400])
+				 tagCloud =  d3.layout.cloud().size([700, 400])
 				      .words(tagList.map(function(d) {
 				        return {text: d, size: 20};
 				      }))
@@ -988,7 +1009,7 @@
 			   $.get('${pageContext.request.contextPath}/dashboard/patient/diabetes/predict?' + queryParams, function(data) {
 				  var obj = jQuery.parseJSON(data);
 				  if(obj.error == null) {
-					  var Needle, arc, arcEndRad, arcStartRad, barWidth, chart, chartInset, degToRad, el, endPadRad, height, margin, needle, numSections, padRad, percToDeg, percToRad, percent, radius, sectionIndx, sectionPerc, startPadRad, svg, totalPercent, width, _i;
+					  var Needle, arc, arcEndRad, arcStartRad, barWidth, chartInset, degToRad, endPadRad, height, margin, needle, numSections, padRad, percToDeg, percToRad, percent, radius, sectionIndx, sectionPerc, startPadRad, svg, totalPercent, width, _i;
 					  var predictionText = obj.diabetes_prediction;
 					  
 					  if(/Critical/i.test(predictionText)) {
@@ -1120,7 +1141,7 @@
 
 					  needle.animateOn(chart, percent);
 					  
-					  var displayText = (obj.diabetes_prediction.replace(/\n/g, "<br />")).replace(/\t/, "&#9;");
+					  displayText = (obj.diabetes_prediction);//.replace(/\n/g, "<br />")).replace(/\t/, "&#9;");
 					  //alert(displayText);
 					  $('#diabetes-prediction-container').html(displayText);
 				  }
@@ -1130,6 +1151,59 @@
 			   });
 			   
 			   $('#diabetes-prediction-explanation-panel').show();
+			   $('#generate-report').show();
+		});
+		
+		$('#generate-report').click(function(){
+			var labelX = 30, labelY = 10;
+			var graphX = 10, graphY = 20;
+			var graphWidth = 80, graphHeight = 80;
+			var doc = new jsPDF();
+			
+			var columnChartCanvas = document.createElement('canvas');
+			columnChartCanvas.setAttribute('width', 600);
+			columnChartCanvas.setAttribute('height', 300);
+			
+			if(columnChartCanvas.getContext && columnChartCanvas.getContext('2d')){ 
+				console.log('generating canvas');
+				canvg(columnChartCanvas, columnChart.getSVG());
+				var columnImage = columnChartCanvas.toDataURL("image/jpeg");
+				
+				doc.setFontSize(20);
+				doc.text(labelX, labelY, "Summary of " + patientName + "'s medical conditions");
+				doc.addImage(columnImage, 'JPEG', graphX, graphY, graphWidth, graphHeight);
+				
+				graphX = graphX + graphWidth + 15;
+				graphY = graphY + 10;
+				doc.setFontSize(15);
+				doc.text(graphX, graphY, "" + patientName + "'s current conditions:");
+				graphY = graphY + 8;
+				doc.setFontSize(12);
+				$.each(tagList, function(index, value){
+					doc.text(graphX, graphY, "\t- " + value);
+					graphY = graphY + 5;
+				});
+				
+				graphX = 10;
+				graphY = 20 + graphHeight + 15;
+				doc.setFontSize(15);
+				doc.text(graphX, graphY, "Diabetes prediction for "+ patientName);
+				graphY = graphY + 8;
+				doc.setFontSize(12);
+				formattedText = displayText.replace(/<h3>/g,"").replace(/<\/h3>/g,"").replace(/<h4>/g,"").replace(/<\/h4>/g,"");
+				formattedText = formattedText.split('.');
+				
+				for(var i = 0; i < formattedText.length; i++) {
+					doc.text(graphX, graphY, formattedText[i]);
+					graphY = graphY + 5;
+				}
+				
+				doc.autoPrint();
+				doc.output('dataurlnewwindow');
+			}	
+			else {
+				console.log('cannot create canvas');
+			}
 		});
 		
 	</script>

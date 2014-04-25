@@ -77,8 +77,7 @@ progress::-webkit-progress-value {
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="${pageContext.request.contextPath}/"><strong>Predictive
-						Analytics</strong></a>
+				<a class="navbar-brand" href="${pageContext.request.contextPath}/"><i class="fa fa-users"></i> <i class="fa fa-bar-chart-o"></i> Population Analytics</a>
 			</div>
 			<!-- /.navbar-header -->
 

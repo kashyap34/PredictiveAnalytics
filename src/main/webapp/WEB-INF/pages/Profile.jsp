@@ -75,7 +75,7 @@
                  </li>
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-user fa-fw"> ${user.fname}</i>  <i class="fa fa-caret-down"></i>
+                        <i class="fa fa-user"> ${user.fname}</i>  <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
                         <li><a href="${pageContext.request.contextPath}/profile"><i class="fa fa-user-md fa-fw"></i> Profile</a>

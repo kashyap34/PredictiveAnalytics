@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,7 @@ import com.beans.DiabetesQuestionnaire;
 import com.beans.PatientData;
 import com.beans.PatientOccupation;
 import com.beans.PatientStatistics;
+import com.beans.UserInfo;
 import com.dao.MysqlDao;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -45,7 +47,7 @@ public class DashboardController {
 	}
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String returnDashboardView(ModelMap model) {
+	public String returnDashboardView(@ModelAttribute("userEmail")String email, ModelMap model) {
 		System.out.println("JRI Path is: " + System.getProperty("java.library.path"));
 		Map<String, Double> avgCasesMap = dao.getAverageCasesWorldWide();
 		
@@ -56,6 +58,10 @@ public class DashboardController {
 		else {
 			logger.error("Error in retrieving the health trends");
 			model.addAttribute("error", "Error in retreiving the health trends");
+		}
+		UserInfo user = dao.retrieveUserDetails(email);
+		if(user != null) {
+			model.addAttribute("user", user);
 		}
 		return "Dashboard";
 	}
@@ -111,7 +117,7 @@ public class DashboardController {
 	}
 	
 	@RequestMapping(value = "/patient", method = RequestMethod.GET)
-	public String returnPatientView(ModelMap model) {
+	public String returnPatientView(@ModelAttribute("userEmail")String email, ModelMap model) {
 		logger.info("Generating the view for patient");
 		
 		List<PatientData> patientList = mongoUtils.retreiveAllPatients();
@@ -119,7 +125,10 @@ public class DashboardController {
 			model.addAttribute("patientList", patientList);
 		else
 			model.addAttribute("error", "Error in retreiving patient data");
-		
+		UserInfo user = dao.retrieveUserDetails(email);
+		if(user != null) {
+			model.addAttribute("user", user);
+		}
 		return "PatientDashboard";
 	}
 	

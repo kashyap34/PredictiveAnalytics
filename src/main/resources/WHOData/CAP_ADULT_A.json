@@ -1,0 +1,453 @@
+{
+  "birthdate": -94210200,
+  "conditions": [
+    {
+      "causeOfDeath": null,
+      "codes": {
+        "SNOMED-CT": [
+          "312403005"
+        ],
+        "ICD-9-CM": [
+          "482.84"
+        ],
+        "ICD-10-CM": [
+          "A48.1"
+        ]
+      },
+      "description": "Diagnosis, Active: Hospital Measures-Pneumonia (Code List: 2.16.840.1.113883.3.666.5.752)",
+      "end_time": 1330964100,
+      "free_text": null,
+      "mood_code": "EVN",
+      "name": null,
+      "negationInd": null,
+      "negationReason": null,
+      "oid": "2.16.840.1.113883.3.560.1.2",
+      "ordinality": {
+        "code_system": "SNOMED-CT",
+        "code": "63161005",
+        "title": "Hospital Measures - Principal"
+      },
+      "priority": null,
+      "reason": null,
+      "severity": null,
+      "specifics": null,
+      "start_time": 1330684200,
+      "status_code": {
+        "SNOMED-CT": [
+          "55561003"
+        ],
+        "HL7 ActStatus": [
+          "active"
+        ]
+      },
+      "time": null,
+      "time_of_death": null,
+      "type": null,
+      "_type": "Condition"
+    }
+  ],
+  "description": "",
+  "encounters": [
+    {
+      "admitTime": 1330679700,
+      "admitType": null,
+      "codes": {
+        "SNOMED-CT": [
+          "32485007"
+        ]
+      },
+      "description": "Encounter, Performed: Encounter Inpatient (Code List: 2.16.840.1.113883.3.666.5.307)",
+      "dischargeDisposition": null,
+      "dischargeTime": 1330964100,
+      "end_time": 1330964100,
+      "facility": {
+        "code": {
+          "code_system": "HL7 Healthcare Service Location",
+          "code": "1001-7",
+          "title": "Hospital Measures-Non-ICU Locations"
+        },
+        "end_time": null,
+        "name": null,
+        "start_time": 1330679700
+      },
+      "free_text": null,
+      "mood_code": "EVN",
+      "negationInd": null,
+      "negationReason": null,
+      "oid": "2.16.840.1.113883.3.560.1.79",
+      "performer_id": null,
+      "reason": null,
+      "specifics": null,
+      "start_time": 1330679700,
+      "status_code": {
+        "HL7 ActStatus": [
+          "performed"
+        ]
+      },
+      "time": null,
+      "transferFrom": null,
+      "transferTo": null,
+      "_type": "Encounter"
+    },
+    {
+      "admitTime": null,
+      "admitType": null,
+      "codes": {
+        "SNOMED-CT": [
+          "305351004"
+        ]
+      },
+      "description": "Encounter, Performed: ICU Admission or Transfer (Code List: 2.16.840.1.113883.3.117.1.7.1.305)",
+      "dischargeDisposition": null,
+      "dischargeTime": null,
+      "end_time": 1330772400,
+      "free_text": null,
+      "mood_code": "EVN",
+      "negationInd": null,
+      "negationReason": null,
+      "oid": "2.16.840.1.113883.3.560.1.79",
+      "performer_id": null,
+      "reason": null,
+      "specifics": null,
+      "start_time": 1330680000,
+      "status_code": {
+        "HL7 ActStatus": [
+          "performed"
+        ]
+      },
+      "time": null,
+      "transferFrom": null,
+      "transferTo": null,
+      "_type": "Encounter"
+    }
+  ],
+  "ethnicity": {
+    "code": "2186-5",
+    "name": "Not Hispanic or Latino",
+    "codeSystem": "CDC Race"
+  },
+  "expired": false,
+  "first": "CAP_ADULT",
+  "gender": "F",
+  "insurance_providers": [
+    {
+      "codes": {
+        "SOP": [
+          "349"
+        ]
+      },
+      "end_time": null,
+      "financial_responsibility_type": {
+        "code": "SELF",
+        "codeSystem": "HL7 Relationship Code"
+      },
+      "free_text": null,
+      "member_id": "1234567890",
+      "name": "Other",
+      "payer": {
+        "name": "Other"
+      },
+      "relationship": null,
+      "start_time": 1199163600,
+      "time": null,
+      "type": "OT"
+    }
+  ],
+  "languages": [
+
+  ],
+  "last": "A",
+  "measure_ids": [
+    "0147",
+    "0142",
+    "0371",
+    "0376",
+    "0375",
+    "0453",
+    "0372"
+  ],
+  "measure_period_end": 1356930000000,
+  "measure_period_start": 1325394000000,
+  "medical_equipment": [
+
+  ],
+  "medical_record_number": "d7108ec0329f792ea437d5051c88a314",
+  "medications": [
+    {
+      "administrationTiming": null,
+      "codes": {
+        "RxNorm": [
+          "1361568"
+        ]
+      },
+      "cumulativeMedicationDuration": null,
+      "deliveryMethod": null,
+      "description": "Medication, Administered: Unfractionated Heparin (Code List: 2.16.840.1.113883.3.117.1.7.1.218)",
+      "dose": null,
+      "doseIndicator": null,
+      "doseRestriction": null,
+      "end_time": 1330680000,
+      "freeTextSig": null,
+      "free_text": null,
+      "fulfillmentInstructions": null,
+      "indication": null,
+      "mood_code": "EVN",
+      "negationInd": null,
+      "negationReason": null,
+      "oid": "2.16.840.1.113883.3.560.1.14",
+      "patientInstructions": null,
+      "productForm": null,
+      "reaction": null,
+      "reason": null,
+      "route": {
+        "code_system": "SNOMED-CT",
+        "code": "418114005",
+        "title": "Intravenous route"
+      },
+      "site": null,
+      "specifics": null,
+      "start_time": 1330680000,
+      "statusOfMedication": null,
+      "status_code": {
+        "HL7 ActStatus": [
+          "administered"
+        ]
+      },
+      "time": null,
+      "typeOfMedication": null,
+      "vehicle": null,
+      "_type": "Medication"
+    },
+    {
+      "administrationTiming": null,
+      "codes": {
+        "RxNorm": [
+          "1000026"
+        ]
+      },
+      "cumulativeMedicationDuration": null,
+      "deliveryMethod": null,
+      "description": "Medication, Administered: Hospital Measures-IV, IM, or PO Antimicrobial Medications (Code List: 2.16.840.1.113883.3.666.5.843)",
+      "dose": null,
+      "doseIndicator": null,
+      "doseRestriction": null,
+      "end_time": 1330689600,
+      "freeTextSig": null,
+      "free_text": null,
+      "fulfillmentInstructions": null,
+      "indication": null,
+      "mood_code": "EVN",
+      "negationInd": null,
+      "negationReason": null,
+      "oid": "2.16.840.1.113883.3.560.1.14",
+      "patientInstructions": null,
+      "productForm": null,
+      "reaction": null,
+      "reason": null,
+      "route": {
+        "code_system": "SNOMED-CT",
+        "code": "127490009",
+        "title": "Hospital measures-Route IV, oral or IM"
+      },
+      "site": null,
+      "specifics": null,
+      "start_time": 1330685100,
+      "statusOfMedication": null,
+      "status_code": {
+        "HL7 ActStatus": [
+          "administered"
+        ]
+      },
+      "time": null,
+      "typeOfMedication": null,
+      "vehicle": null,
+      "_type": "Medication"
+    }
+  ],
+  "procedures": [
+    {
+      "codes": {
+        "SNOMED-CT": [
+          "168731009"
+        ]
+      },
+      "description": "Diagnostic Study, Result: Hospital Measures-Chest xray SM-CT (Code List: 2.16.840.1.113883.3.666.5.678)",
+      "end_time": 1330594200,
+      "free_text": null,
+      "incisionTime": null,
+      "mood_code": "EVN",
+      "negationInd": null,
+      "negationReason": null,
+      "oid": "2.16.840.1.113883.3.560.1.11",
+      "ordinality": null,
+      "performer_id": null,
+      "reason": null,
+      "site": null,
+      "source": null,
+      "specifics": null,
+      "start_time": 1330594200,
+      "status_code": {
+        "HL7 ActStatus": [
+          null
+        ]
+      },
+      "time": null,
+      "values": [
+        {
+          "codes": {
+          },
+          "description": null,
+          "_type": "CodedResultValue"
+        }
+      ],
+      "_type": "Procedure"
+    }
+  ],
+  "race": {
+    "code": "1002-5",
+    "name": "American Indian or Alaska Native",
+    "codeSystem": "CDC Race"
+  },
+  "results": [
+
+  ],
+  "source_data_criteria": [
+    {
+      "id": "DiagnosticStudyResultHospitalMeasuresChestXraySmCt",
+      "start_date": 1330612200000,
+      "end_date": 1330612200000,
+      "value": [
+        {
+          "type": "CD",
+          "code_list_id": "2.16.840.1.113883.3.666.5.1105",
+          "title": "Hospital Measures-Radiological findings consistent with pneumonia"
+        }
+      ],
+      "negation": "",
+      "negation_code_list_id": null,
+      "field_values": {
+      },
+      "oid": "2.16.840.1.113883.3.666.5.678",
+      "definition": "diagnostic_study_result",
+      "status": null
+    },
+    {
+      "id": "EncounterPerformedEncounterInpatient",
+      "start_date": 1330697700000,
+      "end_date": 1330982100000,
+      "value": [
+
+      ],
+      "negation": "",
+      "negation_code_list_id": null,
+      "field_values": {
+        "FACILITY_LOCATION": {
+          "type": "CD",
+          "code_list_id": "2.16.840.1.113883.3.666.5.1084",
+          "title": "Hospital Measures-Non-ICU Locations"
+        },
+        "DISCHARGE_DATETIME": {
+          "type": "TS",
+          "value": "03/05/2012 16:15"
+        },
+        "FACILITY_LOCATION_ARRIVAL_DATETIME": {
+          "type": "TS",
+          "value": "03/02/2012 09:15"
+        },
+        "ADMISSION_DATETIME": {
+          "type": "TS",
+          "value": "03/02/2012 09:15"
+        }
+      },
+      "oid": "2.16.840.1.113883.3.666.5.307",
+      "definition": "encounter",
+      "status": "performed"
+    },
+    {
+      "id": "MedicationAdministeredUnfractionatedHeparin",
+      "start_date": 1330698000000,
+      "end_date": 1330698000000,
+      "value": [
+
+      ],
+      "negation": "",
+      "negation_code_list_id": null,
+      "field_values": {
+        "ROUTE": {
+          "type": "CD",
+          "code_list_id": "2.16.840.1.113883.3.117.1.7.1.222",
+          "title": "Intravenous route"
+        }
+      },
+      "oid": "2.16.840.1.113883.3.117.1.7.1.218",
+      "definition": "medication",
+      "status": "administered"
+    },
+    {
+      "id": "EncounterPerformedIcuAdmissionOrTransfer",
+      "start_date": 1330698000000,
+      "end_date": 1330790400000,
+      "value": [
+
+      ],
+      "negation": "",
+      "negation_code_list_id": null,
+      "field_values": {
+        "LENGTH_OF_STAY": {
+          "type": "PQ",
+          "value": "1",
+          "unit": "day"
+        }
+      },
+      "oid": "2.16.840.1.113883.3.117.1.7.1.305",
+      "definition": "encounter",
+      "status": "performed"
+    },
+    {
+      "id": "DiagnosisActiveHospitalMeasuresPneumonia",
+      "start_date": 1330702200000,
+      "end_date": 1330982100000,
+      "value": [
+
+      ],
+      "negation": "",
+      "negation_code_list_id": null,
+      "field_values": {
+        "ORDINAL": {
+          "type": "CD",
+          "code_list_id": "2.16.840.1.113883.3.666.5.3010",
+          "title": "Hospital Measures - Principal"
+        }
+      },
+      "oid": "2.16.840.1.113883.3.666.5.752",
+      "definition": "diagnosis",
+      "status": "active"
+    },
+    {
+      "id": "MedicationAdministeredHospitalMeasuresIvImOrPoAntimicrobialMedications",
+      "start_date": 1330703100000,
+      "end_date": 1330707600000,
+      "value": [
+
+      ],
+      "negation": "",
+      "negation_code_list_id": null,
+      "field_values": {
+        "ROUTE": {
+          "type": "CD",
+          "code_list_id": "2.16.840.1.113883.3.666.5.1111",
+          "title": "Hospital measures-Route IV, oral or IM"
+        }
+      },
+      "oid": "2.16.840.1.113883.3.666.5.843",
+      "definition": "medication",
+      "status": "administered"
+    },
+    {
+      "id": "MeasurePeriod",
+      "start_date": 1325394000000,
+      "end_date": 1356930000000
+    }
+  ],
+  "type": "eh"
+}

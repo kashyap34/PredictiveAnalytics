@@ -1,0 +1,539 @@
+{
+  "birthdate": -1035793800,
+  "conditions": [
+    {
+      "causeOfDeath": null,
+      "codes": {
+        "SNOMED-CT": [
+          "20301004"
+        ]
+      },
+      "description": "Symptom, Active: Neurologic Symptoms of Stroke (Code List: 2.16.840.1.113883.3.117.1.7.1.399)",
+      "end_time": 1333359000,
+      "free_text": null,
+      "mood_code": "EVN",
+      "name": null,
+      "negationInd": null,
+      "negationReason": null,
+      "oid": "2.16.840.1.113883.3.560.1.69",
+      "ordinality": null,
+      "priority": null,
+      "reason": null,
+      "severity": null,
+      "specifics": null,
+      "start_time": 1333359000,
+      "status_code": {
+        "SNOMED-CT": [
+          "55561003"
+        ],
+        "HL7 ActStatus": [
+          "active"
+        ]
+      },
+      "time": null,
+      "time_of_death": null,
+      "type": null,
+      "_type": "Condition"
+    },
+    {
+      "causeOfDeath": null,
+      "codes": {
+        "SNOMED-CT": [
+          "195080001"
+        ],
+        "ICD-9-CM": [
+          "427.31"
+        ],
+        "ICD-10-CM": [
+          "I48.0"
+        ]
+      },
+      "description": "Diagnosis, Active: Atrial Fibrillation/Flutter (Code List: 2.16.840.1.113883.3.117.1.7.1.202)",
+      "end_time": 1333634400,
+      "free_text": null,
+      "mood_code": "EVN",
+      "name": null,
+      "negationInd": null,
+      "negationReason": null,
+      "oid": "2.16.840.1.113883.3.560.1.2",
+      "ordinality": null,
+      "priority": null,
+      "reason": null,
+      "severity": null,
+      "specifics": null,
+      "start_time": 1333366200,
+      "status_code": {
+        "SNOMED-CT": [
+          "55561003"
+        ],
+        "HL7 ActStatus": [
+          "active"
+        ]
+      },
+      "time": null,
+      "time_of_death": null,
+      "type": null,
+      "_type": "Condition"
+    },
+    {
+      "causeOfDeath": null,
+      "codes": {
+        "SNOMED-CT": [
+          "111297002"
+        ],
+        "ICD-9-CM": [
+          "433.01"
+        ],
+        "ICD-10-CM": [
+          "I63.00"
+        ]
+      },
+      "description": "Diagnosis, Active: Ischemic Stroke (Code List: 2.16.840.1.113883.3.117.1.7.1.247)",
+      "end_time": 1333548000,
+      "free_text": null,
+      "mood_code": "EVN",
+      "name": null,
+      "negationInd": null,
+      "negationReason": null,
+      "oid": "2.16.840.1.113883.3.560.1.2",
+      "ordinality": {
+        "code_system": "SNOMED-CT",
+        "code": "63161005",
+        "title": "Hospital Measures - Principal"
+      },
+      "priority": null,
+      "reason": null,
+      "severity": null,
+      "specifics": null,
+      "start_time": 1333371600,
+      "status_code": {
+        "SNOMED-CT": [
+          "55561003"
+        ],
+        "HL7 ActStatus": [
+          "active"
+        ]
+      },
+      "time": null,
+      "time_of_death": null,
+      "type": null,
+      "_type": "Condition"
+    }
+  ],
+  "description": "",
+  "encounters": [
+    {
+      "admitTime": null,
+      "admitType": null,
+      "codes": {
+        "SNOMED-CT": [
+          "4525004"
+        ]
+      },
+      "description": "Encounter, Performed: Emergency Department Visit (Code List: 2.16.840.1.113883.3.117.1.7.1.292)",
+      "dischargeDisposition": null,
+      "dischargeTime": null,
+      "end_time": 1326470400,
+      "facility": {
+        "code": null,
+        "end_time": 1326470400,
+        "name": null,
+        "start_time": 1326456000
+      },
+      "free_text": null,
+      "mood_code": "EVN",
+      "negationInd": null,
+      "negationReason": null,
+      "oid": "2.16.840.1.113883.3.560.1.79",
+      "performer_id": null,
+      "reason": null,
+      "specifics": null,
+      "start_time": 1326456000,
+      "status_code": {
+        "HL7 ActStatus": [
+          "performed"
+        ]
+      },
+      "time": null,
+      "transferFrom": null,
+      "transferTo": null,
+      "_type": "Encounter"
+    },
+    {
+      "admitTime": null,
+      "admitType": null,
+      "codes": {
+        "SNOMED-CT": [
+          "4525004"
+        ]
+      },
+      "description": "Encounter, Performed: Emergency Department Visit (Code List: 2.16.840.1.113883.3.117.1.7.1.292)",
+      "dischargeDisposition": null,
+      "dischargeTime": null,
+      "end_time": 1333369800,
+      "facility": {
+        "code": null,
+        "end_time": 1333369800,
+        "name": null,
+        "start_time": 1333364400
+      },
+      "free_text": null,
+      "mood_code": "EVN",
+      "negationInd": null,
+      "negationReason": null,
+      "oid": "2.16.840.1.113883.3.560.1.79",
+      "performer_id": null,
+      "reason": null,
+      "specifics": null,
+      "start_time": 1333364400,
+      "status_code": {
+        "HL7 ActStatus": [
+          "performed"
+        ]
+      },
+      "time": null,
+      "transferFrom": null,
+      "transferTo": null,
+      "_type": "Encounter"
+    },
+    {
+      "admitTime": null,
+      "admitType": null,
+      "codes": {
+        "SNOMED-CT": [
+          "10378005"
+        ]
+      },
+      "description": "Encounter, Order: Decision to Admit to Hospital Inpatient (Code List: 2.16.840.1.113883.3.117.1.7.1.295)",
+      "dischargeDisposition": null,
+      "dischargeTime": null,
+      "end_time": 1333368900,
+      "free_text": null,
+      "mood_code": "EVN",
+      "negationInd": null,
+      "negationReason": null,
+      "oid": "2.16.840.1.113883.3.560.1.83",
+      "performer_id": null,
+      "reason": null,
+      "specifics": null,
+      "start_time": 1333368900,
+      "status_code": {
+        "HL7 ActStatus": [
+          "ordered"
+        ]
+      },
+      "time": null,
+      "transferFrom": null,
+      "transferTo": null,
+      "_type": "Encounter"
+    },
+    {
+      "admitTime": 1333371600,
+      "admitType": null,
+      "codes": {
+        "SNOMED-CT": [
+          "32485007"
+        ]
+      },
+      "description": "Encounter, Performed: Inpatient Encounter (Code List: 2.16.840.1.113883.3.117.1.7.1.23)",
+      "dischargeDisposition": {
+        "code_system": "SNOMED-CT",
+        "code": "10161009",
+        "title": "Discharge To Home Or Police Custody"
+      },
+      "dischargeTime": 1333634400,
+      "end_time": 1333634400,
+      "free_text": null,
+      "mood_code": "EVN",
+      "negationInd": null,
+      "negationReason": null,
+      "oid": "2.16.840.1.113883.3.560.1.79",
+      "performer_id": null,
+      "reason": null,
+      "specifics": null,
+      "start_time": 1333371600,
+      "status_code": {
+        "HL7 ActStatus": [
+          "performed"
+        ]
+      },
+      "time": null,
+      "transferFrom": null,
+      "transferTo": null,
+      "_type": "Encounter"
+    }
+  ],
+  "ethnicity": {
+    "code": "2186-5",
+    "name": "Not Hispanic or Latino",
+    "codeSystem": "CDC Race"
+  },
+  "expired": false,
+  "first": "STROKE_ADULT",
+  "gender": "M",
+  "insurance_providers": [
+    {
+      "codes": {
+        "SOP": [
+          "349"
+        ]
+      },
+      "end_time": null,
+      "financial_responsibility_type": {
+        "code": "SELF",
+        "codeSystem": "HL7 Relationship Code"
+      },
+      "free_text": null,
+      "member_id": "1234567890",
+      "name": "Other",
+      "payer": {
+        "name": "Other"
+      },
+      "relationship": null,
+      "start_time": 1199163600,
+      "time": null,
+      "type": "OT"
+    }
+  ],
+  "languages": [
+
+  ],
+  "last": "A",
+  "measure_ids": [
+    "0435",
+    "0437",
+    "0438",
+    "0439",
+    "0440",
+    "0441",
+    "0436",
+    "0163",
+    "0142",
+    "0497",
+    "0376",
+    "0147",
+    "0527",
+    "0496",
+    "0371",
+    "0495"
+  ],
+  "measure_period_end": 1356930000000,
+  "measure_period_start": 1325394000000,
+  "medical_record_number": "879223b7a0d9fee24b76afac7e1ce268",
+  "procedures": [
+
+  ],
+  "race": {
+    "code": "1002-5",
+    "name": "American Indian or Alaska Native",
+    "codeSystem": "CDC Race"
+  },
+  "results": [
+
+  ],
+  "source_data_criteria": [
+    {
+      "id": "OccurrenceAEmergencyDepartmentVisit2",
+      "start_date": 1326474000000,
+      "end_date": 1326488400000,
+      "value": [
+
+      ],
+      "negation": "",
+      "negation_code_list_id": null,
+      "field_values": {
+        "FACILITY_LOCATION_DEPARTURE_DATETIME": {
+          "type": "TS",
+          "value": "01/13/2012 16:00"
+        },
+        "FACILITY_LOCATION_ARRIVAL_DATETIME": {
+          "type": "TS",
+          "value": "01/13/2012 12:00"
+        }
+      },
+      "oid": "2.16.840.1.113883.3.117.1.7.1.292",
+      "definition": "encounter",
+      "status": "performed"
+    },
+    {
+      "id": "SymptomActiveNeurologicSymptomsOfStroke",
+      "start_date": 1333373400000,
+      "end_date": 1333373400000,
+      "value": [
+
+      ],
+      "negation": "",
+      "negation_code_list_id": null,
+      "field_values": {
+      },
+      "oid": "2.16.840.1.113883.3.117.1.7.1.399",
+      "definition": "symptom",
+      "status": "active"
+    },
+    {
+      "id": "EncounterPerformedEmergencyDepartmentVisit",
+      "start_date": 1333378800000,
+      "end_date": 1333384200000,
+      "value": [
+
+      ],
+      "negation": "",
+      "negation_code_list_id": null,
+      "field_values": {
+        "FACILITY_LOCATION_ARRIVAL_DATETIME": {
+          "type": "TS",
+          "value": "04/02/2012 11:00"
+        },
+        "FACILITY_LOCATION_DEPARTURE_DATETIME": {
+          "type": "TS",
+          "value": "04/02/2012 12:30"
+        }
+      },
+      "oid": "2.16.840.1.113883.3.117.1.7.1.292",
+      "definition": "encounter",
+      "status": "performed"
+    },
+    {
+      "id": "DiagnosisActiveAtrialFibrillationFlutter",
+      "start_date": 1333380600000,
+      "end_date": 1333648800000,
+      "value": [
+
+      ],
+      "negation": "",
+      "negation_code_list_id": null,
+      "field_values": {
+      },
+      "oid": "2.16.840.1.113883.3.117.1.7.1.202",
+      "definition": "diagnosis",
+      "status": "active"
+    },
+    {
+      "id": "EncounterOrderDecisionToAdmitToHospitalInpatient",
+      "start_date": 1333383300000,
+      "end_date": 1333383300000,
+      "value": [
+
+      ],
+      "negation": "",
+      "negation_code_list_id": null,
+      "field_values": {
+        "START_DATETIME": {
+          "type": "TS",
+          "value": "4/2/2012 8:15:0"
+        }
+      },
+      "oid": "2.16.840.1.113883.3.117.1.7.1.295",
+      "definition": "encounter",
+      "status": "ordered"
+    },
+    {
+      "id": "EncounterPerformedInpatientEncounter",
+      "start_date": 1333386000000,
+      "end_date": 1333648800000,
+      "value": [
+
+      ],
+      "negation": "",
+      "negation_code_list_id": null,
+      "field_values": {
+        "DISCHARGE_STATUS": {
+          "type": "CD",
+          "code_list_id": "2.16.840.1.113883.3.117.1.7.1.82",
+          "title": "Discharge To Home Or Police Custody"
+        },
+        "DISCHARGE_DATETIME": {
+          "type": "TS",
+          "value": "04/05/2012 14:00"
+        },
+        "ADMISSION_DATETIME": {
+          "type": "TS",
+          "value": "04/02/2012 13:00"
+        }
+      },
+      "oid": "2.16.840.1.113883.3.117.1.7.1.23",
+      "definition": "encounter",
+      "status": "performed"
+    },
+    {
+      "id": "DiagnosisActiveIschemicStroke",
+      "start_date": 1333386000000,
+      "end_date": 1333562400000,
+      "value": [
+
+      ],
+      "negation": "",
+      "negation_code_list_id": null,
+      "field_values": {
+        "ORDINAL": {
+          "type": "CD",
+          "code_list_id": "2.16.840.1.113883.3.666.5.3010",
+          "title": "Hospital Measures - Principal"
+        }
+      },
+      "oid": "2.16.840.1.113883.3.117.1.7.1.247",
+      "definition": "diagnosis",
+      "status": "active"
+    },
+    {
+      "id": "LaboratoryTestResultLdlC",
+      "start_date": 1333400400000,
+      "end_date": 1333400400000,
+      "value": [
+        {
+          "type": "PQ",
+          "value": "110",
+          "unit": "mg/dL"
+        }
+      ],
+      "negation": "",
+      "negation_code_list_id": null,
+      "field_values": {
+      },
+      "oid": "2.16.840.1.113883.3.117.1.7.1.215",
+      "definition": "laboratory_test",
+      "status": null
+    },
+    {
+      "id": "MeasurePeriod",
+      "start_date": 1325394000000,
+      "end_date": 1356930000000
+    }
+  ],
+  "type": "eh",
+  "vital_signs": [
+    {
+      "codes": {
+        "LOINC": [
+          "2089-1"
+        ]
+      },
+      "description": "Laboratory Test, Result: LDL-c (Code List: 2.16.840.1.113883.3.117.1.7.1.215)",
+      "end_time": 1333386000,
+      "free_text": null,
+      "interpretation": null,
+      "mood_code": "EVN",
+      "negationInd": null,
+      "negationReason": null,
+      "oid": "2.16.840.1.113883.3.560.1.12",
+      "reason": null,
+      "referenceRange": null,
+      "specifics": null,
+      "start_time": 1333386000,
+      "status_code": {
+        "HL7 ActStatus": [
+          null
+        ]
+      },
+      "time": null,
+      "values": [
+        {
+          "scalar": "110",
+          "units": "mg/dL",
+          "_type": "PhysicalQuantityResultValue"
+        }
+      ],
+      "_type": "VitalSign"
+    }
+  ]
+}

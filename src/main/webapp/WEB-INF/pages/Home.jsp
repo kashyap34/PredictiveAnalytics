@@ -15,9 +15,15 @@
 
     <title>Welcome to Population Analytics</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
-
+    <link id="bs-css" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath}/resources/font-awesome/css/font-awesome.css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath}/resources/css/sb-admin.css" rel="stylesheet">
+	<style type="text/css">
+	body {
+ 	    background-color: #ffffff;
+    	padding-top: 100px;
+	}
+	</style>
     <!-- Custom styles for this template -->
     <link href="http://getbootstrap.com/examples/justified-nav/justified-nav.css" rel="stylesheet">
 
@@ -33,7 +39,7 @@
     <div class="container">
 
       <div class="masthead">
-        <h3 class="text-muted">Population Analytics</h3>
+        <h3 class="text-muted"><i class="fa fa-users"></i> <i class="fa fa-bar-chart-o"></i> Population Analytics</h3>
         <ul class="nav nav-justified">
           <li class="active"><a href="${pageContext.request.contextPath}/home">Home</a></li>
           <li><a href="${pageContext.request.contextPath}/login">Login</a></li>
@@ -46,7 +52,7 @@
       <div class="jumbotron">
         <h1>Welcome to Population Analytics !</h1>
         <p class="lead">This web application is helpful to doctors for performing analytics on their patient's health records.</p>
-        <p><a class="btn btn-lg btn-success" href="${pageContext.request.contextPath}/register" role="button">Get started today</a></p>
+        <p><a class="btn btn-lg btn-success" href="${pageContext.request.contextPath}/register" role="button">Get started today <i class="fa fa-arrow-circle-o-right"></i></a></p>
         <p class="lead"><strong>It's free!</strong></p>
       </div>
 

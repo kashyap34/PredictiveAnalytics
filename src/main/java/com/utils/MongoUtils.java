@@ -71,15 +71,15 @@ public class MongoUtils {
 	
 	public String parseJSON(String fileName) {
 		try{
-			/*String json = FileUtils.readFileToString(new File(fileName));
+			String json = FileUtils.readFileToString(new File(fileName));
 			
 			
 			DBObject dbObject = (DBObject)JSON.parse(json);
-			ObjectId objectIDToSet = ObjectId.massageToObjectId(dbObject.get("medical_record_number"));
+			/*ObjectId objectIDToSet = ObjectId.massageToObjectId(dbObject.get("medical_record_number"));
 			if(ObjectId.isValid(objectIDToSet.toString())) {
 				logger.info("Generating id for patient: " + objectIDToSet.toString());
 				dbObject.put("_id", objectIDToSet);	
-			}
+			}*/
 			collection.insert(dbObject);
 			ObjectId objectID = (ObjectId)dbObject.get("_id");
 			
@@ -88,9 +88,7 @@ public class MongoUtils {
 			} 
 			else {
 				return "";
-			}*/
-			
-			return "Success";
+			}
 			
 		} catch(Exception e) {
 			logger.error("Error in parsing the JSON schema");

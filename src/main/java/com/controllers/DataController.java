@@ -60,8 +60,9 @@ public class DataController {
 			model.addAttribute("user", user);
 			return "DataUpload";
 		}
-		
-		return "DataUpload";
+		else {
+			return "Login";
+		}
 	}
 	
 	@RequestMapping(method=RequestMethod.GET, value="/data/who/links")
@@ -215,7 +216,7 @@ public class DataController {
 					String response = mongoUtils.parseJSON(fileName);
 					if(!response.isEmpty()) {
 						return "{\"success\": \"You successfully uploaded " + name
-								+ ". Patient ID is:";// + response + "\"}";
+								+ ". Patient ID is:" + response + "\"}";
 					}
 					else {
 						return "{\"error\": \"Error in parsing the file: " + name

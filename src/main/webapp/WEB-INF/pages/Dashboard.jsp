@@ -147,8 +147,7 @@ body {
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="${pageContext.request.contextPath}/"><strong>Predictive
-						Analytics</strong></a>
+				<a class="navbar-brand" href="${pageContext.request.contextPath}/"><i class="fa fa-users"></i> <i class="fa fa-bar-chart-o"></i> Population Analytics</a>
 			</div>
 			<!-- /.navbar-header -->
 
@@ -179,7 +178,7 @@ body {
 						</a></li>
 					</ul></li>
 				<li class="dropdown"><a class="dropdown-toggle"
-					data-toggle="dropdown" href="#"> <i class="fa fa-user fa-fw">
+					data-toggle="dropdown" href="#"> <i class="fa fa-user">
 							${user.fname}</i> <i class="fa fa-caret-down"></i>
 				</a>
 					<ul class="dropdown-menu dropdown-user">
@@ -364,6 +363,12 @@ body {
 					</div>
 				</div>
 				<!--/span-->
+				<div class="row"> 
+					<div class="col-md-12" style="text-align: center;">
+						<button class="btn btn-success" id="generate-report" type="button"><i class="fa fa-print"></i> Generate Report</button>
+						<!-- <button class="btn btn-success" id="generate-all-report" type="button"><i class="fa fa-print"></i> Generate All Report</button> -->
+					</div>
+				</div>
 			</div>
 			<!--/row-->
 
@@ -398,9 +403,20 @@ body {
 		<!-- High Charts -->
 		<script src="http://code.highcharts.com/highcharts.js"></script>
 		<script src="http://code.highcharts.com/modules/exporting.js"></script>
+		
+		<!-- CanvG -->
+		<script src="http://canvg.googlecode.com/svn/trunk/rgbcolor.js"></script> 
+		<script src="http://canvg.googlecode.com/svn/trunk/canvg.js"></script> 
+		
+		<!-- jsPDF -->
+		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jspdf.debug.js"></script>
+		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jspdf.js"></script>
+		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jspdf.plugin.addimage.js"></script>
+		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jspdf.plugin.autoprint.js"></script>
 
 <script type="text/javascript">
-	var disease;
+	var disease, countries;
+	var pieChart, barChart, lineChart;
 	var substringMatcher = function(strs) {
 		  return function findMatches(q, cb) {
 		    var matches, substringRegex;
@@ -424,15 +440,17 @@ body {
 		    cb(matches);
 		  };
 		};
-		
+	
 	$(function () {
 	$('#pie-bar-separator').hide();
 	$('#bar-line-separator').hide();
 	$('#alert-error').hide();
 	$('#filter-data').hide();
+	$('#generate-report').hide();
 	
-		 $('#pie-chart-container').highcharts({
+		pieChart = new Highcharts.Chart({
 	        chart: {
+	        	renderTo: 'pie-chart-container',
 	            plotBackgroundColor: null,
 	            plotBorderWidth: null,
 	            plotShadow: false//,
@@ -471,7 +489,7 @@ body {
 		            		disease = this.name;
 		            		$.get("${pageContext.request.contextPath}/dashboard/country/" + disease, function(data){
 		            			var obj = jQuery.parseJSON(data);
-		            			var countries = obj.countryList;
+		            			countries = obj.countryList;
 		            			$('.typeahead').typeahead({
 		            				hint: true,
 		            				highlight: true,
@@ -482,6 +500,7 @@ body {
 		            				displayKey: 'value',
 		            				source: substringMatcher(countries)
 		            			});
+		            			
 		            			$('#filter-data').show();
 		            			
 		            		});
@@ -503,12 +522,14 @@ body {
 			}
 			else {
 				$('#pie-bar-separator').show();
-				$('#bar-chart-container').highcharts({
+			
+				barChart =	new Highcharts.Chart({
 		            chart: {
-		                type: 'bar'
+		                type: 'bar',
+		                renderTo: 'bar-chart-container'
 		            },
 		            title: {
-		                text: disease + ' - Number of reported cases'
+		                text: disease + ' - Number of reported cases in ' + country
 		            },
 		            subtitle: {
 		                text: 'Source: WHO Data Repository'
@@ -573,9 +594,12 @@ body {
 				
 				$('#bar-line-separator').show();
 				
-				$('#line-chart-container').highcharts({
-		            title: {
-		                text: 'Estimated number of cases by 2018',
+				lineChart = new Highcharts.Chart({
+		            chart: {
+		            	renderTo: 'line-chart-container'
+		            },
+					title: {
+		                text: 'Estimated number of '+ disease +' cases in '+ country +' by 2018',
 		                x: -20 //center
 		            },
 		            subtitle: {
@@ -613,10 +637,261 @@ body {
 		            }]
 		        });
 			}
+			$('#generate-report').show();
 		});
+		
 		
 	});
 	
+	$('#generate-report').click(function(){
+		var labelX = 55, labelY = 10;
+		var graphX = 50, graphY = 20;
+		var graphWidth = 120, graphHeight = 80;
+		var doc = new jsPDF();
+		
+		var pieChartCanvas = document.createElement('canvas');
+		pieChartCanvas.setAttribute('width', 600);
+		pieChartCanvas.setAttribute('height', 300);
+		
+		var barChartCanvas = document.createElement('canvas');
+		barChartCanvas.setAttribute('width', 600);
+		barChartCanvas.setAttribute('height', 300);
+		
+		var lineChartCanvas = document.createElement('canvas');
+		lineChartCanvas.setAttribute('width', 600);
+		lineChartCanvas.setAttribute('height', 300);
+		
+		if(pieChartCanvas.getContext && pieChartCanvas.getContext('2d') && 
+				barChartCanvas.getContext && barChartCanvas.getContext('2d') &&
+				lineChartCanvas.getContext && lineChartCanvas.getContext('2d')) {
+			console.log('generating canvas');
+			canvg(pieChartCanvas, pieChart.getSVG());
+			var pieImage = pieChartCanvas.toDataURL("image/jpeg");
+			
+			canvg(barChartCanvas, barChart.getSVG());
+			var barImage = barChartCanvas.toDataURL("image/jpeg");
+			
+			canvg(lineChartCanvas, lineChart.getSVG());
+			var lineImage = lineChartCanvas.toDataURL("image/jpeg");
+			
+			doc.setFontSize(20);
+			doc.text(labelX, labelY, "Health Trends Around The World");
+			doc.addImage(pieImage, 'JPEG', graphX, graphY, graphWidth, graphHeight);
+			
+			graphY = graphY + graphHeight + 15;
+			doc.addImage(barImage, 'JPEG', graphX, graphY, graphWidth, graphHeight);
+			
+			graphY = graphY + graphHeight + 15;
+			doc.addImage(lineImage, 'JPEG', graphX, graphY, graphWidth, graphHeight);
+			//doc.save('country-statistics.pdf');
+			
+			doc.autoPrint();
+			doc.output('dataurlnewwindow');
+		}	
+		else {
+			console.log('cannot create canvas');
+		}
+	});
+	
+	/* $('#generate-all-report').click(function(){
+		var labelX = 55, labelY = 10;
+		var graphX = 50, graphY = 20;
+		var graphWidth = 120, graphHeight = 80;
+		var doc = new jsPDF();
+		var diseaseList = ['Malaria', 'Diabetes', 'Tuberculosis', 'Cholera'];
+		var countryListData = [];
+		var firstPage = true;
+		
+		var pieChartCanvas = document.createElement('canvas');
+		pieChartCanvas.setAttribute('width', 600);
+		pieChartCanvas.setAttribute('height', 300);
+		
+		var barChartCanvas = document.createElement('canvas');
+		barChartCanvas.setAttribute('width', 600);
+		barChartCanvas.setAttribute('height', 300);
+		
+		var lineChartCanvas = document.createElement('canvas');
+		lineChartCanvas.setAttribute('width', 600);
+		lineChartCanvas.setAttribute('height', 300);
+		
+		canvg(pieChartCanvas, pieChart.getSVG());
+		var pieImage = pieChartCanvas.toDataURL("image/jpeg");
+
+		doc.setFontSize(20);
+		doc.text(labelX, labelY, "Health Trends Around The World");
+		doc.addImage(pieImage, 'JPEG', graphX, graphY, graphWidth, graphHeight);
+		
+		$.each(diseaseList, function(diseaseIndex, diseaseValue) {
+			$.get("${pageContext.request.contextPath}/dashboard/country/" + diseaseValue, function(data){
+    			var obj = jQuery.parseJSON(data);
+    			countryListData = obj.countryList;
+    		
+			
+			for(var countryIndex = 0; countryIndex < countryListData.length; countryIndex++) {
+				$.get("${pageContext.request.contextPath}/dashboard/country?disease=" + diseaseValue + "&country=" + countryListData[countryIndex], function(data){
+					var obj = jQuery.parseJSON(data);
+					var cases = obj.cases;
+					var predictions = obj.predictions;
+					if(obj.error != null) {
+						console.log('Error in retrieving cases and predictions for ' + diseaseValue + ' in ' + countryListData[countryIndex]);
+					}
+					else {
+						var barChart =	new Highcharts.Chart({
+				            chart: {
+				                type: 'bar'
+				            },
+				            title: {
+				                text: disease + ' - Number of reported cases in ' + countryListData[countryIndex]
+				            },
+				            subtitle: {
+				                text: 'Source: WHO Data Repository'
+				            },
+				            xAxis: {
+				                categories: [countryListData[countryIndex]],
+				                title: {
+				                    text: null
+				                }
+				            },
+				            yAxis: {
+				                min: 0,
+				                title: {
+				                    text: 'Cases (numbers in 100k)',
+				                    align: 'low'
+				                },
+				                labels: {
+				                    overflow: 'justify'
+				                }
+				            },
+				            plotOptions: {
+				                bar: {
+				                    dataLabels: {
+				                        enabled: true
+				                    }
+				                }
+				            },
+				            legend: {
+				                layout: 'vertical',
+				                align: 'right',
+				                verticalAlign: 'top',
+				                x: -40,
+				                y: 100,
+				                floating: true,
+				                borderWidth: 1,
+				                backgroundColor: '#FFFFFF',
+				                shadow: true
+				            },
+				            credits: {
+				                enabled: false
+				            },
+				            series: [{
+				                name: 'Year 2006',
+				                data: [cases[2006]]
+				            }, {
+				                name: 'Year 2007',
+				                data: [cases[2007]]
+				            }, {
+				                name: 'Year 2008',
+				                data: [cases[2008]]
+				            }, {
+				                name: 'Year 2009',
+				                data: [cases[2009]]
+				            }, {
+				                name: 'Year 2010',
+				                data: [cases[2010]]
+				            }, {
+				                name: 'Year 2011',
+				                data: [cases[2011]]
+				            }]
+				        });
+						
+						
+						var lineChart = new Highcharts.Chart({
+							title: {
+				                text: 'Estimated number of '+ diseaseValue +' cases in '+ countryListData[countryIndex] +' by 2018',
+				                x: -20 //center
+				            },
+				            subtitle: {
+				                text: 'Predictions based on WHO Data',
+				                x: -20
+				            },
+				            xAxis: {
+				                categories: [2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018],
+				                title: {
+				                	text: 'Year'
+				                }
+				            },
+				            yAxis: {
+				                title: {
+				                    text: 'Number of cases (numbers in 100k)'
+				                },
+				                plotLines: [{
+				                    value: 0,
+				                    width: 1,
+				                    color: '#808080'
+				                }]
+				            },
+				            tooltip: {
+				                pointFormat: '{series.name}: <b>{point.y:.0f}</b>'
+				            },
+				            legend: {
+				                layout: 'vertical',
+				                align: 'right',
+				                verticalAlign: 'middle',
+				                borderWidth: 0
+				            },
+				            series: [{
+				                name: country,
+				                data: predictions
+				            }]
+				        });
+					}
+					
+					if(barChartCanvas.getContext && barChartCanvas.getContext('2d') &&
+							lineChartCanvas.getContext && lineChartCanvas.getContext('2d')) {
+						
+						if(firstPage) {
+							canvg(barChartCanvas, barChart.getSVG());
+							var barImage = barChartCanvas.toDataURL("image/jpeg");
+							
+							canvg(lineChartCanvas, lineChart.getSVG());
+							var lineImage = lineChartCanvas.toDataURL("image/jpeg");
+							
+							graphY = graphY + graphHeight + 15;
+							doc.addImage(barImage, 'JPEG', graphX, graphY, graphWidth, graphHeight);
+							
+							graphY = graphY + graphHeight + 15;
+							doc.addImage(lineImage, 'JPEG', graphX, graphY, graphWidth, graphHeight);
+							
+							firstPage = false;
+						}
+						else {
+							doc.addPage();
+							graphY = 40;
+							canvg(barChartCanvas, barChart.getSVG());
+							var barImage = barChartCanvas.toDataURL("image/jpeg");
+							
+							canvg(lineChartCanvas, lineChart.getSVG());
+							var lineImage = lineChartCanvas.toDataURL("image/jpeg");
+							
+							doc.addImage(barImage, 'JPEG', graphX, graphY, graphWidth, graphHeight);
+							
+							graphY = graphY + graphHeight + 25;
+							doc.addImage(lineImage, 'JPEG', graphX, graphY, graphWidth, graphHeight);
+						}
+					}
+					else {
+						console.log('Error in creating PDF');
+					}
+				});
+				setTimeout(this, 3000);
+			}
+			});
+		});
+		
+			doc.autoPrint();
+			doc.output('dataurlnewwindow');
+	});
+ */	
 </script>
 </body>
 </html>
